@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>1 Point - Profile</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="header-container"></div>
+
+  <main class="profile-container">
+    <h1>Your Profile</h1>
+
+    <section class="profile-info" id="profile-info"></section>
+
+    <section class="booking-history">
+      <h2>Booking History</h2>
+      <ul>
+        <li>🛠️ Technician - 12 June 2025 - Completed</li>
+        <li>🚗 Car Repair - 15 June 2025 - Pending</li>
+        <!-- Populate dynamically if needed -->
+      </ul>
+    </section>
+
+    <button onclick="logout()">Logout</button>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script>
+  // Load Header & Footer
+  fetch('header.html').then(res => res.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  });
+
+  fetch('footer.html').then(res => res.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+
+    // ✅ Render profile data AFTER footer loads (safe timing)
+    const user = JSON.parse(localStorage.getItem("az_user") || "{}");
+    const profileInfo = document.getElementById("profile-info");
+
+    if (user && profileInfo) {
+      profileInfo.innerHTML = `
+        <p><strong>Name:</strong> ${user.name || 'N/A'}</p>
+        <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
+        <p><strong>Phone:</strong> ${user.phone || 'N/A'}</p>
+        <p><strong>Address:</strong> ${user.address || 'N/A'}</p>
+        <p><strong>Occupation:</strong> ${user.occupation || 'N/A'}</p>
+        <button onclick="editProfile()">Edit Profile</button>
+      `;
+    }
+  });
+
+  function editProfile() {
+    alert("Edit Profile feature coming soon.");
+  }
+
+  function logout() {
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("az_user");
+    window.location.href = "signin.html";
+  }
+</script>
+
+</body>
+</html>

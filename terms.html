@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms & Conditions – 1 Point</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <div id="header-container"></div>
+
+  <!-- Back Button -->
+  <div class="back-btn top-left">
+    <button onclick="history.back()">← Back</button>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <section class="terms-card terms-section">
+      <h2>Customer Terms</h2>
+      <ul>
+        <li>1 Point connects you with third-party providers. We are not directly responsible for service quality.</li>
+        <li>Ensure you describe your service needs clearly to avoid miscommunication.</li>
+        <li>Payments must be made only through authorized methods provided by 1 Point.</li>
+        <li>We offer limited mediation in case of disputes but are not legally liable.</li>
+        <li>Late cancellations or frequent no-shows may result in restrictions or penalties.</li>
+        <li>Your data is used only to provide and improve our services.</li>
+        <li>By using 1 Point, you agree to updates in these terms as required.</li>
+      </ul>
+    </section>
+
+    <section class="terms-card terms-section">
+      <h2>Service Provider Terms</h2>
+      <ul>
+        <li>1 Point connects customers to service providers but is not the provider.</li>
+        <li>Service providers are fully responsible for any damages or incidents during work.</li>
+        <li>We support legal action if a customer refuses to pay or threatens a provider.</li>
+        <li>Payments collected through 1 Point belong to the provider and are claimable any time.</li>
+        <li>Poor performance or fraud may result in removal from the platform.</li>
+        <li>Bypassing the platform by sharing personal contacts leads to ₹5000 fine and account ban.</li>
+      </ul>
+    </section>
+
+    <section id="agree-section" class="agree-box">
+      <input type="checkbox" id="agree" />
+      <label for="agree">I have read and agree to the Terms and Conditions.</label><br><br>
+      <button id="accept-btn" disabled>Accept & Continue</button>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <!-- Script to load header/footer -->
+  <script>
+    fetch('header.html').then(res => res.text()).then(data => {
+      document.getElementById('header-container').innerHTML = data;
+    });
+
+    fetch('footer.html').then(res => res.text()).then(data => {
+      document.getElementById('footer-container').innerHTML = data;
+    });
+
+    // Checkbox logic
+    const agreeCheckbox = document.getElementById("agree");
+    const acceptBtn = document.getElementById("accept-btn");
+
+    agreeCheckbox.addEventListener("change", () => {
+      acceptBtn.disabled = !agreeCheckbox.checked;
+    });
+
+    acceptBtn.addEventListener("click", () => {
+      localStorage.setItem("agreedToTerms", "true");
+      window.location.href = "createaccount.html";
+    });
+  </script>
+</body>
+</html>

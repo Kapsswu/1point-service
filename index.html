@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1 Point - Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header (loaded from separate file) -->
+  <div id="header-container"></div>
+
+  <!-- Search Bar -->
+  <section class="search-section">
+    <input type="text" id="searchInput" placeholder="Type to search for services..." autocomplete="off" />
+    <ul id="suggestions"></ul>
+  </section>
+
+  <!-- Most Used -->
+  <section class="most-used">
+    <h2>Most Used</h2>
+    <div class="two-column-grid">
+      <a href="booking.html?c=Home Services&s=Electrician" class="category-card"><i class="fas fa-bolt"></i><br>Electrician</a>
+      <a href="booking.html?c=Home Services&s=Plumber" class="category-card"><i class="fas fa-wrench"></i><br>Plumber</a>
+      <a href="booking.html?c=Home Services&s=Technician (AC, Fridge Repairs)" class="category-card"><i class="fas fa-tools"></i><br>Technician</a>
+      <a href="booking.html?c=Home Services&s=Carpenter" class="category-card"><i class="fas fa-hammer"></i><br>Carpenter</a>
+      <a href="booking.html?c=Transportation&s=Taxi Service" class="category-card"><i class="fas fa-taxi"></i><br>Taxi Service</a>
+      <a href="booking.html?c=Multimedia&s=Photography" class="category-card"><i class="fas fa-camera"></i><br>Photography</a>
+      <a href="booking.html?c=Construction&s=Labour Service" class="category-card"><i class="fas fa-user-hard-hat"></i><br>Labour Service</a>
+      <a href="booking.html?c=Automobile Repairs&s=Car Repairs" class="category-card"><i class="fas fa-car-crash"></i><br>Car Repairs</a>
+    </div>
+  </section>
+
+  <!-- All Categories -->
+  <section class="all-categories">
+  <h2>Categories</h2>
+  <ul class="full-width-box-list">
+    <li><a href="category.html?cat=Home Services">🏠 Home Services</a></li>
+    <li><a href="category.html?cat=Transportation">🚌 Transportation</a></li>
+    <li><a href="category.html?cat=Rentals">🔑 Rentals</a></li>
+    <li><a href="category.html?cat=Multimedia">🎥 Multimedia</a></li>
+    <li><a href="category.html?cat=Real Estate">🏢 Real Estate</a></li>
+    <li><a href="category.html?cat=Goods Delivery">🚚 Goods Delivery</a></li>
+    <li><a href="category.html?cat=Event Management">🎉 Event Management</a></li>
+    <li><a href="category.html?cat=Construction">🚧 Construction</a></li>
+    <li><a href="category.html?cat=Consultants">🧑‍💼 Consultants</a></li>
+    <li><a href="category.html?cat=Automobile Repairs">🛠️ Automobile Repairs</a></li>
+    <li><a href="category.html?cat=Others">✨ Others</a></li>
+  </ul>
+</section>
+
+  <!-- Footer (loaded from separate file) -->
+  <div id="footer-container"></div>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
+    <img src="whatsapp-icon.png" alt="Chat on WhatsApp" />
+  </a>
+
+  <!-- Load Header & Footer -->
+  <script>
+    fetch('header.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('header-container').innerHTML = data);
+
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('footer-container').innerHTML = data);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+/* style.css — Unified styling for all 13 HTML files in AZ Service */
+
+:root {
+  --primary: #e63946;
+  --bg: #121212;
+  --card: #1f1f1f;
+  --light: #ffffff;
+  --hover: #c72c36;
+  --gray: #888;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--light);
+  line-height: 1.6;
+  padding: 0 20px;
+  padding-top: 180px; /* ← This pushes everything down */
+}
+
+h1, h2, h3 {
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.container, main, .profile-container {
+  max-width: 800px;
+  margin: auto;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+input, select, textarea, button {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+input, select, textarea {
+  background: #f1f1f1;
+  color: #000;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--hover);
+}
+
+/* Navigation & Header/Footer */
+header, .top-nav {
+  background: var(--card);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.top-nav a, .footer-links a {
+  color: var(--light);
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 0.9rem;
+}
+
+.top-nav a:hover, .footer-links a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  background: var(--card);
+  padding: 20px;
+  color: var(--gray);
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 40px;
+}
+
+.footer-links {
+  margin-bottom: 10px;
+}
+
+/* WhatsApp Floating Button */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
+}
+
+.floating-whatsapp img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Category & Cards */
+.two-column-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.category-card, .category-icon-card {
+  background: var(--card);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.category-card:hover, .category-icon-card:hover {
+  background: var(--hover);
+}
+
+.category-icon-card i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Review Page */
+.review-card {
+  background: var(--card);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 1rem auto;
+}
+
+.review-card textarea {
+  height: 100px;
+}
+
+/* Terms Cards */
+.terms-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.terms-card ul {
+  list-style: disc inside;
+}
+
+/* Booking History */
+.booking-history ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.booking-history li {
+  background: #2a2a2a;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+/* Back Button */
+.back-btn {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.back-btn button {
+  background: none;
+  border: none;
+  color: var(--light);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Search Section */
+.search-section input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+#suggestions {
+  background: var(--card);
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+#suggestions li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+
+#suggestions li:hover {
+  background: var(--hover);
+}
+.full-width-box-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.full-width-box-list li {
+  background: var(--card);
+  border-radius: 0;
+  padding: 50px 20px;
+  margin: 0 -20px; /* stretches to screen edges */
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
+  transition: background 0.3s;
+}
+
+.full-width-box-list li:hover {
+  background: var(--hover);
+}
+
+.full-width-box-list a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  display: block;
+}
+
+/* FIXED HEADER */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--card);
+  padding: 35px 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* FIXED SEARCH */
+.search-section {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  padding: 10px 20px;
+  background: var(--bg);
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* PUSH CONTENT BELOW FIXED HEADER + SEARCH */
+body {
+  background-color: var(--bg);
+  color: var(--light);
+  line-height: 1.6;
+  padding: 0 20px;
+  padding-top: 180px;
+}
