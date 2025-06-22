@@ -150,15 +150,15 @@
       // ✅ Show success message before redirect
       alert("✅ Booking data prepared. Redirecting to WhatsApp...");
 
-      const message = `*AZ Service Booking
-*Service:* ${subcategory}
-*Category:* ${category.replace(/-/g, ' ')}
-*Name:* ${name}
-*Phone:* ${phone}
-*Location:* ${location}
-*Address:* ${address}
-*Description:* ${description}
-*Preferred Time:* ${datetime}
+      const message = `*AZ Service Booking%0A
+*Service:* ${subcategory}%0A
+*Category:* ${category.replace(/-/g, ' ')}%0A
+*Name:* ${name}%0A
+*Phone:* ${phone}%0A
+*Location:* ${location}%0A
+*Address:* ${address}%0A
+*Description:* ${description}%0A
+*Preferred Time:* ${datetime}%0A
 *Urgency:* ${urgency}`;
 
       const encodedMessage = encodeURIComponent(message);
