@@ -63,3 +63,15 @@
   <script src="review.js" defer></script>
 </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById('review-form');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('✅ Thank you for your review!');
+        this.reset();
+      });
+    }
+  });
+</script>
