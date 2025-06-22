@@ -114,11 +114,5 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-<script>
-  document.getElementById('review-form').addEventListener('submit', function (e) {
-    e.preventDefault(); // prevents actual form submission
-    alert('✅ Thank you for your review!');
-    this.reset(); // clears the form
-  });
-</script>
+
 
