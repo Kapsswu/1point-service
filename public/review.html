@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leave a Review | AZ Service</title>
+  <link rel="stylesheet" href="style.css" /> <!-- ✅ Updated path -->
+</head>
+<body>
+
+  <!-- Header (loaded externally) -->
+  <div id="header-container"></div>
+
+  <!-- Main Content -->
+  <main class="container">
+    <h2>Leave a Review</h2>
+    <form id="review-form" class="form-box" autocomplete="off">
+      <div class="form-group">
+        <label for="booking-id">Booking ID (optional):</label>
+        <input type="text" id="booking-id" name="booking-id" placeholder="Enter your Booking ID" />
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating <span>*</span>:</label>
+        <select id="rating" name="rating" required>
+          <option value="">-- Select Stars --</option>
+          <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+          <option value="4">⭐⭐⭐⭐ - Very Good</option>
+          <option value="3">⭐⭐⭐ - Good</option>
+          <option value="2">⭐⭐ - Fair</option>
+          <option value="1">⭐ - Poor</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback">Your Feedback (optional):</label>
+        <textarea id="feedback" name="feedback" rows="5" placeholder="Write something..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary">Submit Review</button>
+    </form>
+  </main>
+
+  <!-- Footer (loaded externally) -->
+  <div id="footer-container"></div>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/6009982567" class="floating-whatsapp" target="_blank" title="Chat with AZ Service" aria-label="Chat with AZ Service on WhatsApp">
+    <img src="assets/whatsapp.svg" alt="WhatsApp Icon" />
+  </a>
+
+  <!-- Load Header & Footer -->
+  <script>
+    fetch('header.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('header-container').innerHTML = data);
+
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('footer-container').innerHTML = data);
+  </script>
+
+  <script src="review.js" defer></script>
+</body>
+</html>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('review-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('✅ Thank you for your review!');
+      this.reset();
+    });
+  }
+});

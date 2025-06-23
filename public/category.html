@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Category - 1Point</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div id="header-container"></div>
+
+  <main class="container">
+    <div class="back-btn">
+      <button onclick="history.back()">← Back</button>
+    </div>
+
+    <h2 id="category-title">Category</h2>
+    <div id="subcategory-list"></div>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script>
+    const categoryMap = {
+      "Home Services": ["Electrician", "Plumber", "Technician (AC, Fridge Repairs)", "Carpenter"],
+      "Transportation": ["Taxi Service", "Bike Rental", "Goods Transport", "Self Drive Car"],
+      "Rentals": ["Projector Rental", "Tent & Table", "Sound System", "Construction Tools"],
+      "Multimedia": ["Photography", "Videography", "Drone Shot", "Live Broadcast"],
+      "Real Estate": ["Rent House", "Rent Shop", "Buy Land", "Commercial Space"],
+      "Goods Delivery": ["Food Delivery", "Courier", "E-commerce", "Furniture Movers"],
+      "Event Management": ["Wedding Planner", "Event Host", "Decoration", "Catering"],
+      "Construction": ["Labour Service", "Material Supply", "Site Supervisor", "Blueprint Designer"],
+      "Consultants": ["Legal Consultant", "Business Coach", "Marketing Expert", "Tax Advisor"],
+      "Automobile Repairs": ["Car Repairs", "Bike Repairs", "Car Wash", "Tire Change"],
+      "Others": ["Custom Request", "Miscellaneous"]
+    };
+
+    const emojiMap = {
+      "Electrician": "⚡",
+      "Plumber": "🔧",
+      "Technician (AC, Fridge Repairs)": "🛠️",
+      "Carpenter": "🖱️",
+      "Taxi Service": "🚕",
+      "Photography": "📷",
+      "Labour Service": "🧑‍🎓",
+      "Car Repairs": "🚗",
+      // Add more if needed
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("cat");
+    const title = document.getElementById("category-title");
+    const list = document.getElementById("subcategory-list");
+
+    if (category && categoryMap[category]) {
+      title.textContent = category;
+      document.title = `1Point – ${category}`;
+      list.classList.add("two-column-grid");
+
+      categoryMap[category].forEach(subcat => {
+        const link = document.createElement("a");
+        link.className = "category-card";
+        link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
+        const emoji = emojiMap[subcat] || "✨";
+        link.innerHTML = `${emoji}<br>${subcat}`;
+        list.appendChild(link);
+      });
+    } else {
+      title.textContent = "Invalid or Missing Category";
+      list.innerHTML = `<p>Try going back to the <a href="index.html">homepage</a>.</p>`;
+    }
+  </script>
+</body>
+</html>

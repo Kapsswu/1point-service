@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AZ Booking</title>
+  <style>
+    :root {
+      --primary: #e63946;
+      --bg: #121212;
+      --card: #1f1f1f;
+      --light: #ffffff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--light);
+      font-family: sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    label {
+      font-size: 0.95rem;
+      margin-bottom: 5px;
+    }
+
+    input, textarea, select {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c72c36;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Book a Service</h2>
+
+  <form id="bookingForm">
+    <div>
+      <label>Selected Service</label>
+      <input type="text" id="service" readonly />
+    </div>
+
+    <div>
+      <label>Your Name</label>
+      <input type="text" id="name" placeholder="Your full name" required />
+    </div>
+
+    <div>
+      <label>Phone Number</label>
+      <input type="tel" id="phone" placeholder="10-digit number" required />
+    </div>
+
+    <div>
+      <label>Location</label>
+      <input type="text" id="location" placeholder="Eg: Dimapur" required />
+    </div>
+
+    <div>
+      <label>Address</label>
+      <textarea id="address" rows="2" placeholder="House No, Landmark..."></textarea>
+    </div>
+
+    <div>
+      <label>Describe your problem</label>
+      <textarea id="description" rows="3" placeholder="Describe the issue or service needed"></textarea>
+    </div>
+
+    <div>
+      <label>Preferred Date & Time</label>
+      <input type="datetime-local" id="datetime" required />
+    </div>
+
+    <div>
+      <label>Urgency</label>
+      <select id="urgency">
+        <option value="Normal 🟢">Normal 🟢</option>
+        <option value="Urgent 🟡">Urgent 🟡</option>
+        <option value="Emergency 🔴">Emergency 🔴</option>
+      </select>
+    </div>
+
+    <button type="submit">Send via WhatsApp</button>
+  </form>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("c") || "";
+    const subcategory = urlParams.get("s") || "";
+
+    document.getElementById("service").value = `${subcategory} (${category.replace(/-/g, ' ')})`;
+
+    // Load saved user data
+    const user = JSON.parse(localStorage.getItem("az_user")) || {};
+    document.getElementById("name").value = user.name || "";
+    document.getElementById("phone").value = user.phone || "";
+    document.getElementById("location").value = user.location || "";
+    document.getElementById("address").value = user.address || "";
+
+    document.getElementById("bookingForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const location = document.getElementById("location").value;
+      const address = document.getElementById("address").value;
+      const description = document.getElementById("description").value;
+      const datetime = document.getElementById("datetime").value;
+      const urgency = document.getElementById("urgency").value;
+
+      // ✅ Save details to localStorage
+      const userData = { name, phone, location, address };
+      localStorage.setItem("az_user", JSON.stringify(userData));
+
+      // ✅ Show success message before redirect
+      alert("✅ Booking data prepared. Redirecting to WhatsApp...");
+
+      const message = `*AZ Service Booking%0A
+*Service:* ${subcategory}%0A
+*Category:* ${category.replace(/-/g, ' ')}%0A
+*Name:* ${name}%0A
+*Phone:* ${phone}%0A
+*Location:* ${location}%0A
+*Address:* ${address}%0A
+*Description:* ${description}%0A
+*Preferred Time:* ${datetime}%0A
+*Urgency:* ${urgency}`;
+
+      const encodedMessage = encodeURIComponent(message);
+      window.open(`https://wa.me/916009982567?text=${encodedMessage}`, "_blank");
+    });
+  </script>
+</body>
+</html>
