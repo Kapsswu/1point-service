@@ -1,14 +1,17 @@
 // script.js — Reusable JavaScript for all AZ Service pages
 
-// Load header and footer components
 window.addEventListener("DOMContentLoaded", () => {
   const headerContainer = document.getElementById("header-container");
   const footerContainer = document.getElementById("footer-container");
 
+  // Load header and footer
   if (headerContainer) {
-    fetch("header.html").then(res => res.text()).then(data => {
-      headerContainer.innerHTML = data;
-    });
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        headerContainer.innerHTML = data;
+        handleHeaderAuthState(); // Set auth status in header after load
+      });
   }
 
   if (footerContainer) {
@@ -25,13 +28,14 @@ window.addEventListener("DOMContentLoaded", () => {
     const category = urlParams.get("c") || "";
     const subcategory = urlParams.get("s") || "";
     serviceField.value = `${subcategory} (${category.replace(/-/g, ' ')})`;
+
     ["name", "phone", "location", "address"].forEach(id => {
       const input = document.getElementById(id);
       if (input && user[id]) input.value = user[id];
     });
   }
 
-  // Handle booking form submission
+  // Handle booking form
   const bookingForm = document.getElementById("bookingForm");
   if (bookingForm) {
     bookingForm.addEventListener("submit", function (e) {
@@ -66,7 +70,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Handle terms.html checkbox logic
+  // Terms agreement
   const agreeCheckbox = document.getElementById("agree");
   const acceptBtn = document.getElementById("accept-btn");
   if (agreeCheckbox && acceptBtn) {
@@ -76,11 +80,11 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     acceptBtn.addEventListener("click", () => {
       localStorage.setItem("agreedToTerms", true);
-      window.location.href = "index.html";
+      window.location.href = "auth.html"; // updated redirect
     });
   }
 
-  // Search feature on homepage
+  // Search
   const searchInput = document.getElementById("searchInput");
   const suggestions = document.getElementById("suggestions");
 
@@ -114,16 +118,29 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-});
 
-
-  // Logout handler (used in profile.html)
+  // Logout (for profile.html or header icon)
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("az_user");
-      window.location.href = "signin.html";
+      localStorage.removeItem("loggedInUserId");
+      window.location.href = "auth.html";
     });
   }
+});
 
+// Handle signed-in header state
+function handleHeaderAuthState() {
+  const uid = localStorage.getItem("loggedInUserId");
+  const signInLink = document.getElementById("signin-link");
+  const profileIcon = document.getElementById("profile-icon");
 
+  if (uid) {
+    if (signInLink) signInLink.style.display = "none";
+    if (profileIcon) profileIcon.style.display = "inline-block";
+  } else {
+    if (signInLink) signInLink.style.display = "inline-block";
+    if (profileIcon) profileIcon.style.display = "none";
+  }
+}
