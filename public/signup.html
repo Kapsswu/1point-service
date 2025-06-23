@@ -10,15 +10,14 @@
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    // ✅ REPLACE WITH YOUR FIREBASE CONFIG
     const firebaseConfig = {
-  apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
-  authDomain: "point-service-c2fcb.firebaseapp.com",
-  projectId: "point-service-c2fcb",
-  storageBucket: "point-service-c2fcb.appspot.com",
-  messagingSenderId: "77473043188",
-  appId: "1:77473043188:web:06ea411c7ffedd1bc6c4a1",
-  measurementId: "G-RVDYK2C3QN"
+      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+      authDomain: "point-service-c2fcb.firebaseapp.com",
+      projectId: "point-service-c2fcb",
+      storageBucket: "point-service-c2fcb.appspot.com",
+      messagingSenderId: "77473043188",
+      appId: "1:77473043188:web:06ea411c7ffedd1bc6c4a1",
+      measurementId: "G-RVDYK2C3QN"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -39,28 +38,22 @@
         const password = document.getElementById("password").value;
 
         try {
-          // Create Firebase user
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
 
-          // Save user details in Firestore
-          const userData = {
-            name,
-            email,
-            phone,
-            address,
-            occupation
-          };
-
+          const userData = { name, email, phone, address, occupation };
           await setDoc(doc(db, "users", user.uid), userData);
 
-          // Store in localStorage for auto-fill
           localStorage.setItem("az_user", JSON.stringify(userData));
+          alert("✅ Signup successful!");
 
-          alert("✅ Signup successful! Redirecting...");
-          window.location.href = "profile.html";
+          // ✅ Debug message
+          console.log("Redirecting to profile.html...");
+          location.assign("profile.html");
+
         } catch (error) {
           alert("❌ Error: " + error.message);
+          console.error("Signup Error:", error);
         }
       });
     });
