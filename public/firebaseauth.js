@@ -42,7 +42,7 @@ if (signUpBtn) {
           location: "",
           address: ""
         }));
-        window.location.href = "index.html"; // After sign up → go to homepage
+        window.location.href = "index.html"; // ✅ REDIRECT
       })
       .catch((error) => {
         const message = document.getElementById("signUpMessage");
