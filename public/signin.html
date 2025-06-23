@@ -40,12 +40,17 @@
 
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
-            const userData = userDoc.data();
-            localStorage.setItem("az_user", JSON.stringify(userData));
-            alert("✅ Signed in successfully!");
-            window.location.href = "profile.html";
+          const userData = userDoc.data();
+          localStorage.setItem("az_user", JSON.stringify(userData));
+          alert("✅ Signed in successfully!");
+
+          // ✅ Add console log here
+          console.log("Redirecting to profile...");
+
+          // ✅ More reliable redirect
+          location.assign("profile.html");
           } else {
-            alert("⚠️ User data not found in database.");
+          alert("⚠️ User data not found in database.");
           }
         } catch (error) {
           alert("❌ Error: " + error.message);
