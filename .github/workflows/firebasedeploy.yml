@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main  # Change this to your main branch if it's not 'main'
+      - main  # Change this if your main branch has a different name
 
 jobs:
   deploy:
@@ -18,15 +18,8 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Build (if needed)
-        # Uncomment if you need to build your project before deploying
-        # run: npm run build
-
       - name: Deploy to Firebase
-        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
