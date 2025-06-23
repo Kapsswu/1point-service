@@ -136,9 +136,21 @@ footer {
 /* Category & Cards */
 .two-column-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 15px;
   margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+  .two-column-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 340px) {
+  .two-column-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .category-card, .category-icon-card {
@@ -211,6 +223,7 @@ footer {
   font-size: 1rem;
   cursor: pointer;
 }
+
 /* Search Section */
 .search-section input {
   width: 100%;
@@ -311,6 +324,7 @@ body {
   padding: 0 20px;
   padding-top: 180px;
 }
+
 .logo {
   text-align: center;
   line-height: 1;
@@ -326,6 +340,7 @@ body {
   font-size: 0.95rem;
   color: var(--light);
 }
+
 .form-box {
   background: var(--card);
   padding: 20px;
