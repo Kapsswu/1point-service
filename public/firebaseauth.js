@@ -42,6 +42,7 @@ if (signUpBtn) {
           location: "",
           address: ""
         }));
+        alert("✅ Account created. Redirecting...");
         window.location.href = "index.html"; // ✅ REDIRECT
       })
       .catch((error) => {
