@@ -129,14 +129,12 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-// Handle signed-in header state
 function handleHeaderAuthState() {
-  const uid = localStorage.getItem("loggedInUserId");
+  const userId = localStorage.getItem("loggedInUserId");
   const signInLink = document.getElementById("signin-link");
   const profileIcon = document.getElementById("profile-icon");
 
-  if (uid) {
+  if (userId) {
     if (signInLink) signInLink.style.display = "none";
     if (profileIcon) profileIcon.style.display = "inline-block";
   } else {
