@@ -30,20 +30,14 @@ if (signUpBtn) {
     e.preventDefault();
     const email = document.getElementById("rEmail").value;
     const password = document.getElementById("rPassword").value;
-    const fName = document.getElementById("fName").value;
-    const lName = document.getElementById("lName").value;
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        // ✅ Save to localStorage
         localStorage.setItem("loggedInUserId", userCredential.user.uid);
-        localStorage.setItem("az_user", JSON.stringify({
-          name: fName + " " + lName,
-          phone: "",
-          location: "",
-          address: ""
-        }));
-        alert("✅ Account created. Redirecting...");
-        window.location.href = "index.html"; // ✅ REDIRECT
+
+        // ✅ Redirect to homepage
+        window.location.href = "index.html";
       })
       .catch((error) => {
         const message = document.getElementById("signUpMessage");
@@ -53,7 +47,7 @@ if (signUpBtn) {
   });
 }
 
-// 🔐 Sign In
+// 🔓 Sign In
 const signInBtn = document.getElementById("submitSignIn");
 if (signInBtn) {
   signInBtn.addEventListener("click", (e) => {
@@ -64,7 +58,7 @@ if (signInBtn) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         localStorage.setItem("loggedInUserId", userCredential.user.uid);
-        window.location.href = "index.html"; // After login → go to homepage
+        window.location.href = "index.html";
       })
       .catch((error) => {
         const message = document.getElementById("signInMessage");
@@ -87,3 +81,4 @@ if (forgotLink) {
     }
   });
 }
+
