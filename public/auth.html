@@ -32,7 +32,8 @@
         <input type="password" id="rPassword" placeholder="Password" required>
         <label for="rPassword">Password</label>
       </div>
-      <button class="btn" id="submitSignUp">Sign Up</button>
+      <!-- ✅ Fixed type -->
+      <button class="btn" id="submitSignUp" type="button">Sign Up</button>
     </form>
     <p class="or">----------or--------</p>
     <div class="icons">
@@ -41,7 +42,7 @@
     </div>
     <div class="links">
       <p>Already have an account?</p>
-      <button id="signInButton">Sign In</button>
+      <button id="signInButton" type="button">Sign In</button>
     </div>
   </div>
 
@@ -60,7 +61,8 @@
         <label for="password">Password</label>
       </div>
       <p class="recover"><a href="#" id="forgotPasswordLink">Forgot Password?</a></p>
-      <button class="btn" id="submitSignIn">Sign In</button>
+      <!-- ✅ Fixed type -->
+      <button class="btn" id="submitSignIn" type="button">Sign In</button>
     </form>
     <p class="or">----------or--------</p>
     <div class="icons">
@@ -69,28 +71,26 @@
     </div>
     <div class="links">
       <p>Don't have an account?</p>
-      <button id="signUpButton">Sign Up</button>
+      <button id="signUpButton" type="button">Sign Up</button>
     </div>
   </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const signUpButton = document.getElementById('signUpButton');
-    const signInButton = document.getElementById('signInButton');
-    const signInForm = document.getElementById('signIn');
-    const signUpForm = document.getElementById('signup');
+    document.addEventListener("DOMContentLoaded", function () {
+      const signUpButton = document.getElementById('signUpButton');
+      const signInButton = document.getElementById('signInButton');
+      const signInForm = document.getElementById('signIn');
+      const signUpForm = document.getElementById('signup');
 
-    signUpButton.addEventListener('click', function () {
-      signInForm.style.display = "none";
-      signUpForm.style.display = "block";
+      signUpButton.addEventListener('click', function () {
+        signInForm.style.display = "none";
+        signUpForm.style.display = "block";
+      });
+      signInButton.addEventListener('click', function () {
+        signInForm.style.display = "block";
+        signUpForm.style.display = "none";
+      });
     });
-    signInButton.addEventListener('click', function () {
-      signInForm.style.display = "block";
-      signUpForm.style.display = "none";
-    });
-  });
-</script>
+  </script>
 </body>
 </html>
-
-
