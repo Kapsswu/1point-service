@@ -8,33 +8,40 @@
   <script type="module" src="firebaseauth.js"></script>
 </head>
 <body>
+
+  <!-- 🔐 SIGN UP FORM -->
   <div class="container" id="signup" style="display:none;">
     <h1 class="form-title">Register</h1>
     <form>
       <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+
       <div class="input-group">
         <i class="fas fa-user"></i>
         <input type="text" id="fName" placeholder="First Name" required>
         <label for="fName">First Name</label>
       </div>
+
       <div class="input-group">
         <i class="fas fa-user"></i>
         <input type="text" id="lName" placeholder="Last Name" required>
         <label for="lName">Last Name</label>
       </div>
+
       <div class="input-group">
         <i class="fas fa-envelope"></i>
         <input type="email" id="rEmail" placeholder="Email" required>
         <label for="rEmail">Email</label>
       </div>
+
       <div class="input-group">
         <i class="fas fa-lock"></i>
         <input type="password" id="rPassword" placeholder="Password" required>
         <label for="rPassword">Password</label>
       </div>
-      <!-- ✅ Fixed type -->
+
       <button class="btn" id="submitSignUp" type="button">Sign Up</button>
     </form>
+
     <p class="or">----------or--------</p>
     <div class="icons">
       <i class="fab fa-google"></i>
@@ -46,24 +53,25 @@
     </div>
   </div>
 
+  <!-- 📩 SIGN IN FORM (EMAIL LINK ONLY) -->
   <div class="container" id="signIn">
     <h1 class="form-title">Sign In</h1>
     <form>
       <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+
       <div class="input-group">
         <i class="fas fa-envelope"></i>
         <input type="email" id="email" placeholder="Email" required>
         <label for="email">Email</label>
       </div>
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="password" placeholder="Password" required>
-        <label for="password">Password</label>
-      </div>
+
+      <!-- Removed password field (email link login doesn't need it) -->
+
       <p class="recover"><a href="#" id="forgotPasswordLink">Forgot Password?</a></p>
-      <!-- ✅ Fixed type -->
-      <button class="btn" id="submitSignIn" type="button">Sign In</button>
+
+      <button class="btn" id="submitSignIn" type="button">Send Sign-In Link</button>
     </form>
+
     <p class="or">----------or--------</p>
     <div class="icons">
       <i class="fab fa-google"></i>
@@ -75,6 +83,7 @@
     </div>
   </div>
 
+  <!-- 🔁 Toggle Script -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const signUpButton = document.getElementById('signUpButton');
@@ -92,5 +101,6 @@
       });
     });
   </script>
+
 </body>
 </html>
