@@ -63,7 +63,7 @@ if (signInBtn) {
 }
 
 // ✅ Complete Sign-in
-if (auth.isSignInWithEmailLink(window.location.href)) {
+if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
   let email = window.localStorage.getItem("emailForSignIn");
   if (!email) {
     email = window.prompt("Please confirm your email:");
