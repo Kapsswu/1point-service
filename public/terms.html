@@ -77,25 +77,36 @@
     </div>
   </footer>
 
-  <!-- Script -->
-  <script>
-    const agreeCheckbox = document.getElementById("agree");
-    const acceptBtn = document.getElementById("accept-btn");
+ <script>
+  const agreeCheckbox = document.getElementById("agree");
+  const acceptBtn = document.getElementById("accept-btn");
 
-    agreeCheckbox.addEventListener("change", () => {
-      acceptBtn.disabled = !agreeCheckbox.checked;
-    });
+  // Enable button when checkbox is checked
+  agreeCheckbox.addEventListener("change", () => {
+    acceptBtn.disabled = !agreeCheckbox.checked;
+  });
 
-    acceptBtn.addEventListener("click", () => {
-      if (agreeCheckbox.checked) {
-        localStorage.setItem("agreedToTerms", "true");
-        window.location.href = "auth.html#signup";
+  // Redirect logic based on where user came from
+  acceptBtn.addEventListener("click", () => {
+    if (agreeCheckbox.checked) {
+      localStorage.setItem("agreedToTerms", "true");
+
+      const cameFrom = sessionStorage.getItem("cameFrom");
+
+      if (cameFrom === "signup") {
+        sessionStorage.setItem("showSignupForm", "true");
+        window.location.href = "auth.html";
+      } else {
+        window.history.back(); // fallback: go to the previous page
       }
-    });
+    }
+  });
 
-    const userId = localStorage.getItem("loggedInUserId");
-    document.getElementById("signin-link").style.display = userId ? "none" : "inline-block";
-    document.getElementById("profile-icon").style.display = userId ? "inline-block" : "none";
-  </script>
+  // Header profile/sign-in toggle
+  const userId = localStorage.getItem("loggedInUserId");
+  document.getElementById("signin-link").style.display = userId ? "none" : "inline-block";
+  document.getElementById("profile-icon").style.display = userId ? "inline-block" : "none";
+</script>
+
 </body>
 </html>
