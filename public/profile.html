@@ -11,27 +11,29 @@
 <body>
 
   <!-- Embedded Header -->
-<header class="top-nav">
-  <a href="index.html" class="logo" style="text-decoration: none;">
-    <div style="text-align: center; line-height: 1;">
-      <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
-      <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
-    </div>
-  </a>
-
-  <div class="nav-links">
-    <a href="auth.html" id="signin-link">Sign In</a>
-    <a href="profile.html" id="profile-icon" style="display: none;">
-      <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+  <header class="top-nav">
+    <a href="index.html" class="logo" style="text-decoration: none;">
+      <div style="text-align: center; line-height: 1;">
+        <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
+        <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
+      </div>
     </a>
-    <a href="#">Download 1 Point App</a>
-  </div>
-</header>
+
+    <div class="nav-links">
+      <a href="auth.html" id="signin-link">Sign In</a>
+      <a href="profile.html" id="profile-icon" style="display: none;">
+        <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+      </a>
+      <a href="#">Download 1 Point App</a>
+    </div>
+  </header>
 
   <main class="profile-container">
     <h1>Your Profile</h1>
 
-    <section class="profile-info" id="profile-info"></section>
+    <section class="profile-info" id="profile-info">
+      <p>Loading your profile...</p>
+    </section>
 
     <section class="booking-history">
       <h2>Booking History</h2>
@@ -55,7 +57,7 @@
     </div>
     <div class="social">
       <p>Follow us:</p>
-      <a href="https://https://www.instagram.com/az_service_dimapur" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/az_service_dimapur" target="_blank">Instagram</a>
       <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a>
       <a href="#" id="fb-link">Facebook</a>
     </div>
@@ -63,22 +65,22 @@
 
   <!-- Floating WhatsApp Button -->
   <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
-    <img src="whatsapp-icon.png" alt="Chat on WhatsApp" />
+    <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
 
   <script>
-    // Redirect to sign-in if no user is found
-    const storedUser = localStorage.getItem("az_user");
-    if (!storedUser) {
-      window.location.href = "signin.html";
+    // ✅ Check if user is logged in
+    const userId = localStorage.getItem("loggedInUserId");
+    if (!userId) {
+      window.location.href = "auth.html";
     }
 
-    // Render profile info
-    const user = JSON.parse(storedUser || "{}");
+    // ✅ Display profile info from localStorage if available
+    const user = JSON.parse(localStorage.getItem("az_user") || "{}");
     const profileInfo = document.getElementById("profile-info");
-
-    if (user && profileInfo) {
+    if (profileInfo) {
       profileInfo.innerHTML = `
+        <p><strong>User ID:</strong> ${userId}</p>
         <p><strong>Name:</strong> ${user.name || 'N/A'}</p>
         <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
         <p><strong>Phone:</strong> ${user.phone || 'N/A'}</p>
@@ -93,8 +95,8 @@
     }
 
     function logout() {
-      localStorage.removeItem("az_user");
-      window.location.href = "signin.html";
+      localStorage.removeItem("loggedInUserId");
+      window.location.href = "auth.html";
     }
   </script>
 
