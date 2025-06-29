@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms & Conditions – 1 Point</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="top-nav">
+    <a href="index.html" class="logo" style="text-decoration: none;">
+      <div style="text-align: center; line-height: 1;">
+        <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
+        <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="auth.html" id="signin-link">Sign In</a>
+      <a href="profile.html" id="profile-icon" style="display: none;">
+        <img src="profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+      </a>
+      <a href="#">Download 1 Point App</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <section class="terms-card terms-section">
+      <h2>Customer Terms</h2>
+      <ul>
+        <li>1 Point connects you with third-party providers. We are not directly responsible for service quality.</li>
+        <li>Ensure you describe your service needs clearly to avoid miscommunication.</li>
+        <li>Payments must be made only through authorized methods provided by 1 Point.</li>
+        <li>We offer limited mediation in case of disputes but are not legally liable.</li>
+        <li>Late cancellations or frequent no-shows may result in restrictions or penalties.</li>
+        <li>Your data is used only to provide and improve our services.</li>
+        <li>By using 1 Point, you agree to updates in these terms as required.</li>
+      </ul>
+    </section>
+
+    <section class="terms-card terms-section">
+      <h2>Service Provider Terms</h2>
+      <ul>
+        <li>1 Point connects customers to service providers but is not the provider.</li>
+        <li>Service providers are fully responsible for any damages or incidents during work.</li>
+        <li>We support legal action if a customer refuses to pay or threatens a provider.</li>
+        <li>Payments collected through 1 Point belong to the provider and are claimable any time.</li>
+        <li>Poor performance or fraud may result in removal from the platform.</li>
+        <li>Bypassing the platform by sharing personal contacts leads to ₹5000 fine and account ban.</li>
+      </ul>
+    </section>
+
+    <!-- Agree & Continue -->
+    <section id="agree-section" class="agree-box">
+      <input type="checkbox" id="agree" />
+      <label for="agree">I have read and agree to the Terms and Conditions.</label><br><br>
+      <button id="accept-btn" disabled>Accept & Continue</button>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About Us</a>
+      <a href="terms.html">Terms</a>
+      <a href="registration.html">Registration</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="review.html">Reviews</a>
+    </div>
+    <div class="social">
+      <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a> |
+      <a href="https://www.instagram.com/1point_service" target="_blank">Instagram</a> |
+      <a href="https://www.facebook.com/1point_service" target="_blank">Facebook</a>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const agreeCheckbox = document.getElementById("agree");
+    const acceptBtn = document.getElementById("accept-btn");
+
+    agreeCheckbox.addEventListener("change", () => {
+      acceptBtn.disabled = !agreeCheckbox.checked;
+    });
+
+    acceptBtn.addEventListener("click", () => {
+      if (agreeCheckbox.checked) {
+        localStorage.setItem("agreedToTerms", "true");
+        window.location.href = "auth.html#signup";
+      }
+    });
+
+    const userId = localStorage.getItem("loggedInUserId");
+    document.getElementById("signin-link").style.display = userId ? "none" : "inline-block";
+    document.getElementById("profile-icon").style.display = userId ? "inline-block" : "none";
+  </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Service</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Embedded Header -->
+  <header class="top-nav">
+  <a href="index.html" class="logo" style="text-decoration: none;">
+    <div style="text-align: center; line-height: 1;">
+      <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
+      <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
+    </div>
+  </a>
+
+  <div class="nav-links">
+    <a href="auth.html" id="signin-link">Sign In</a>
+    <a href="profile.html" id="profile-icon" style="display: none;">
+      <img src="profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+    </a>
+    <a href="#">Download 1 Point App</a>
+  </div>
+</header>
+
+  <main class="container">
+    <h2>Book a Service</h2>
+
+    <form id="bookingForm">
+      <div>
+        <label>Selected Service</label>
+        <input type="text" id="service" readonly />
+      </div>
+
+      <div>
+        <label>Your Name</label>
+        <input type="text" id="name" placeholder="Your full name" required />
+      </div>
+
+      <div>
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="10-digit number" required />
+      </div>
+
+      <div>
+        <label>Location</label>
+        <input type="text" id="location" placeholder="Eg: Dimapur" required />
+      </div>
+
+      <div>
+        <label>Address</label>
+        <textarea id="address" rows="2" placeholder="House No, Landmark..."></textarea>
+      </div>
+
+      <div>
+        <label>Describe your problem</label>
+        <textarea id="description" rows="3" placeholder="Describe the issue or service needed"></textarea>
+      </div>
+
+      <div>
+        <label>Preferred Date & Time</label>
+        <input type="datetime-local" id="datetime" required />
+      </div>
+
+      <div>
+        <label>Urgency</label>
+        <select id="urgency">
+          <option value="Normal 🟢">Normal 🟢</option>
+          <option value="Urgent 🟡">Urgent 🟡</option>
+          <option value="Emergency 🔴">Emergency 🔴</option>
+        </select>
+      </div>
+
+      <button type="submit">Send via WhatsApp</button>
+    </form>
+  </main>
+
+  <!-- Embedded Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About Us</a>
+      <a href="terms.html">Terms</a>
+      <a href="registration.html">Registration</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="review.html">Reviews</a>
+    </div>
+    <div class="social">
+      <p>Follow us:</p>
+      <a href="https://https://www.instagram.com/az_service_dimapur" target="_blank">Instagram</a>
+      <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a>
+      <a href="#" id="fb-link">Facebook</a>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
+    <img src="whatsapp-icon.png" alt="Chat on WhatsApp" />
+  </a>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("c") || "";
+    const subcategory = urlParams.get("s") || "";
+
+    document.getElementById("service").value = `${subcategory} (${category.replace(/-/g, ' ')})`;
+
+    const user = JSON.parse(localStorage.getItem("az_user")) || {};
+    document.getElementById("name").value = user.name || "";
+    document.getElementById("phone").value = user.phone || "";
+    document.getElementById("location").value = user.location || "";
+    document.getElementById("address").value = user.address || "";
+
+    document.getElementById("bookingForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const location = document.getElementById("location").value;
+      const address = document.getElementById("address").value;
+      const description = document.getElementById("description").value;
+      const datetime = document.getElementById("datetime").value;
+      const urgency = document.getElementById("urgency").value;
+
+      const userData = { name, phone, location, address };
+      localStorage.setItem("az_user", JSON.stringify(userData));
+
+      alert("✅ Booking data prepared. Redirecting to WhatsApp...");
+
+      const message = `*AZ Service Booking%0A
+*Service:* ${subcategory}%0A
+*Category:* ${category.replace(/-/g, ' ')}%0A
+*Name:* ${name}%0A
+*Phone:* ${phone}%0A
+*Location:* ${location}%0A
+*Address:* ${address}%0A
+*Description:* ${description}%0A
+*Preferred Time:* ${datetime}%0A
+*Urgency:* ${urgency}`;
+
+      const encodedMessage = encodeURIComponent(message);
+      window.open(`https://wa.me/916009982567?text=${encodedMessage}`, "_blank");
+    });
+  </script>
+
+</body>
+</html>

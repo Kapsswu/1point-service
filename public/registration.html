@@ -1,0 +1,90 @@
+<!-- registration.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Provider Registration</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    function sendToWhatsApp() {
+      const name = document.getElementById('reg-name').value;
+      const phone = document.getElementById('reg-phone').value;
+      const service = document.getElementById('reg-service').value;
+      const city = document.getElementById('reg-city').value;
+      const message = `New Provider Registration:\nName: ${name}\nPhone: ${phone}\nService: ${service}\nCity: ${city}`;
+      const url = `https://wa.me/916009982567?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Embedded Header -->
+ <header class="top-nav">
+  <a href="index.html" class="logo" style="text-decoration: none;">
+    <div style="text-align: center; line-height: 1;">
+      <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
+      <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
+    </div>
+  </a>
+
+  <div class="nav-links">
+    <a href="auth.html" id="signin-link">Sign In</a>
+    <a href="profile.html" id="profile-icon" style="display: none;">
+      <img src="profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+    </a>
+    <a href="#">Download 1 Point App</a>
+  </div>
+</header>
+
+  <main class="container">
+    <h1>Register as a Service Provider</h1>
+    <form id="providerForm">
+      <label for="reg-name">Full Name:</label>
+      <input type="text" id="reg-name" name="reg-name" required>
+
+      <label for="reg-phone">Phone Number:</label>
+      <input type="tel" id="reg-phone" name="reg-phone" required>
+
+      <label for="reg-service">Service Offered:</label>
+      <input type="text" id="reg-service" name="reg-service" required>
+
+      <label for="reg-city">City:</label>
+      <input type="text" id="reg-city" name="reg-city" required>
+
+      <label>
+        <input type="checkbox" required>
+        I agree to the <a href="terms.html" target="_blank">terms and conditions for providers</a>.
+      </label>
+
+      <button type="button" onclick="sendToWhatsApp()">Submit via WhatsApp</button>
+    </form>
+  </main>
+
+  <!-- Embedded Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About Us</a>
+      <a href="terms.html">Terms</a>
+      <a href="registration.html">Registration</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="review.html">Reviews</a>
+    </div>
+    <div class="social">
+      <p>Follow us:</p>
+      <a href="https://https://www.instagram.com/az_service_dimapur" target="_blank">Instagram</a>
+      <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a>
+      <a href="#" id="fb-link">Facebook</a>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
+    <img src="whatsapp-icon.png" alt="Chat on WhatsApp" />
+  </a>
+
+</body>
+</html>
