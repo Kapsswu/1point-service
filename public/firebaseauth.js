@@ -1,6 +1,6 @@
-// firebaseauth.js
+// ✅ firebaseauth.js (CDN version)
 
-// 🔌 Firebase config
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
   authDomain: "point-service-c2fcb.firebaseapp.com",
@@ -11,17 +11,17 @@ const firebaseConfig = {
   measurementId: "G-MTVG8TYHDG"
 };
 
-// 🔐 Init
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// 📩 Email link settings
+// Sign-in link settings
 const actionCodeSettings = {
   url: 'https://point-service-c2fcb.web.app/auth.html',
   handleCodeInApp: true
 };
 
-// 🆕 Sign Up
+// Sign Up
 const signUpBtn = document.getElementById("submitSignUp");
 if (signUpBtn) {
   signUpBtn.addEventListener("click", (e) => {
@@ -42,7 +42,7 @@ if (signUpBtn) {
   });
 }
 
-// ✉️ Send Sign-In Email Link
+// Send Sign-In Link
 const signInBtn = document.getElementById("submitSignIn");
 if (signInBtn) {
   signInBtn.addEventListener("click", (e) => {
@@ -62,7 +62,7 @@ if (signInBtn) {
   });
 }
 
-// ✅ Complete Sign-in
+// Complete Sign-in
 if (auth.isSignInWithEmailLink(window.location.href)) {
   let email = window.localStorage.getItem("emailForSignIn");
   if (!email) {
@@ -80,7 +80,7 @@ if (auth.isSignInWithEmailLink(window.location.href)) {
     });
 }
 
-// 🔐 Forgot Password
+// Forgot Password
 const forgotLink = document.getElementById("forgotPasswordLink");
 if (forgotLink) {
   forgotLink.addEventListener("click", (e) => {
@@ -92,4 +92,4 @@ if (forgotLink) {
         .catch((err) => alert("❌ " + err.message));
     }
   });
-}
+});
