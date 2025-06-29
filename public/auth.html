@@ -23,7 +23,7 @@
     <div class="nav-links">
       <a href="auth.html" id="signin-link">Sign In</a>
       <a href="profile.html" id="profile-icon" style="display: none;">
-       <img src="profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+        <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
       </a>
       <a href="#">Download 1 Point App</a>
     </div>
@@ -62,7 +62,7 @@
       <div class="form-group">
         <label>
           <input type="checkbox" id="agree-terms" required />
-          I agree to the <a href="terms.html?from=auth">Terms and Conditions</a>.
+          I agree to the <a href="terms.html" onclick="sessionStorage.setItem('cameFrom', 'signup');">Terms and Conditions</a>.
         </label>
       </div>
 
@@ -116,6 +116,13 @@
     const signInForm = document.getElementById('signIn');
     const signUpForm = document.getElementById('signup');
 
+      // 🔁 Return from terms.html: show signup form
+  if (sessionStorage.getItem("showSignupForm") === "true") {
+    sessionStorage.removeItem("showSignupForm");
+    signInForm.style.display = "none";
+    signUpForm.style.display = "block";
+  }
+
     // ✅ Show Sign-Up if URL has #signup
     if (window.location.hash === "#signup") {
       signInForm.style.display = "none";
@@ -155,7 +162,7 @@
 
   <!-- Floating WhatsApp Button -->
   <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
-    <img src="whatsapp-icon.png" alt="Chat on WhatsApp" />
+    <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
 
 </body>
