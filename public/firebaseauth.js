@@ -27,7 +27,7 @@ const auth = getAuth(app);
 
 // 📩 Email link sign-in settings
 const actionCodeSettings = {
-  url: window.location.href,
+   url: 'https://point-service-c2fcb.web.app/auth.html',
   handleCodeInApp: true
 };
 
