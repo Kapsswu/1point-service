@@ -26,6 +26,8 @@ const signUpBtn = document.getElementById("submitSignUp");
 if (signUpBtn) {
   signUpBtn.addEventListener("click", (e) => {
     e.preventDefault();
+    console.log("✅ Sign In button clicked");
+
     const email = document.getElementById("rEmail").value;
     const password = document.getElementById("rPassword").value;
 
