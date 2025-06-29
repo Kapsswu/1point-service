@@ -1,3 +1,4 @@
+// firebaseauth.js (MODULAR STYLE)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import {
   getAuth,
@@ -8,7 +9,7 @@ import {
   sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
-// ✅ Firebase config
+// ✅ Config
 const firebaseConfig = {
   apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
   authDomain: "point-service-c2fcb.firebaseapp.com",
@@ -19,16 +20,16 @@ const firebaseConfig = {
   measurementId: "G-MTVG8TYHDG"
 };
 
-// ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Action code settings
 const actionCodeSettings = {
   url: 'https://point-service-c2fcb.web.app/auth.html',
   handleCodeInApp: true
 };
 
-// 🔐 SIGN UP
+// 🔐 Sign Up
 const signUpBtn = document.getElementById("submitSignUp");
 if (signUpBtn) {
   signUpBtn.addEventListener("click", async (e) => {
@@ -57,18 +58,19 @@ if (signUpBtn) {
   });
 }
 
-// ✉️ SEND SIGN-IN LINK
+// 📩 Sign-In Link
 const signInBtn = document.getElementById("submitSignIn");
 if (signInBtn) {
   signInBtn.addEventListener("click", async (e) => {
     e.preventDefault();
+
     const email = document.getElementById("email").value.trim();
     const message = document.getElementById("signInMessage");
-    message.style.display = "none";
 
+    message.style.display = "none";
     try {
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem("emailForSignIn", email);
+      localStorage.setItem("emailForSignIn", email);
       alert("✅ Sign-in link sent! Check your email.");
     } catch (error) {
       message.textContent = error.message;
@@ -77,16 +79,17 @@ if (signInBtn) {
   });
 }
 
-// ✅ COMPLETE SIGN-IN WITH EMAIL LINK
+// ✅ Complete Email Link Sign-In
 if (isSignInWithEmailLink(auth, window.location.href)) {
   (async () => {
-    let email = window.localStorage.getItem("emailForSignIn");
+    let email = localStorage.getItem("emailForSignIn");
     if (!email) {
-      email = window.prompt("Please enter your email to confirm sign-in:");
+      email = window.prompt("Enter your email to finish sign-in:");
     }
+
     try {
       const result = await signInWithEmailLink(auth, email, window.location.href);
-      window.localStorage.removeItem("emailForSignIn");
+      localStorage.removeItem("emailForSignIn");
       localStorage.setItem("loggedInUserId", result.user.uid);
       window.location.href = "index.html";
     } catch (error) {
@@ -95,16 +98,16 @@ if (isSignInWithEmailLink(auth, window.location.href)) {
   })();
 }
 
-// 🔁 FORGOT PASSWORD
+// 🔁 Forgot Password
 const forgotLink = document.getElementById("forgotPasswordLink");
 if (forgotLink) {
   forgotLink.addEventListener("click", async (e) => {
     e.preventDefault();
-    const email = window.prompt("Enter your email for password reset:");
+    const email = window.prompt("Enter your email to reset password:");
     if (email) {
       try {
         await sendPasswordResetEmail(auth, email);
-        alert("✅ Password reset email sent!");
+        alert("✅ Reset link sent!");
       } catch (err) {
         alert("❌ " + err.message);
       }
