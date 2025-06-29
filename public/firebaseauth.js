@@ -94,5 +94,4 @@ if (forgotLink) {
         .catch((err) => alert("❌ " + err.message));
     }
   });
-}
 
