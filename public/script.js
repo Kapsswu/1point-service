@@ -150,22 +150,3 @@ document.querySelectorAll(".category-card").forEach(card => {
   }
 });
 
-// Sticky header shrink on scroll
-let lastScroll = 0;
-const header = document.querySelector('header');
-
-window.addEventListener('scroll', () => {
-  if (!header) return;
-
-  const currentScroll = window.scrollY;
-
-  if (currentScroll > lastScroll) {
-    // Scrolling down → expand
-    header.classList.remove('shrink');
-  } else {
-    // Scrolling up → shrink
-    header.classList.add('shrink');
-  }
-
-  lastScroll = currentScroll;
-});
