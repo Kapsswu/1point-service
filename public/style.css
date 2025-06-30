@@ -19,7 +19,7 @@ body {
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 20px;
+  padding-top: 180px; /* Allows space for full header */
 }
 
 h1, h2, h3 {
@@ -77,11 +77,17 @@ button:hover {
   background-color: var(--hover);
 }
 
-/* Header / Nav */
+/* HEADER + STICKY SHRINK EFFECT */
 header, .top-nav {
-  background: var(--card);
+  background-image: url('image/header-hornbill.jpg'); /* 🖼️ Hornbill Festival image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   width: 100%;
-  padding: 15px 20px;
+  height: 160px; /* Full height */
+  transition: height 0.3s ease;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -89,15 +95,38 @@ header, .top-nav {
   top: 0;
   z-index: 999;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: relative;
+  color: #fff;
 }
 
+
+/* Shrink on scroll up */
+header.shrink {
+  height: 80px;
+}
+
+/* Overlay for text readability */
+.top-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* dark overlay */
+  z-index: 0;
+}
+
+/* Put all header content above overlay */
+.top-nav > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Nav Links */
 .top-nav a {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   padding: 10px;
-  color: var(--light);
+  color: #fff;
   text-decoration: none;
   margin: 0 10px;
-  font-size: 0.9rem;
 }
 
 .top-nav a:hover,
@@ -105,6 +134,7 @@ header, .top-nav {
   text-decoration: underline;
 }
 
+/* Logo Styling */
 .logo {
   text-align: center;
   line-height: 1;
@@ -113,12 +143,12 @@ header, .top-nav {
 .logo div:first-child {
   font-size: 2.2rem;
   font-weight: bold;
-  color: var(--primary);
+  color: #fff;
 }
 
 .logo div:last-child {
   font-size: 0.95rem;
-  color: var(--gray);
+  color: #ddd;
 }
 
 /* Footer */
