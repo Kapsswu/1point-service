@@ -153,21 +153,18 @@ document.querySelectorAll(".category-card").forEach(card => {
 // Sticky header shrink on scroll
 let lastScroll = 0;
 const header = document.querySelector('header');
-const topNav = document.querySelector('.top-nav'); // ⬅️ added this
 
 window.addEventListener('scroll', () => {
-  if (!header || !topNav) return; // check both
+  if (!header) return;
 
   const currentScroll = window.scrollY;
 
   if (currentScroll > lastScroll) {
-    // Scrolling down – shrink
-    header.classList.add('shrink');
-    topNav.classList.add('shrink');
-  } else {
-    // Scrolling up – expand
+    // Scrolling down → expand
     header.classList.remove('shrink');
-    topNav.classList.remove('shrink');
+  } else {
+    // Scrolling up → shrink
+    header.classList.add('shrink');
   }
 
   lastScroll = currentScroll;
