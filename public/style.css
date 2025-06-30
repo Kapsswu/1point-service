@@ -77,61 +77,39 @@ button:hover {
   background-color: var(--hover);
 }
 
-/* HEADER + STICKY SHRINK EFFECT */
+/* FIXED DARK HEADER WITH BACKGROUND IMAGE */
 header, .top-nav {
-  background-image: url('image/header-hornbill.jpg'); /* 🖼️ Hornbill Festival image */
+  background-image: url('image/header-hornbill.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
   width: 100%;
-  height: 160px; /* Full height */
-  transition: height 0.3s ease;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  position: relative;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   color: #fff;
 }
 
-
-/* Shrink on scroll up */
-header.shrink {
-  height: 80px;
-}
-
-/* Overlay for text readability */
 .top-nav::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* dark overlay */
+  background: rgba(0, 0, 0, 0.4);
   z-index: 0;
 }
 
-/* Put all header content above overlay */
 .top-nav > * {
   position: relative;
   z-index: 1;
-}
-
-/* Nav Links */
-.top-nav a {
-  font-size: 0.9rem;
-  padding: 10px;
-  color: #fff;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-.top-nav a:hover,
-.footer-links a:hover {
-  text-decoration: underline;
 }
 
 /* Logo Styling */
