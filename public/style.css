@@ -162,7 +162,7 @@ footer {
 }
 
 .category-card {
-  background: var(--card);
+  background: transparent;
   color: var(--light);
   text-align: center;
   text-decoration: none;
