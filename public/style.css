@@ -19,7 +19,7 @@ body {
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 180px; /* Allows space for full header */
+  padding-top: 160px; /* Allows space for full header */
 }
 
 h1, h2, h3 {
@@ -77,52 +77,7 @@ button:hover {
   background-color: var(--hover);
 }
 
-header, .top-nav {
-  background-image: url('image/header-hornbill.jpg');
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  width: 100%;
-  height: 160px;
-  transition: height 0.3s ease;
-  padding: 0 20px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  color: #fff;
-  position: relative;
-}
-
-/* ✅ Add this new shrink rule */
-header.shrink, .top-nav.shrink {
-  height: 40px;
-}
-
-/* Dark overlay for readability */
-.top-nav::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 0;
-}
-
-.top-nav > * {
-  position: relative;
-  z-index: 1;
-  height: 100%; /* ← Make children stretch to full height */
-  display: flex;
-  align-items: center;
-}
-
-/* Optional: Adjust logo to align nicely */
+/* Logo Styling */
 .logo {
   display: flex;
   flex-direction: column;
@@ -131,6 +86,32 @@ header.shrink, .top-nav.shrink {
   text-align: center;
   line-height: 1;
 }
+
+.logo div:first-child {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.logo div:last-child {
+  font-size: 0.95rem;
+  color: #ddd;
+}
+/* 🔄 Smooth transition */
+.logo div:first-child,
+.logo div:last-child {
+  transition: font-size 0.3s ease;
+}
+
+/* 🟡 Shrink effect on scroll */
+header.shrink .logo div:first-child {
+  font-size: 1.4rem;
+}
+
+header.shrink .logo div:last-child {
+  font-size: 0.75rem;
+}
+
 
 /* Footer */
 footer {
