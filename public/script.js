@@ -142,3 +142,26 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+// Set background images for homepage cards
+document.querySelectorAll(".category-card").forEach(card => {
+  const bg = card.getAttribute("data-bg");
+  if (bg) {
+    card.style.backgroundImage = `url(${bg})`;
+  }
+});
+let lastScroll = 0;
+const header = document.querySelector('header');
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScroll) {
+    // Scrolling down – full header
+    header.classList.remove('shrink');
+  } else {
+    // Scrolling up – shrink header
+    header.classList.add('shrink');
+  }
+
+  lastScroll = currentScroll;
+});
