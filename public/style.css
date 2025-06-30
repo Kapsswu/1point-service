@@ -82,7 +82,9 @@ button:hover {
 header, .top-nav {
   background: var(--card);
   padding: 20px 40px;
-  width: 100%;
+  width: 100vw;
+  margin-left: -20px;
+  margin-right: -20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -91,6 +93,7 @@ header, .top-nav {
   z-index: 999;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
 .top-nav a {
   font-size: 1.1rem;
   padding: 10px;
