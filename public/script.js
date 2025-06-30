@@ -159,13 +159,13 @@ window.addEventListener('scroll', () => {
 
   const currentScroll = window.scrollY;
 
-  if (currentScroll > lastScroll) {
-    // Scrolling down – full header
-    header.classList.remove('shrink');
-  } else {
-    // Scrolling up – shrink header
-    header.classList.add('shrink');
-  }
+ if (currentScroll > lastScroll) {
+  // Scrolling down – shrink header ✅
+  header.classList.add('shrink');
+} else {
+  // Scrolling up – expand header ✅
+  header.classList.remove('shrink');
+}
 
   lastScroll = currentScroll;
 });
