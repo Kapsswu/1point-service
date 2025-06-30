@@ -51,60 +51,60 @@
     </div>
   </footer>
 
-  <script>
-    const categoryMap = {
-      "Home Services": ["Electrician", "Plumber", "Technician (AC, Fridge Repairs)", "Carpenter"],
-      "Transportation": ["Taxi Service", "Bike Rental", "Goods Transport", "Self Drive Car"],
-      "Rentals": ["Projector Rental", "Tent & Table", "Sound System", "Construction Tools"],
-      "Multimedia": ["Photography", "Videography", "Drone Shot", "Live Broadcast"],
-      "Real Estate": ["Rent House", "Rent Shop", "Buy Land", "Commercial Space"],
-      "Goods Delivery": ["Food Delivery", "Courier", "E-commerce", "Furniture Movers"],
-      "Event Management": ["Wedding Planner", "Event Host", "Decoration", "Catering"],
-      "Construction": ["Labour Service", "Material Supply", "Site Supervisor", "Blueprint Designer"],
-      "Consultants": ["Legal Consultant", "Business Coach", "Marketing Expert", "Tax Advisor"],
-      "Automobile Repairs": ["Car Repairs", "Bike Repairs", "Car Wash", "Tire Change"],
-      "Others": ["Custom Request", "Miscellaneous"]
-    };
+<script>
+  const categoryMap = {
+    "Home Services": ["Electrician", "Plumber", "Technician (AC, Fridge Repairs)", "Carpenter"],
+    "Transportation": ["Taxi Service", "Bike Rental", "Goods Transport", "Self Drive Car"],
+    "Rentals": ["Projector Rental", "Tent & Table", "Sound System", "Construction Tools"],
+    "Multimedia": ["Photography", "Videography", "Drone Shot", "Live Broadcast"],
+    "Real Estate": ["Rent House", "Rent Shop", "Buy Land", "Commercial Space"],
+    "Goods Delivery": ["Food Delivery", "Courier", "E-commerce", "Furniture Movers"],
+    "Event Management": ["Wedding Planner", "Event Host", "Decoration", "Catering"],
+    "Construction": ["Labour Service", "Material Supply", "Site Supervisor", "Blueprint Designer"],
+    "Consultants": ["Legal Consultant", "Business Coach", "Marketing Expert", "Tax Advisor"],
+    "Automobile Repairs": ["Car Repairs", "Bike Repairs", "Car Wash", "Tire Change"],
+    "Others": ["Custom Request", "Miscellaneous"]
+  };
 
-    const imageMap = {
-  "Electrician": "image/electrician.jpg",
-  "Plumber": "image/plumber.jpg",
-  "Technician (AC, Fridge Repairs)": "image/technician.jpg",
-  "Carpenter": "image/carpenter.jpg",
-  "Taxi Service": "image/taxi.jpg",
-  "Photography": "image/photography.jpg",
-  "Labour Service": "image/labour.jpg",
-  "Car Repairs": "image/car-repairs.jpg",
-  "Bike Repairs": "image/bike-repairs.jpg",
-  "Car Wash": "image/car-wash.jpg",
-  "Tire Change": "image/tire.jpg"
-};
+  const imageMap = {
+    "Electrician": "image/electrician.jpg",
+    "Plumber": "image/plumber.jpg",
+    "Technician (AC, Fridge Repairs)": "image/technician.jpg",
+    "Carpenter": "image/carpenter.jpg",
+    "Taxi Service": "image/taxi.jpg",
+    "Photography": "image/photography.jpg",
+    "Labour Service": "image/labour.jpg",
+    "Car Repairs": "image/car-repairs.jpg",
+    "Bike Repairs": "image/bike-repairs.jpg",
+    "Car Wash": "image/car-wash.jpg",
+    "Tire Change": "image/tire.jpg"
+  };
 
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("cat");
-    const title = document.getElementById("category-title");
-    const list = document.getElementById("subcategory-list");
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("cat");
+  const title = document.getElementById("category-title");
+  const list = document.getElementById("subcategory-list");
 
-    if (category && categoryMap[category]) {
-      title.textContent = category;
-      document.title = `1Point – ${category}`;
-      list.classList.add("two-column-grid");
+  if (category && categoryMap[category]) {
+    title.textContent = category;
+    document.title = `1Point – ${category}`;
+    list.classList.add("two-column-grid");
 
-  categoryMap[category].forEach(subcat => {
-  const link = document.createElement("a");
-  link.className = "category-card";
-  link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
-  
-  const imgSrc = imageMap[subcat] || "image/default.jpg";
-  link.style.backgroundImage = `url('${imgSrc}')`;
-  link.innerHTML = `<span>${subcat}</span>`;
+    categoryMap[category].forEach(subcat => {
+      const link = document.createElement("a");
+      link.className = "category-card";
+      link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
+      
+      const imgSrc = imageMap[subcat] || "image/default.jpg";
+      link.style.backgroundImage = `url('${imgSrc}')`;
 
-  list.appendChild(link);
-});
-    } else {
-      title.textContent = "Invalid or Missing Category";
-      list.innerHTML = `<p>Try going back to the <a href="index.html">homepage</a>.</p>`;
-    }
-  </script>
+      link.innerHTML = `<span>${subcat}</span>`;
+      list.appendChild(link);
+    });
+  } else {
+    title.textContent = "Invalid or Missing Category";
+    list.innerHTML = `<p>Try going back to the <a href="index.html">homepage</a>.</p>`;
+  }
+</script>
 </body>
 </html>
