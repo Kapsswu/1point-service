@@ -66,16 +66,19 @@
       "Others": ["Custom Request", "Miscellaneous"]
     };
 
-    const emojiMap = {
-      "Electrician": "⚡",
-      "Plumber": "🔧",
-      "Technician (AC, Fridge Repairs)": "🛠️",
-      "Carpenter": "🪚",
-      "Taxi Service": "🚕",
-      "Photography": "📷",
-      "Labour Service": "👷",
-      "Car Repairs": "🚗"
-    };
+    const imageMap = {
+  "Electrician": "image/electrician.jpg",
+  "Plumber": "image/plumber.jpg",
+  "Technician (AC, Fridge Repairs)": "image/technician.jpg",
+  "Carpenter": "image/carpenter.jpg",
+  "Taxi Service": "image/taxi.jpg",
+  "Photography": "image/photography.jpg",
+  "Labour Service": "image/labour.jpg",
+  "Car Repairs": "image/car-repairs.jpg",
+  "Bike Repairs": "image/bike-repairs.jpg",
+  "Car Wash": "image/car-wash.jpg",
+  "Tire Change": "image/tire.jpg"
+};
 
     const params = new URLSearchParams(window.location.search);
     const category = params.get("cat");
@@ -87,14 +90,19 @@
       document.title = `1Point – ${category}`;
       list.classList.add("two-column-grid");
 
-      categoryMap[category].forEach(subcat => {
-        const link = document.createElement("a");
-        link.className = "category-card";
-        link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
-        const emoji = emojiMap[subcat] || "✨";
-        link.innerHTML = `${emoji}<br>${subcat}`;
-        list.appendChild(link);
-      });
+     categoryMap[category].forEach(subcat => {
+  const link = document.createElement("a");
+  link.className = "category-card";
+  link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
+  
+  const imgSrc = imageMap[subcat] || "image/default.jpg";
+  link.innerHTML = `
+    <img src="${imgSrc}" alt="${subcat}" />
+    <span>${subcat}</span>
+  `;
+
+  list.appendChild(link);
+});
     } else {
       title.textContent = "Invalid or Missing Category";
       list.innerHTML = `<p>Try going back to the <a href="index.html">homepage</a>.</p>`;
