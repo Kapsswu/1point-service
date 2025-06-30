@@ -81,10 +81,8 @@ button:hover {
 
 header, .top-nav {
   background: var(--card);
-  padding: 20px 40px; /* Increase padding for a bigger look */
-  width: 100vw;       /* Ensure full screen width */
-  margin-left: -20px; /* Remove the body's side padding */
-  margin-right: -20px;
+  padding: 20px 40px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,6 +91,19 @@ header, .top-nav {
   z-index: 999;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+.top-nav a {
+  font-size: 1.1rem;
+  padding: 10px;
+}
+
+.logo div:first-child {
+  font-size: 2.5rem;
+}
+
+.logo div:last-child {
+  font-size: 1.05rem;
+}
+
 
 .top-nav a, .footer-links a {
   color: var(--light);
@@ -197,13 +208,17 @@ footer {
 }
 
 .search-section {
-  padding: 20px;
+  padding: 0;                        /* Remove inner space */
   background-color: #fff;
-  text-align: center;
   position: sticky;
   top: 70px;
   z-index: 998;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  width: 100%;                       /* Full width */
+  display: flex;                     /* Align input & button */
+  justify-content: center;
+  align-items: center;
+  height: auto;                      /* Can remove this if input height is controlled */
 }
 
 .search-section input {
@@ -212,6 +227,8 @@ footer {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
 }
 
 #suggestions {
