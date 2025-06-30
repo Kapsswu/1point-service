@@ -100,6 +100,11 @@ header, .top-nav {
   position: relative;
 }
 
+/* ✅ Add this new shrink rule */
+header.shrink, .top-nav.shrink {
+  height: 40px;
+}
+
 /* Dark overlay for readability */
 .top-nav::before {
   content: '';
