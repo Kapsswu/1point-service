@@ -19,7 +19,7 @@ body {
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 160px; /* Allows space for full header */
+  padding-top: 60px; /* Allows space for full header */
 }
 
 h1, h2, h3 {
