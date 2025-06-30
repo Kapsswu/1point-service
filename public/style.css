@@ -102,6 +102,52 @@ button:hover {
 .logo div:last-child {
   transition: font-size 0.3s ease;
 }
+/* =============================
+   🔁 HEADER STICKY + SHRINK ON SCROLL
+============================= */
+header {
+  background-image: url('image/header-hornbill.jpg'); /* Adjust the path if needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px; /* Expanded height */
+  padding: 0 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 999;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: #fff;
+
+  transition: height 0.3s ease;
+}
+
+/* Shrink on scroll up */
+header.shrink {
+  height: 30px;
+}
+
+/* Dark overlay inside header */
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+/* Make all header children visible above overlay */
+header > * {
+  position: relative;
+  z-index: 1;
+}
 
 /* 🟡 Shrink effect on scroll */
 header.shrink .logo div:first-child {
