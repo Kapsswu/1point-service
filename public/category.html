@@ -90,16 +90,14 @@
       document.title = `1Point – ${category}`;
       list.classList.add("two-column-grid");
 
-     categoryMap[category].forEach(subcat => {
+  categoryMap[category].forEach(subcat => {
   const link = document.createElement("a");
   link.className = "category-card";
   link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
   
   const imgSrc = imageMap[subcat] || "image/default.jpg";
-  link.innerHTML = `
-    <img src="${imgSrc}" alt="${subcat}" />
-    <span>${subcat}</span>
-  `;
+  link.style.backgroundImage = `url('${imgSrc}')`;
+  link.innerHTML = `<span>${subcat}</span>`;
 
   list.appendChild(link);
 });
