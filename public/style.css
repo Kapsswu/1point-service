@@ -19,7 +19,13 @@ body {
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 180px; /* Allows space for full header */
+  padding-top: 230px; /* Total space for header + search */
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 260px;
+  }
 }
 
 h1, h2, h3 {
@@ -77,7 +83,9 @@ button:hover {
   background-color: var(--hover);
 }
 
-/* FIXED DARK HEADER WITH BACKGROUND IMAGE */
+/* ================================
+   FIXED HEADER WITH BACKGROUND IMAGE
+================================ */
 header, .top-nav {
   background-image: url('image/header-hornbill.jpg');
   background-size: cover;
@@ -97,6 +105,12 @@ header, .top-nav {
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  header, .top-nav {
+    height: 200px;
+  }
 }
 
 .top-nav::before {
@@ -129,7 +143,39 @@ header, .top-nav {
   color: #ddd;
 }
 
-/* Footer */
+/* ================================
+   SEARCH BAR BELOW HEADER
+================================ */
+.search-section {
+  padding: 10px 20px;
+  background-color: #fff;
+  position: fixed;
+  top: 160px;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .search-section {
+    top: 200px;
+  }
+}
+
+.search-section input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* ================================
+   FOOTER & WHATSAPP BUTTON
+================================ */
 footer {
   background: var(--card);
   padding: 20px;
@@ -166,9 +212,9 @@ footer {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-/* ============================
-   CARD STYLE for SUBCATEGORIES + MOST USED
-============================ */
+/* ================================
+   CATEGORY CARDS
+================================ */
 .two-column-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -178,7 +224,7 @@ footer {
 
 .category-card {
   height: 140px;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background-size: cover;
   background-position: center;
@@ -204,9 +250,9 @@ footer {
   transform: scale(1.02);
 }
 
-/* =============================
-   LIST STYLE for MAIN CATEGORIES
-============================= */
+/* ================================
+   MAIN CATEGORIES LIST STYLE
+================================ */
 .full-width-box-list {
   list-style: none;
   padding: 0;
@@ -242,7 +288,9 @@ footer {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Others */
+/* ================================
+   MISCELLANEOUS
+================================ */
 .review-card, .terms-card, .form-box {
   background: var(--card);
   padding: 20px;
@@ -276,28 +324,6 @@ footer {
   cursor: pointer;
 }
 
-/* Search Bar */
-.search-section {
-  padding: 0;
-  background-color: #fff;
-  position: sticky;
-  top: 70px;
-  z-index: 998;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.search-section input {
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
 #suggestions {
   background: #fff;
   list-style: none;
@@ -327,7 +353,6 @@ footer {
   color: red;
 }
 
-/* Booking Summary Box */
 .booking-summary {
   background: #e9ecef;
   padding: 15px;
