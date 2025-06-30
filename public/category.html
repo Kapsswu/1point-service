@@ -6,34 +6,35 @@
   <title>Category - 1Point</title>
   <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
   <!-- HEADER -->
   <header class="top-nav">
-  <a href="index.html" class="logo" style="text-decoration: none;">
-    <div style="text-align: center; line-height: 1;">
-      <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
-      <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
-    </div>
-  </a>
-
-  <div class="nav-links">
-    <a href="auth.html" id="signin-link">Sign In</a>
-    <a href="profile.html" id="profile-icon" style="display: none;">
-      <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+    <a href="index.html" class="logo" style="text-decoration: none;">
+      <div style="text-align: center; line-height: 1;">
+        <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
+        <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
+      </div>
     </a>
-    <a href="#">Download 1 Point App</a>
-  </div>
-</header>
+    <div class="nav-links">
+      <a href="auth.html" id="signin-link">Sign In</a>
+      <a href="profile.html" id="profile-icon" style="display: none;">
+        <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+      </a>
+      <a href="#">Download 1 Point App</a>
+    </div>
+  </header>
 
+  <!-- CATEGORY MAIN -->
   <main class="container">
     <div class="back-btn">
       <button onclick="history.back()">← Back</button>
     </div>
 
     <h2 id="category-title">Category</h2>
-    <div id="subcategory-list"></div>
+    <div id="subcategory-list" class="two-column-grid"></div>
   </main>
 
   <!-- FOOTER -->
@@ -51,60 +52,91 @@
     </div>
   </footer>
 
-<script>
-  const categoryMap = {
-    "Home Services": ["Electrician", "Plumber", "Technician (AC, Fridge Repairs)", "Carpenter"],
-    "Transportation": ["Taxi Service", "Bike Rental", "Goods Transport", "Self Drive Car"],
-    "Rentals": ["Projector Rental", "Tent & Table", "Sound System", "Construction Tools"],
-    "Multimedia": ["Photography", "Videography", "Drone Shot", "Live Broadcast"],
-    "Real Estate": ["Rent House", "Rent Shop", "Buy Land", "Commercial Space"],
-    "Goods Delivery": ["Food Delivery", "Courier", "E-commerce", "Furniture Movers"],
-    "Event Management": ["Wedding Planner", "Event Host", "Decoration", "Catering"],
-    "Construction": ["Labour Service", "Material Supply", "Site Supervisor", "Blueprint Designer"],
-    "Consultants": ["Legal Consultant", "Business Coach", "Marketing Expert", "Tax Advisor"],
-    "Automobile Repairs": ["Car Repairs", "Bike Repairs", "Car Wash", "Tire Change"],
-    "Others": ["Custom Request", "Miscellaneous"]
-  };
+  <script>
+    const categoryMap = {
+      "Home Services": ["Electrician", "Plumber", "Technician (AC, Fridge Repairs)", "Carpenter"],
+      "Transportation": ["Taxi Service", "Bike Rental", "Goods Transport", "Self Drive Car"],
+      "Rentals": ["Projector Rental", "Tent & Table", "Sound System", "Construction Tools"],
+      "Multimedia": ["Photography", "Videography", "Drone Shot", "Live Broadcast"],
+      "Real Estate": ["Rent House", "Rent Shop", "Buy Land", "Commercial Space"],
+      "Goods Delivery": ["Food Delivery", "Courier", "E-commerce", "Furniture Movers"],
+      "Event Management": ["Wedding Planner", "Event Host", "Decoration", "Catering"],
+      "Construction": ["Labour Service", "Material Supply", "Site Supervisor", "Blueprint Designer"],
+      "Consultants": ["Legal Consultant", "Business Coach", "Marketing Expert", "Tax Advisor"],
+      "Automobile Repairs": ["Car Repairs", "Bike Repairs", "Car Wash", "Tire Change"],
+      "Others": ["Custom Request", "Miscellaneous"]
+    };
 
-  const imageMap = {
-    "Electrician": "image/electrician.jpg",
-    "Plumber": "image/plumber.jpg",
-    "Technician (AC, Fridge Repairs)": "image/technician.jpg",
-    "Carpenter": "image/carpenter.jpg",
-    "Taxi Service": "image/taxi.jpg",
-    "Photography": "image/photography.jpg",
-    "Labour Service": "image/labour.jpg",
-    "Car Repairs": "image/car-repairs.jpg",
-    "Bike Repairs": "image/bike-repairs.jpg",
-    "Car Wash": "image/car-wash.jpg",
-    "Tire Change": "image/tire.jpg"
-  };
+    const iconMap = {
+      "Electrician": "fas fa-bolt",
+      "Plumber": "fas fa-wrench",
+      "Technician (AC, Fridge Repairs)": "fas fa-tools",
+      "Carpenter": "fas fa-hammer",
+      "Taxi Service": "fas fa-taxi",
+      "Photography": "fas fa-camera",
+      "Labour Service": "fas fa-user-hard-hat",
+      "Car Repairs": "fas fa-car-crash",
+      "Bike Repairs": "fas fa-motorcycle",
+      "Car Wash": "fas fa-water",
+      "Tire Change": "fas fa-circle-notch",
+      "Courier": "fas fa-box",
+      "Food Delivery": "fas fa-utensils",
+      "DJ": "fas fa-music",
+      "Projector Rental": "fas fa-video",
+      "Tent & Table": "fas fa-campground",
+      "Sound System": "fas fa-volume-up",
+      "Decoration": "fas fa-brush",
+      "Custom Request": "fas fa-question"
+    };
 
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get("cat");
-  const title = document.getElementById("category-title");
-  const list = document.getElementById("subcategory-list");
+    const imageMap = {
+      "Electrician": "image/electrician.jpg",
+      "Plumber": "image/plumber.jpg",
+      "Technician (AC, Fridge Repairs)": "image/technician.jpg",
+      "Carpenter": "image/carpenter.jpg",
+      "Taxi Service": "image/taxi.jpg",
+      "Photography": "image/photography.jpg",
+      "Labour Service": "image/labour.jpg",
+      "Car Repairs": "image/car-repairs.jpg",
+      "Bike Repairs": "image/bike-repairs.jpg",
+      "Car Wash": "image/car-wash.jpg",
+      "Tire Change": "image/tire.jpg",
+      "Courier": "image/courier.jpg",
+      "Food Delivery": "image/food.jpg",
+      "DJ": "image/dj.jpg",
+      "Projector Rental": "image/projector.jpg",
+      "Tent & Table": "image/tent.jpg",
+      "Sound System": "image/sound.jpg",
+      "Decoration": "image/decoration.jpg",
+      "Custom Request": "image/custom.jpg"
+    };
 
-  if (category && categoryMap[category]) {
-    title.textContent = category;
-    document.title = `1Point – ${category}`;
-    list.classList.add("two-column-grid");
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("cat");
+    const title = document.getElementById("category-title");
+    const list = document.getElementById("subcategory-list");
 
-    categoryMap[category].forEach(subcat => {
-      const link = document.createElement("a");
-      link.className = "category-card";
-      link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
-      
-      const imgSrc = imageMap[subcat] || "image/default.jpg";
-      link.style.backgroundImage = `url('${imgSrc}')`;
+    if (category && categoryMap[category]) {
+      title.textContent = category;
+      document.title = `1Point – ${category}`;
 
-      link.innerHTML = `<span>${subcat}</span>`;
-      list.appendChild(link);
-    });
-  } else {
-    title.textContent = "Invalid or Missing Category";
-    list.innerHTML = `<p>Try going back to the <a href="index.html">homepage</a>.</p>`;
-  }
-</script>
+      categoryMap[category].forEach(subcat => {
+        const link = document.createElement("a");
+        link.className = "category-card";
+        link.href = `booking.html?c=${encodeURIComponent(category)}&s=${encodeURIComponent(subcat)}`;
+        
+        const imgSrc = imageMap[subcat] || "image/default.jpg";
+        const iconClass = iconMap[subcat] || "fas fa-cogs";
+
+        link.style.backgroundImage = `url('${imgSrc}')`;
+        link.innerHTML = `<i class="${iconClass}"></i><span>${subcat}</span>`;
+        list.appendChild(link);
+      });
+    } else {
+      title.textContent = "Invalid or Missing Category";
+      list.innerHTML = `<p>Try going back to the <a href="index.html">homepage</a>.</p>`;
+    }
+  </script>
+
 </body>
 </html>
