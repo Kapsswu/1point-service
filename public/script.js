@@ -149,10 +149,14 @@ document.querySelectorAll(".category-card").forEach(card => {
     card.style.backgroundImage = `url(${bg})`;
   }
 });
+
+// Sticky header shrink on scroll
 let lastScroll = 0;
 const header = document.querySelector('header');
 
 window.addEventListener('scroll', () => {
+  if (!header) return; // Prevent errors if header is missing
+
   const currentScroll = window.scrollY;
 
   if (currentScroll > lastScroll) {
