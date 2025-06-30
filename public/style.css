@@ -196,12 +196,22 @@ footer {
   background: #e2e6ea;
 }
 
+/* NEW: Responsive 2-column layout */
+.two-column-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  padding: 0 10px;
+}
+
 .review-card, .terms-card, .form-box {
   background: var(--card);
   padding: 20px;
   border-radius: 10px;
   margin: 1rem auto;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
 }
 
 .booking-history ul {
