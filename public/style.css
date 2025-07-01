@@ -360,3 +360,58 @@ footer {
   border-bottom: 1px solid #ddd;
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
+/* PROVIDER BANNER SECTION with broad background image */
+.provider-banner {
+  position: relative;
+  background-image: url('image/provider-bg.jpg'); /* replace with your selected image */
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  padding: 60px 20px;
+  margin-top: 40px;
+}
+
+.provider-banner-overlay {
+  background-color: rgba(0, 0, 0, 0.55);
+  padding: 40px 20px;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.provider-content {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.provider-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #ffef9f;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.provider-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #f1f1f1;
+  margin: 10px 0;
+}
+
+.provider-btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 30px;
+  font-size: 1rem;
+  background-color: #ff5c00;
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.provider-btn:hover {
+  background-color: #e04800;
+}
