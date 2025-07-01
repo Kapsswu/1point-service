@@ -18,7 +18,6 @@
         <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
       </div>
     </a>
-
     <div class="nav-links">
       <a href="auth.html" id="signin-link">Sign In</a>
       <a href="profile.html" id="profile-icon" style="display: none;">
@@ -46,7 +45,7 @@
     <button onclick="logout()">Logout</button>
   </main>
 
-  <!-- Embedded Footer -->
+  <!-- Footer -->
   <footer>
     <div class="footer-links">
       <a href="about.html">About Us</a>
@@ -68,36 +67,80 @@
     <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
 
-  <script>
-    // ✅ Check if user is logged in
-    const userId = localStorage.getItem("loggedInUserId");
-    if (!userId) {
-      window.location.href = "auth.html";
-    }
+  <!-- Firebase + Edit Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
-    // ✅ Display profile info from localStorage if available
-    const user = JSON.parse(localStorage.getItem("az_user") || "{}");
-    const profileInfo = document.getElementById("profile-info");
-    if (profileInfo) {
+    const firebaseConfig = {
+      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+      authDomain: "point-service-c2fcb.firebaseapp.com",
+      projectId: "point-service-c2fcb",
+      storageBucket: "point-service-c2fcb.appspot.com",
+      messagingSenderId: "77473043188",
+      appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
+      measurementId: "G-MTVG8TYHDG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "auth.html";
+      } else {
+        const userId = user.uid;
+        const userData = JSON.parse(localStorage.getItem("az_user") || "{}");
+        const profileInfo = document.getElementById("profile-info");
+
+        profileInfo.innerHTML = `
+          <p><strong>User ID:</strong> ${userId}</p>
+          <p><strong>Name:</strong> ${userData.name || 'N/A'}</p>
+          <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
+          <p><strong>Phone:</strong> ${userData.phone || 'N/A'}</p>
+          <p><strong>Address:</strong> ${userData.address || 'N/A'}</p>
+          <p><strong>Occupation:</strong> ${userData.occupation || 'N/A'}</p>
+          <button onclick="editProfile()">Edit Profile</button>
+        `;
+      }
+    });
+
+    // Edit Profile: turn static text into input fields
+    window.editProfile = () => {
+      const userData = JSON.parse(localStorage.getItem("az_user") || "{}");
+      const profileInfo = document.getElementById("profile-info");
+
       profileInfo.innerHTML = `
-        <p><strong>User ID:</strong> ${userId}</p>
-        <p><strong>Name:</strong> ${user.name || 'N/A'}</p>
-        <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
-        <p><strong>Phone:</strong> ${user.phone || 'N/A'}</p>
-        <p><strong>Address:</strong> ${user.address || 'N/A'}</p>
-        <p><strong>Occupation:</strong> ${user.occupation || 'N/A'}</p>
-        <button onclick="editProfile()">Edit Profile</button>
+        <p><strong>Name:</strong> <input id="edit-name" value="${userData.name || ''}" /></p>
+        <p><strong>Email:</strong> <input id="edit-email" value="${userData.email || ''}" /></p>
+        <p><strong>Phone:</strong> <input id="edit-phone" value="${userData.phone || ''}" /></p>
+        <p><strong>Address:</strong> <input id="edit-address" value="${userData.address || ''}" /></p>
+        <p><strong>Occupation:</strong> <input id="edit-occupation" value="${userData.occupation || ''}" /></p>
+        <button onclick="saveProfile()">Save</button>
       `;
-    }
+    };
 
-    function editProfile() {
-      alert("Edit Profile feature coming soon.");
-    }
+    // Save updated info to localStorage and reload
+    window.saveProfile = () => {
+      const updatedUser = {
+        name: document.getElementById("edit-name").value.trim(),
+        email: document.getElementById("edit-email").value.trim(),
+        phone: document.getElementById("edit-phone").value.trim(),
+        address: document.getElementById("edit-address").value.trim(),
+        occupation: document.getElementById("edit-occupation").value.trim(),
+      };
 
-    function logout() {
-      localStorage.removeItem("loggedInUserId");
-      window.location.href = "auth.html";
-    }
+      localStorage.setItem("az_user", JSON.stringify(updatedUser));
+      alert("✅ Profile updated!");
+      window.location.reload();
+    };
+
+    window.logout = () => {
+      signOut(auth).then(() => {
+        localStorage.removeItem("az_user");
+        window.location.href = "auth.html";
+      });
+    };
   </script>
 
 </body>
