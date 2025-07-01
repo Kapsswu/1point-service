@@ -19,7 +19,7 @@ body {
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 220px;
+  padding-top: 140px;
   scroll-behavior: smooth;
 }
 
@@ -77,19 +77,38 @@ button {
 button:hover {
   background-color: var(--hover);
 }
+/* 🔽 Add this at the bottom of style.css */
+
+.top-nav .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 15px;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.logo div:first-child {
+  font-size: 2.8rem;
+  color: #fff !important;
+}
+
+.logo div:last-child {
+  font-size: 1.1rem;
+  color: #eee !important;
+}
 
 header, .top-nav {
   background-image: url('image/header-hornbill.jpg');
-  background-size: cover;
-  background-position: center;
+  background-size: 100% auto;
+  background-position: center top;
   background-repeat: no-repeat;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 180px;
+  height: 130px;
   width: 100%;
-  padding: 0 20px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -271,7 +290,7 @@ footer {
   padding: 10px;
   background-color: #fff;
   position: sticky;
-  top: 180px;
+  top: 130px;
   z-index: 998;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   width: 100%;
@@ -328,4 +347,16 @@ footer {
 
 .booking-summary p {
   margin-bottom: 8px;
+}
+.grand-heading {
+  background-color: #f5f5f5;          /* silver-white background */
+  color: #c9a227;                     /* rich gold text */
+  padding: 12px 20px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
