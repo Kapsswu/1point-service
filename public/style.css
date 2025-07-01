@@ -98,13 +98,11 @@ button:hover {
 }
 
 header, .top-nav {
+  position: relative; /* 🔧 Needed for ::before to stay inside */
   background-image: url('image/header-hornbill.jpg');
   background-size: 100% auto;
   background-position: center top;
   background-repeat: no-repeat;
-  top: 0;
-  left: 0;
-  right: 0;
   height: 130px;
   width: 100%;
   padding: 10px 20px;
@@ -118,15 +116,15 @@ header, .top-nav {
 
 .top-nav::before {
   content: '';
-  position: absolute;
+  position: absolute; /* ✅ Fixes click-blocking issue */
   inset: 0;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0,0,0,0.2));
-  z-index: 0;
+  z-index: 0; /* Stays behind everything */
 }
 
 .top-nav > * {
   position: relative;
-  z-index: 1;
+  z-index: 1; /* Puts nav content above the overlay */
 }
 
 .logo {
@@ -288,15 +286,12 @@ footer {
 .search-section {
   padding: 10px;
   background-color: #fff;
-  top: 130px;
-  z-index: 998;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .search-section input {
   width: 100%;
   padding: 10px;
