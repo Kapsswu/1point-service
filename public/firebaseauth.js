@@ -6,7 +6,8 @@ import {
   sendSignInLinkToEmail,
   isSignInWithEmailLink,
   signInWithEmailLink,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // ✅ Config
@@ -49,7 +50,9 @@ if (signUpBtn) {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(userCredential.user); // ✅ Send verification email
       localStorage.setItem("loggedInUserId", userCredential.user.uid);
+      alert("✅ Account created. A verification email has been sent to your inbox.");
       window.location.href = "index.html";
     } catch (error) {
       message.textContent = error.message;
