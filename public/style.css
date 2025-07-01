@@ -77,7 +77,6 @@ button {
 button:hover {
   background-color: var(--hover);
 }
-/* 🔽 Add this at the bottom of style.css */
 
 .top-nav .nav-links a {
   color: #fff;
@@ -97,7 +96,9 @@ button:hover {
   color: #eee !important;
 }
 
-header,.top-nav {
+/* ✅ FIXED HEADER AND OVERLAY */
+header,
+.top-nav {
   background-image: url('image/header-hornbill.jpg');
   background-size: 100% auto;
   background-position: center top;
@@ -108,14 +109,19 @@ header,.top-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   color: #fff;
+  position: relative;
+  z-index: 10;
 }
 
 .top-nav::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  height: 130px;
+  width: 100%;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0,0,0,0.2));
   z-index: 0;
 }
@@ -290,6 +296,7 @@ footer {
   justify-content: center;
   align-items: center;
 }
+
 .search-section input {
   width: 100%;
   padding: 10px;
@@ -339,9 +346,10 @@ footer {
 .booking-summary p {
   margin-bottom: 8px;
 }
+
 .grand-heading {
-  background-color: #42e0deec;          /* silver-white background */
-  color: #392e09;                     /* rich gold text */
+  background-color: #42e0deec;
+  color: #392e09;
   padding: 12px 20px;
   font-size: 1.4rem;
   font-weight: bold;
@@ -351,10 +359,10 @@ footer {
   border-bottom: 1px solid #ddd;
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
-/* PROVIDER BANNER SECTION with broad background image */
+
 .provider-banner {
   position: relative;
-  background-image: url('image/provider-bg.jpg'); /* replace with your selected image */
+  background-image: url('image/provider-bg.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;
