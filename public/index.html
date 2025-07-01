@@ -112,6 +112,38 @@
   <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
     <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
+  
+   <!-- ✅ Firebase Auth Status Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+      authDomain: "point-service-c2fcb.firebaseapp.com",
+      projectId: "point-service-c2fcb",
+      storageBucket: "point-service-c2fcb.appspot.com",
+      messagingSenderId: "77473043188",
+      appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
+      measurementId: "G-MTVG8TYHDG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      const signInLink = document.getElementById("signin-link");
+      const profileIcon = document.getElementById("profile-icon");
+
+      if (user) {
+        signInLink.style.display = "none";
+        profileIcon.style.display = "inline-block";
+      } else {
+        signInLink.style.display = "inline-block";
+        profileIcon.style.display = "none";
+      }
+    });
+  </script>
 
 </body>
 </html>
