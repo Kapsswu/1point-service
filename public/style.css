@@ -19,7 +19,7 @@ body {
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 140px;
+  padding-top: 0px;
   scroll-behavior: smooth;
 }
 
@@ -102,7 +102,6 @@ header, .top-nav {
   background-size: 100% auto;
   background-position: center top;
   background-repeat: no-repeat;
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -289,7 +288,6 @@ footer {
 .search-section {
   padding: 10px;
   background-color: #fff;
-  position: sticky;
   top: 130px;
   z-index: 998;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
