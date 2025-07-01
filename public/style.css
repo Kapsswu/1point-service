@@ -19,7 +19,7 @@ body {
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 140px;
+  padding-top: 0px;
   scroll-behavior: smooth;
 }
 
@@ -97,22 +97,17 @@ button:hover {
   color: #eee !important;
 }
 
-header, .top-nav {
+header,.top-nav {
   background-image: url('image/header-hornbill.jpg');
   background-size: 100% auto;
   background-position: center top;
   background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   height: 130px;
   width: 100%;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   color: #fff;
 }
@@ -289,16 +284,12 @@ footer {
 .search-section {
   padding: 10px;
   background-color: #fff;
-  position: sticky;
-  top: 130px;
-  z-index: 998;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .search-section input {
   width: 100%;
   padding: 10px;
