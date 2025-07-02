@@ -414,3 +414,16 @@ footer {
 .provider-btn:hover {
   background-color: #e04800;
 }
+.label-box {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.7); /* black border */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
