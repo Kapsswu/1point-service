@@ -31,52 +31,69 @@ const actionCodeSettings = {
 };
 
 // 🔐 Sign Up
-const signUpBtn = document.getElementById("submitSignUp");
-if (signUpBtn) {
-  signUpBtn.addEventListener("click", async (e) => {
-    e.preventDefault();
+signUpBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
 
-    const email = document.getElementById("rEmail").value.trim();
-    const password = document.getElementById("rPassword").value.trim();
-    const agreeTerms = document.getElementById("agree-terms").checked;
-    const message = document.getElementById("signUpMessage");
+  const email = document.getElementById("rEmail").value.trim();
+  const password = document.getElementById("rPassword").value.trim();
+  const agreeTerms = document.getElementById("agree-terms").checked;
+  const message = document.getElementById("signUpMessage");
 
-    message.style.display = "none";
-    if (!agreeTerms) {
-      message.textContent = "⚠️ You must agree to the terms.";
-      message.style.display = "block";
-      return;
+  message.style.display = "none";
+
+  if (!agreeTerms) {
+    message.textContent = "⚠️ You must agree to the terms.";
+    message.style.display = "block";
+    return;
+  }
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+    // ✅ Send email link to login instead of signing in immediately
+    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+    localStorage.setItem("emailForSignIn", email);
+
+    alert("✅ Account created. A login link has been sent to your email.");
+    window.location.href = "auth.html";
+  } catch (error) {
+    if (error.code === "auth/email-already-in-use") {
+      message.textContent = "⚠️ This email is already registered. Try signing in.";
+    } else if (error.code === "auth/weak-password") {
+      message.textContent = "⚠️ Password should be at least 6 characters.";
+    } else {
+      message.textContent = "❌ " + error.message;
     }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await sendEmailVerification(userCredential.user); // ✅ Send verification email
-      localStorage.setItem("loggedInUserId", userCredential.user.uid);
-      alert("✅ Account created. A verification email has been sent to your inbox.");
-      window.location.href = "index.html";
-    } catch (error) {
-      message.textContent = error.message;
-      message.style.display = "block";
-    }
-  });
-}
+    message.style.display = "block";
+  }
+});
 
 // 📩 Sign-In Link
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
 const signInBtn = document.getElementById("submitSignIn");
 if (signInBtn) {
   signInBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
     const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
     const message = document.getElementById("signInMessage");
 
     message.style.display = "none";
     try {
-      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      localStorage.setItem("emailForSignIn", email);
-      alert("✅ Sign-in link sent! Check your email.");
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem("loggedInUserId", result.user.uid);
+      alert("✅ Logged in!");
+      window.location.href = "index.html";
     } catch (error) {
-      message.textContent = error.message;
+      if (error.code === "auth/user-not-found") {
+        message.textContent = "❌ No user found with this email.";
+      } else if (error.code === "auth/wrong-password") {
+        message.textContent = "❌ Incorrect password.";
+      } else {
+        message.textContent = "❌ " + error.message;
+      }
       message.style.display = "block";
     }
   });
