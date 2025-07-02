@@ -3,14 +3,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebas
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  sendSignInLinkToEmail,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-  sendPasswordResetEmail,
-  sendEmailVerification
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
-// ✅ Config
+// ✅ Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
   authDomain: "point-service-c2fcb.firebaseapp.com",
@@ -24,53 +22,44 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Action code settings
-const actionCodeSettings = {
-  url: 'https://point-service-c2fcb.web.app/auth.html',
-  handleCodeInApp: true
-};
+// ✅ SIGN UP
+const signUpBtn = document.getElementById("submitSignUp");
+if (signUpBtn) {
+  signUpBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
 
-// 🔐 Sign Up
-signUpBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
+    const email = document.getElementById("rEmail").value.trim();
+    const password = document.getElementById("rPassword").value.trim();
+    const agreeTerms = document.getElementById("agree-terms").checked;
+    const message = document.getElementById("signUpMessage");
 
-  const email = document.getElementById("rEmail").value.trim();
-  const password = document.getElementById("rPassword").value.trim();
-  const agreeTerms = document.getElementById("agree-terms").checked;
-  const message = document.getElementById("signUpMessage");
+    message.style.display = "none";
 
-  message.style.display = "none";
-
-  if (!agreeTerms) {
-    message.textContent = "⚠️ You must agree to the terms.";
-    message.style.display = "block";
-    return;
-  }
-
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-    // ✅ Send email link to login instead of signing in immediately
-    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-    localStorage.setItem("emailForSignIn", email);
-
-    alert("✅ Account created. A login link has been sent to your email.");
-    window.location.href = "auth.html";
-  } catch (error) {
-    if (error.code === "auth/email-already-in-use") {
-      message.textContent = "⚠️ This email is already registered. Try signing in.";
-    } else if (error.code === "auth/weak-password") {
-      message.textContent = "⚠️ Password should be at least 6 characters.";
-    } else {
-      message.textContent = "❌ " + error.message;
+    if (!agreeTerms) {
+      message.textContent = "⚠️ You must agree to the terms.";
+      message.style.display = "block";
+      return;
     }
-    message.style.display = "block";
-  }
-});
 
-// 📩 Sign-In Link
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(userCredential.user);
+      alert("✅ Account created! A verification email has been sent.");
+      window.location.href = "auth.html";
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        message.textContent = "⚠️ This email is already registered. Try signing in.";
+      } else if (error.code === "auth/weak-password") {
+        message.textContent = "⚠️ Password should be at least 6 characters.";
+      } else {
+        message.textContent = "❌ " + error.message;
+      }
+      message.style.display = "block";
+    }
+  });
+}
 
+// ✅ SIGN IN
 const signInBtn = document.getElementById("submitSignIn");
 if (signInBtn) {
   signInBtn.addEventListener("click", async (e) => {
@@ -81,10 +70,18 @@ if (signInBtn) {
     const message = document.getElementById("signInMessage");
 
     message.style.display = "none";
+
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      localStorage.setItem("loggedInUserId", result.user.uid);
-      alert("✅ Logged in!");
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      if (!user.emailVerified) {
+        message.textContent = "⚠️ Please verify your email before signing in.";
+        message.style.display = "block";
+        return;
+      }
+
+      localStorage.setItem("loggedInUserId", user.uid);
       window.location.href = "index.html";
     } catch (error) {
       if (error.code === "auth/user-not-found") {
@@ -99,25 +96,6 @@ if (signInBtn) {
   });
 }
 
-// ✅ Complete Email Link Sign-In
-if (isSignInWithEmailLink(auth, window.location.href)) {
-  (async () => {
-    let email = localStorage.getItem("emailForSignIn");
-    if (!email) {
-      email = window.prompt("Enter your email to finish sign-in:");
-    }
-
-    try {
-      const result = await signInWithEmailLink(auth, email, window.location.href);
-      localStorage.removeItem("emailForSignIn");
-      localStorage.setItem("loggedInUserId", result.user.uid);
-      window.location.href = "index.html";
-    } catch (error) {
-      alert("❌ Sign-in failed: " + error.message);
-    }
-  })();
-}
-
 // 🔁 Forgot Password
 const forgotLink = document.getElementById("forgotPasswordLink");
 if (forgotLink) {
@@ -127,7 +105,7 @@ if (forgotLink) {
     if (email) {
       try {
         await sendPasswordResetEmail(auth, email);
-        alert("✅ Reset link sent!");
+        alert("✅ Password reset link sent to your email.");
       } catch (err) {
         alert("❌ " + err.message);
       }
