@@ -415,16 +415,15 @@ footer {
   background-color: #e04800;
 }
 .label-box {
-  background: rgba(0, 0, 0, 0.4); /* darker transparent background */
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  padding: 6px 12px;
-  border-radius: 8px;
-  color: #fff; /* white text */
+  background: rgba(0, 0, 0, 0.5); /* Slightly darker for more contrast */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 6px 14px;
+  border-radius: 10px;
+  color: #fff;
   font-size: 1rem;
   font-weight: 600;
-  margin-top: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle white border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* deeper shadow */
+  margin-top: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
-
