@@ -233,7 +233,7 @@ footer {
   background-position: center;
   background-repeat: no-repeat;
   padding: 50px 20px;
-  margin: 0 -20px;
+  margin: 0; /* ✅ Fixed: remove negative margin */
   text-align: center;
   transition: background 0.3s;
   color: #fff;
@@ -242,6 +242,8 @@ footer {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   position: relative;
+  width: 100%; /* ✅ Ensure it stays within screen */
+  box-sizing: border-box; /* ✅ Essential to avoid overflow */
 }
 
 .full-width-box-list a {
