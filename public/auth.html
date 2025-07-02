@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <!-- Embedded Header -->
+  <!-- 🔝 Header -->
   <header class="top-nav">
     <a href="index.html" class="logo" style="text-decoration: none;">
       <div style="text-align: center; line-height: 1;">
@@ -19,7 +19,6 @@
         <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
       </div>
     </a>
-
     <div class="nav-links">
       <a href="auth.html" id="signin-link">Sign In</a>
       <a href="profile.html" id="profile-icon" style="display: none;">
@@ -29,7 +28,7 @@
     </div>
   </header>
 
-  <!-- 🔐 SIGN UP FORM -->
+  <!-- 🔐 SIGN UP -->
   <div class="container" id="signup" style="display:none;">
     <h1 class="form-title">Register</h1>
     <form>
@@ -80,7 +79,7 @@
     </div>
   </div>
 
-  <!-- 📩 SIGN IN FORM (EMAIL LINK ONLY) -->
+  <!-- 🔑 SIGN IN -->
   <div class="container" id="signIn">
     <h1 class="form-title">Sign In</h1>
     <form>
@@ -92,9 +91,15 @@
         <label for="email">Email</label>
       </div>
 
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" required>
+        <label for="password">Password</label>
+      </div>
+
       <p class="recover"><a href="#" id="forgotPasswordLink">Forgot Password?</a></p>
 
-     <button class="btn" id="submitSignIn" type="button">Sign In</button>
+      <button class="btn" id="submitSignIn" type="button">Sign In</button>
     </form>
 
     <p class="or">----------or--------</p>
@@ -108,42 +113,38 @@
     </div>
   </div>
 
-  <!-- 🔁 Toggle Script -->
+  <!-- 🔁 Toggle Logic -->
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const signUpButton = document.getElementById('signUpButton');
-    const signInButton = document.getElementById('signInButton');
-    const signInForm = document.getElementById('signIn');
-    const signUpForm = document.getElementById('signup');
+    document.addEventListener("DOMContentLoaded", function () {
+      const signUpButton = document.getElementById('signUpButton');
+      const signInButton = document.getElementById('signInButton');
+      const signInForm = document.getElementById('signIn');
+      const signUpForm = document.getElementById('signup');
 
-      // 🔁 Return from terms.html: show signup form
-  if (sessionStorage.getItem("showSignupForm") === "true") {
-    sessionStorage.removeItem("showSignupForm");
-    signInForm.style.display = "none";
-    signUpForm.style.display = "block";
-  }
+      if (sessionStorage.getItem("showSignupForm") === "true") {
+        sessionStorage.removeItem("showSignupForm");
+        signInForm.style.display = "none";
+        signUpForm.style.display = "block";
+      }
 
-    // ✅ Show Sign-Up if URL has #signup
-    if (window.location.hash === "#signup") {
-      signInForm.style.display = "none";
-      signUpForm.style.display = "block";
-    }
+      if (window.location.hash === "#signup") {
+        signInForm.style.display = "none";
+        signUpForm.style.display = "block";
+      }
 
-    // Toggle buttons
-    signUpButton.addEventListener('click', function () {
-      signInForm.style.display = "none";
-      signUpForm.style.display = "block";
+      signUpButton.addEventListener('click', function () {
+        signInForm.style.display = "none";
+        signUpForm.style.display = "block";
+      });
+
+      signInButton.addEventListener('click', function () {
+        signInForm.style.display = "block";
+        signUpForm.style.display = "none";
+      });
     });
+  </script>
 
-    signInButton.addEventListener('click', function () {
-      signInForm.style.display = "block";
-      signUpForm.style.display = "none";
-    });
-  });
-</script>
-
-
-  <!-- Embedded Footer -->
+  <!-- 📎 Footer -->
   <footer>
     <div class="footer-links">
       <a href="about.html">About Us</a>
@@ -160,7 +161,7 @@
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button -->
+  <!-- 💬 WhatsApp Button -->
   <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
     <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
