@@ -1,6 +1,6 @@
 :root {
-  --primary: #007bff;
-  --bg: #b8b7b7;
+  --primary: #858c94;
+  --bg: #060505;
   --card: #cdd1d5;
   --light: #333;
   --hover: #0056b3;
@@ -350,8 +350,8 @@ footer {
 }
 
 .grand-heading {
-  background-color: #42e0deec;
-  color: #392e09;
+   background-color: #060606ec;
+  color: #fafaf7;
   padding: 12px 20px;
   font-size: 1.4rem;
   font-weight: bold;
