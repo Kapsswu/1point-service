@@ -14,13 +14,19 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg);
   color: var(--light);
   line-height: 1.6;
   padding: 0;
-  padding-top: 0px;
-  scroll-behavior: smooth;
 }
 
 h1, h2, h3 {
@@ -30,6 +36,7 @@ h1, h2, h3 {
 }
 
 .container, main, .profile-container {
+  width: 100%;
   max-width: 800px;
   margin: auto;
   background: var(--card);
@@ -56,11 +63,7 @@ input, select, textarea, button {
   border-radius: 6px;
   border: 1px solid #ccc;
   width: 100%;
-}
-
-input, select, textarea {
-  background: #fff;
-  color: #000;
+  box-sizing: border-box;
 }
 
 textarea {
@@ -96,11 +99,11 @@ button:hover {
   color: #eee !important;
 }
 
-/* ✅ FIXED HEADER AND OVERLAY */
+/* ✅ HEADER */
 header,
 .top-nav {
   background-image: url('image/header-hornbill.jpg');
-  background-size: 100% auto;
+  background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
   height: 130px;
@@ -136,18 +139,6 @@ header,
   line-height: 1;
 }
 
-.logo div:first-child {
-  font-size: 2.2rem;
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-}
-
-.logo div:last-child {
-  font-size: 0.95rem;
-  color: #eee;
-}
-
 footer {
   background: var(--card);
   padding: 20px;
@@ -155,8 +146,6 @@ footer {
   text-align: center;
   font-size: 0.85rem;
   margin-top: 40px;
-  margin-left: -20px;
-  margin-right: -20px;
   box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
 }
 
@@ -233,7 +222,6 @@ footer {
   background-position: center;
   background-repeat: no-repeat;
   padding: 50px 20px;
-  margin: 0; /* ✅ Fixed: remove negative margin */
   text-align: center;
   transition: background 0.3s;
   color: #fff;
@@ -242,18 +230,15 @@ footer {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   position: relative;
-  width: 100%; /* ✅ Ensure it stays within screen */
-  box-sizing: border-box; /* ✅ Essential to avoid overflow */
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .full-width-box-list a {
   color: #fff;
   text-decoration: none;
   display: block;
-}
-
-.full-width-box-list li:hover {
-  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .review-card, .terms-card, .form-box {
@@ -297,6 +282,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .search-section input {
@@ -305,6 +291,7 @@ footer {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
+  box-sizing: border-box;
 }
 
 #suggestions {
@@ -350,7 +337,7 @@ footer {
 }
 
 .grand-heading {
-   background-color: #060606ec;
+  background-color: #060606ec;
   color: #fafaf7;
   padding: 12px 20px;
   font-size: 1.4rem;
@@ -416,8 +403,9 @@ footer {
 .provider-btn:hover {
   background-color: #e04800;
 }
+
 .label-box {
-  background: rgba(0, 0, 0, 0.5); /* Slightly darker for more contrast */
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   padding: 6px 14px;
