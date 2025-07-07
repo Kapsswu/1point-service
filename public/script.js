@@ -3,27 +3,43 @@ window.addEventListener("DOMContentLoaded", () => {
   const footerContainer = document.getElementById("footer-container");
 
   // Load header
-  if (headerContainer) {
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => {
-        headerContainer.innerHTML = data;
+ if (headerContainer) {
+   fetch("header.html")
+  .then(res => res.text())
+  .then(data => {
+    headerContainer.innerHTML = data;
 
-        // 🔄 After header is loaded, update auth-related UI
-        const userId = localStorage.getItem("loggedInUserId");
-        const signInLink = document.getElementById("signin-link");
-        const profileIcon = document.getElementById("profile-icon");
+    // 🔄 After header is loaded, update auth-related UI
+    const userId = localStorage.getItem("loggedInUserId");
+    const signInLink = document.getElementById("signin-link");
+    const profileIcon = document.getElementById("profile-icon");
 
-        if (userId) {
-          if (signInLink) signInLink.style.display = "none";
-          if (profileIcon) profileIcon.style.display = "inline-block";
-        } else {
-          if (signInLink) signInLink.style.display = "inline-block";
-          if (profileIcon) profileIcon.style.display = "none";
+    if (userId) {
+      if (signInLink) signInLink.style.display = "none";
+      if (profileIcon) profileIcon.style.display = "inline-block";
+    } else {
+      if (signInLink) signInLink.style.display = "inline-block";
+      if (profileIcon) profileIcon.style.display = "none";
+    }
+
+    // ✅ Add this only after header is loaded
+    const allowedWithoutLogin = ["index.html", "", "/"];
+    if (!userId) {
+      document.querySelectorAll("a").forEach((link) => {
+        const href = link.getAttribute("href");
+        if (
+          href &&
+          !allowedWithoutLogin.some(page => href.includes(page))
+        ) {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            alert("🔒 Please sign in to access this feature.");
+          });
         }
       });
-  }
-
+    }
+  });
+}
   // Load footer
   if (footerContainer) {
     fetch("footer.html")
