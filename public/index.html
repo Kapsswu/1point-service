@@ -228,5 +228,25 @@
     });
   </script>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const allowedWithoutLogin = ["index.html", "", "/"];
+    const isLoggedIn = localStorage.getItem("loggedInUserId");
+
+    document.querySelectorAll("a").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (
+        href &&
+        !allowedWithoutLogin.some(page => href.includes(page)) &&
+        !isLoggedIn
+      ) {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          alert("🔒 Please sign in to access this feature.");
+        });
+      }
+    });
+  });
+</script>
 </body>
 </html>
