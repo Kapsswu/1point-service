@@ -5,7 +5,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  onAuthStateChanged // 
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // ✅ Firebase Config
@@ -21,6 +22,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    localStorage.setItem("loggedInUserId", user.uid);
+  } else {
+    localStorage.removeItem("loggedInUserId");
+  }
+});
 
 // ✅ SIGN UP
 const signUpBtn = document.getElementById("submitSignUp");
