@@ -1,54 +1,51 @@
+const allowedPagesWithoutLogin = ["index.html", "", "/", "auth.html"];
+const currentPage = location.pathname.split("/").pop();
+const userId = localStorage.getItem("loggedInUserId");
+
+if (!userId && !allowedPagesWithoutLogin.includes(currentPage)) {
+  alert("🔒 Please sign in to access this page.");
+  window.location.href = "auth.html";
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   const headerContainer = document.getElementById("header-container");
   const footerContainer = document.getElementById("footer-container");
 
   // Load header
- if (headerContainer) {
+  if (headerContainer) {
    fetch("header.html")
   .then(res => res.text())
   .then(data => {
-    headerContainer.innerHTML = data;
+  headerContainer.innerHTML = data;
 
-    // 🔄 After header is loaded, update auth-related UI
-    const userId = localStorage.getItem("loggedInUserId");
-    const signInLink = document.getElementById("signin-link");
-    const profileIcon = document.getElementById("profile-icon");
+  const userId = localStorage.getItem("loggedInUserId");
+  const signInLink = document.getElementById("signin-link");
+  const profileIcon = document.getElementById("profile-icon");
 
-    if (userId) {
-      if (signInLink) signInLink.style.display = "none";
-      if (profileIcon) profileIcon.style.display = "inline-block";
-    } else {
-      if (signInLink) signInLink.style.display = "inline-block";
-      if (profileIcon) profileIcon.style.display = "none";
-    }
+  if (userId) {
+    if (signInLink) signInLink.style.display = "none";
+    if (profileIcon) profileIcon.style.display = "inline-block";
+  } else {
+    if (signInLink) signInLink.style.display = "inline-block";
+    if (profileIcon) profileIcon.style.display = "none";
 
-    // ✅ Add this only after header is loaded
+    // 👇 Place this INSIDE this block
     const allowedWithoutLogin = ["index.html", "", "/"];
-    if (!userId) {
-      document.querySelectorAll("a").forEach((link) => {
-        const href = link.getAttribute("href");
-        if (
-          href &&
-          !allowedWithoutLogin.some(page => href.includes(page))
-        ) {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            alert("🔒 Please sign in to access this feature.");
-          });
-        }
-      });
-    }
-  });
-}
-  // Load footer
-  if (footerContainer) {
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => {
-        footerContainer.innerHTML = data;
-      });
+    document.querySelectorAll("a").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (
+        href &&
+        !allowedWithoutLogin.some(page => href.includes(page))
+      ) {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          alert("🔒 Please sign in to access this feature.");
+        });
+      }
+    });
   }
-
+});
+}
   // Autofill booking form
   const serviceField = document.getElementById("service");
   const user = JSON.parse(localStorage.getItem("az_user")) || {};
