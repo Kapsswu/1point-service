@@ -417,3 +417,47 @@ footer {
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
+
+/* --- 9anime-inspired minimalist improvements --- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.card-title {
+  padding: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #f0f0f0;
+  background-color: #222;
+}
+
+@media screen and (max-width: 600px) {
+  .card-title {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}
