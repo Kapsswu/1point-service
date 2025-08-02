@@ -2,94 +2,103 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leave a Review | AZ Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reviews – AZ Service</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.png" />
 </head>
 <body>
+  <!-- Header -->
+  <div id="header-container"></div>
 
-  <!-- Embedded Header -->
- <header class="top-nav">
-  <a href="index.html" class="logo" style="text-decoration: none;">
-    <div style="text-align: center; line-height: 1;">
-      <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
-      <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
-    </div>
-  </a>
-
-  <div class="nav-links">
-    <a href="auth.html" id="signin-link">Sign In</a>
-    <a href="profile.html" id="profile-icon" style="display: none;">
-      <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
-    </a>
-    <a href="#">Download 1 Point App</a>
-  </div>
-</header>
-
-  <!-- Main Content -->
-  <main class="container">
-    <h2>Leave a Review</h2>
-    <form id="review-form" class="form-box" autocomplete="off">
-      <div class="form-group">
-        <label for="booking-id">Booking ID (optional):</label>
-        <input type="text" id="booking-id" name="booking-id" placeholder="Enter your Booking ID" />
-      </div>
-
-      <div class="form-group">
-        <label for="rating">Rating <span>*</span>:</label>
-        <select id="rating" name="rating" required>
-          <option value="">-- Select Stars --</option>
+  <!-- Main Review Section -->
+  <main class="review-page">
+    <section class="review-form">
+      <h2>Submit a Review</h2>
+      <form id="reviewForm">
+        <input type="text" id="reviewName" placeholder="Your Name" required />
+        <textarea id="reviewMessage" rows="4" placeholder="Write your review..." required></textarea>
+        <select id="reviewRating" required>
+          <option value="">Rating</option>
           <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
-          <option value="4">⭐⭐⭐⭐ - Very Good</option>
-          <option value="3">⭐⭐⭐ - Good</option>
-          <option value="2">⭐⭐ - Fair</option>
-          <option value="1">⭐ - Poor</option>
+          <option value="4">⭐⭐⭐⭐ - Good</option>
+          <option value="3">⭐⭐⭐ - Average</option>
+          <option value="2">⭐⭐ - Poor</option>
+          <option value="1">⭐ - Terrible</option>
         </select>
-      </div>
+        <button type="submit">Post Review</button>
+      </form>
+    </section>
 
-      <div class="form-group">
-        <label for="feedback">Your Feedback (optional):</label>
-        <textarea id="feedback" name="feedback" rows="5" placeholder="Write something..."></textarea>
-      </div>
-
-      <button type="submit" class="btn-primary">Submit Review</button>
-    </form>
+    <section class="reviews-display">
+      <h2>Customer Reviews</h2>
+      <ul id="reviewsList"></ul>
+    </section>
   </main>
 
-  <!-- Embedded Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="about.html">About Us</a>
-      <a href="terms.html">Terms</a>
-      <a href="registration.html">Registration</a>
-      <a href="contact.html">Contact Us</a>
-      <a href="review.html">Reviews</a>
-    </div>
-    <div class="social">
-      <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a> |
-      <a href="https://www.instagram.com/1point_service" target="_blank">Instagram</a> |
-      <a href="https://www.facebook.com/1point_service" target="_blank">Facebook</a>
-    </div>
-  </footer>
+  <!-- Footer -->
+  <div id="footer-container"></div>
 
-  <!-- WhatsApp Floating Button -->
- <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
-    <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
-  </a>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  <!-- Review JS -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById('review-form');
-      if (form) {
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          alert('✅ Thank you for your review!');
-          this.reset();
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const reviewsRef = collection(db, "az_reviews");
+
+    const reviewForm = document.getElementById("reviewForm");
+    const reviewsList = document.getElementById("reviewsList");
+
+    reviewForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("reviewName").value.trim();
+      const message = document.getElementById("reviewMessage").value.trim();
+      const rating = parseInt(document.getElementById("reviewRating").value);
+
+      if (name && message && rating) {
+        await addDoc(reviewsRef, {
+          name,
+          message,
+          rating,
+          timestamp: serverTimestamp(),
         });
+
+        reviewForm.reset();
+        alert("✅ Your review has been submitted!");
       }
     });
+
+    const q = query(reviewsRef, orderBy("timestamp", "desc"));
+    onSnapshot(q, (snapshot) => {
+      reviewsList.innerHTML = "";
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${data.name}</strong>
+          <div>${"⭐".repeat(data.rating)}</div>
+          <p>${data.message}</p>
+          <hr/>
+        `;
+        reviewsList.appendChild(li);
+      });
+    });
   </script>
+
+  <!-- General Script -->
   <script src="script.js"></script>
 </body>
 </html>
