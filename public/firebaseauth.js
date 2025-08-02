@@ -6,8 +6,11 @@ import {
   signInWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
-  onAuthStateChanged // 
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+// 🧠 Import Firestore helper
+import { saveUserProfile } from "./firebasefirestore.js";
 
 // ✅ Firebase Config
 const firebaseConfig = {
@@ -23,6 +26,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// 🔁 Save UID to localStorage when logged in
 onAuthStateChanged(auth, (user) => {
   if (user) {
     localStorage.setItem("loggedInUserId", user.uid);
@@ -52,7 +56,21 @@ if (signUpBtn) {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const uid = userCredential.user.uid;
+
+      // 🔄 Create user data
+      const userData = {
+        uid: uid,
+        email: email,
+        createdAt: new Date().toISOString()
+      };
+
+      // 🔐 Save to Firestore
+      await saveUserProfile(uid, userData);
+
+      // 📧 Send verification email
       await sendEmailVerification(userCredential.user);
+
       alert("✅ Account created! A verification email has been sent.");
       window.location.href = "auth.html";
     } catch (error) {
