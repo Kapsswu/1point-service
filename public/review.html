@@ -3,104 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Reviews – AZ Service</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.png" />
+  <title>Leave a Review | AZ Service</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 </head>
 <body>
+
   <!-- Header -->
-  <div id="header-container"></div>
+  <header class="top-nav">
+    <a href="index.html" class="logo" style="text-decoration: none;">
+      <div style="text-align: center; line-height: 1;">
+        <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
+        <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="auth.html" id="signin-link">Sign In</a>
+      <a href="profile.html" id="profile-icon" style="display: none;">
+        <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
+      </a>
+      <a href="#">Download 1 Point App</a>
+    </div>
+  </header>
 
-  <!-- Main Review Section -->
-  <main class="review-page">
-    <section class="review-form">
-      <h2>Submit a Review</h2>
-      <form id="reviewForm">
-        <input type="text" id="reviewName" placeholder="Your Name" required />
-        <textarea id="reviewMessage" rows="4" placeholder="Write your review..." required></textarea>
-        <select id="reviewRating" required>
-          <option value="">Rating</option>
+  <!-- Main -->
+  <main class="container">
+    <h2>Leave a Review</h2>
+    <form id="review-form" class="form-box" autocomplete="off">
+      <div class="form-group">
+        <label for="booking-id">Booking ID (optional):</label>
+        <input type="text" id="booking-id" name="booking-id" placeholder="Enter your Booking ID" />
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating <span>*</span>:</label>
+        <select id="rating" name="rating" required>
+          <option value="">-- Select Stars --</option>
           <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
-          <option value="4">⭐⭐⭐⭐ - Good</option>
-          <option value="3">⭐⭐⭐ - Average</option>
-          <option value="2">⭐⭐ - Poor</option>
-          <option value="1">⭐ - Terrible</option>
+          <option value="4">⭐⭐⭐⭐ - Very Good</option>
+          <option value="3">⭐⭐⭐ - Good</option>
+          <option value="2">⭐⭐ - Fair</option>
+          <option value="1">⭐ - Poor</option>
         </select>
-        <button type="submit">Post Review</button>
-      </form>
-    </section>
+      </div>
 
-    <section class="reviews-display">
-      <h2>Customer Reviews</h2>
-      <ul id="reviewsList"></ul>
-    </section>
+      <div class="form-group">
+        <label for="feedback">Your Feedback (optional):</label>
+        <textarea id="feedback" name="feedback" rows="5" placeholder="Write something..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary">Submit Review</button>
+    </form>
   </main>
 
   <!-- Footer -->
-  <div id="footer-container"></div>
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About Us</a>
+      <a href="terms.html">Terms</a>
+      <a href="registration.html">Registration</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="review.html">Reviews</a>
+    </div>
+    <div class="social">
+      <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a> |
+      <a href="https://www.instagram.com/1point_service" target="_blank">Instagram</a> |
+      <a href="https://www.facebook.com/1point_service" target="_blank">Facebook</a>
+    </div>
+  </footer>
 
-  <!-- Firebase SDK -->
+  <!-- WhatsApp Floating -->
+  <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
+    <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
+  </a>
+
+  <!-- Main Review Script -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
-      authDomain: "point-service-c2fcb.firebaseapp.com",
-      projectId: "point-service-c2fcb",
-      storageBucket: "point-service-c2fcb.appspot.com",
-      messagingSenderId: "77473043188",
-      appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
-      measurementId: "G-MTVG8TYHDG"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
-    const reviewsRef = collection(db, "az_reviews");
 
-    const reviewForm = document.getElementById("reviewForm");
-    const reviewsList = document.getElementById("reviewsList");
+    const form = document.getElementById('review-form');
 
-    reviewForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("reviewName").value.trim();
-      const message = document.getElementById("reviewMessage").value.trim();
-      const rating = parseInt(document.getElementById("reviewRating").value);
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        document.getElementById("signin-link").style.display = "none";
+        document.getElementById("profile-icon").style.display = "inline-block";
 
-      if (name && message && rating) {
-        await addDoc(reviewsRef, {
-          name,
-          message,
-          rating,
-          timestamp: serverTimestamp(),
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const rating = form.rating.value;
+          const feedback = form.feedback.value;
+          const bookingId = form['booking-id'].value;
+
+          if (!rating) {
+            alert("⭐ Please select a rating.");
+            return;
+          }
+
+          try {
+            await addDoc(collection(db, "reviews"), {
+              uid: user.uid,
+              name: user.displayName || "",
+              email: user.email || "",
+              rating: parseInt(rating),
+              feedback: feedback.trim(),
+              bookingId: bookingId.trim(),
+              timestamp: serverTimestamp()
+            });
+
+            alert("✅ Thank you for your review!");
+            form.reset();
+          } catch (error) {
+            console.error("Review submission failed", error);
+            alert("❌ Failed to submit. Try again.");
+          }
         });
 
-        reviewForm.reset();
-        alert("✅ Your review has been submitted!");
+      } else {
+        alert("⚠️ You must be signed in to leave a review.");
+        window.location.href = "auth.html";
       }
-    });
-
-    const q = query(reviewsRef, orderBy("timestamp", "desc"));
-    onSnapshot(q, (snapshot) => {
-      reviewsList.innerHTML = "";
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <strong>${data.name}</strong>
-          <div>${"⭐".repeat(data.rating)}</div>
-          <p>${data.message}</p>
-          <hr/>
-        `;
-        reviewsList.appendChild(li);
-      });
     });
   </script>
 
-  <!-- General Script -->
+  <!-- Shared JS -->
   <script src="script.js"></script>
 </body>
 </html>
-
