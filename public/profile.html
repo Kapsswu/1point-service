@@ -3,10 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>1 Point - Profile</title>
+  <title>1 Point - Your Profile</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .profile-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      background: #fff;
+    }
+    .profile-info p {
+      margin-bottom: 0.75rem;
+    }
+    .profile-info input {
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      margin-top: 4px;
+    }
+    .profile-info button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #007BFF;
+      color: #fff;
+      cursor: pointer;
+    }
+    .profile-info button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
 
@@ -66,110 +97,102 @@
     <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
 
-  <!-- Firebase with Firestore -->
+  <!-- Firebase Profile Logic -->
   <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
-  authDomain: "point-service-c2fcb.firebaseapp.com",
-  projectId: "point-service-c2fcb",
-  storageBucket: "point-service-c2fcb.appspot.com",
-  messagingSenderId: "77473043188",
-  appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
-  measurementId: "G-MTVG8TYHDG"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+      authDomain: "point-service-c2fcb.firebaseapp.com",
+      projectId: "point-service-c2fcb",
+      storageBucket: "point-service-c2fcb.appspot.com",
+      messagingSenderId: "77473043188",
+      appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
+      measurementId: "G-MTVG8TYHDG"
+    };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-const profileInfo = document.getElementById("profile-info");
+    const profileInfo = document.getElementById("profile-info");
+    let currentUserID = null;
+    let currentUserData = null;
 
-let currentUserID = null;
-let currentUserData = null;
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "auth.html";
+        return;
+      }
 
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = "auth.html";
-    return;
-  }
+      currentUserID = user.uid;
 
-  currentUserID = user.uid;
+      try {
+        const docSnap = await getDoc(doc(db, "users", currentUserID));
+        currentUserData = docSnap.exists() ? docSnap.data() : {};
+        renderProfile(user);
+      } catch (err) {
+        profileInfo.innerHTML = `<p style="color:red;">\u26a0\ufe0f Failed to load profile</p>`;
+        console.error(err);
+      }
+    });
 
-  try {
-    const docRef = doc(db, "users", currentUserID);
-    const docSnap = await getDoc(docRef);
+    function renderProfile(user) {
+      const data = currentUserData || {};
+      profileInfo.innerHTML = `
+        <p><strong>User ID:</strong> ${currentUserID}</p>
+        <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
+        <p><strong>Address:</strong> ${data.address || 'N/A'}</p>
+        <p><strong>Occupation:</strong> ${data.occupation || 'N/A'}</p>
+        <button id="edit-btn">Edit Profile</button>
+      `;
 
-    currentUserData = docSnap.exists() ? docSnap.data() : {};
+      document.getElementById("edit-btn").addEventListener("click", showEditForm);
+    }
 
-    renderProfile(user);
-  } catch (err) {
-    profileInfo.innerHTML = `<p style="color:red;">⚠️ Failed to load profile</p>`;
-    console.error(err);
-  }
-});
+    function showEditForm() {
+      const data = currentUserData || {};
+      profileInfo.innerHTML = `
+        <p><strong>Name:</strong> <input id="edit-name" value="${data.name || ''}" /></p>
+        <p><strong>Phone:</strong> <input id="edit-phone" value="${data.phone || ''}" /></p>
+        <p><strong>Address:</strong> <input id="edit-address" value="${data.address || ''}" /></p>
+        <p><strong>Occupation:</strong> <input id="edit-occupation" value="${data.occupation || ''}" /></p>
+        <button id="save-btn">Save</button>
+        <button id="cancel-btn">Cancel</button>
+      `;
 
-function renderProfile(user) {
-  const data = currentUserData || {};
+      document.getElementById("save-btn").addEventListener("click", saveProfile);
+      document.getElementById("cancel-btn").addEventListener("click", () => renderProfile(auth.currentUser));
+    }
 
-  profileInfo.innerHTML = `
-    <p><strong>User ID:</strong> ${currentUserID}</p>
-    <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
-    <p><strong>Email:</strong> ${user.email}</p>
-    <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
-    <p><strong>Address:</strong> ${data.address || 'N/A'}</p>
-    <p><strong>Occupation:</strong> ${data.occupation || 'N/A'}</p>
-    <button id="edit-btn">Edit Profile</button>
-  `;
+    async function saveProfile() {
+      const updatedUser = {
+        name: document.getElementById("edit-name").value.trim(),
+        phone: document.getElementById("edit-phone").value.trim(),
+        address: document.getElementById("edit-address").value.trim(),
+        occupation: document.getElementById("edit-occupation").value.trim()
+      };
 
-  document.getElementById("edit-btn").addEventListener("click", () => showEditForm());
-}
+      try {
+        await setDoc(doc(db, "users", currentUserID), updatedUser, { merge: true });
+        currentUserData = { ...currentUserData, ...updatedUser };
+        alert("✅ Profile updated!");
+        renderProfile(auth.currentUser);
+      } catch (err) {
+        alert("❌ Failed to update profile.");
+        console.error(err);
+      }
+    }
 
-function showEditForm() {
-  const data = currentUserData || {};
-
-  profileInfo.innerHTML = `
-    <p><strong>Name:</strong> <input id="edit-name" value="${data.name || ''}" /></p>
-    <p><strong>Phone:</strong> <input id="edit-phone" value="${data.phone || ''}" /></p>
-    <p><strong>Address:</strong> <input id="edit-address" value="${data.address || ''}" /></p>
-    <p><strong>Occupation:</strong> <input id="edit-occupation" value="${data.occupation || ''}" /></p>
-    <button id="save-btn">Save</button>
-    <button id="cancel-btn">Cancel</button>
-  `;
-
-  document.getElementById("save-btn").addEventListener("click", () => saveProfile());
-  document.getElementById("cancel-btn").addEventListener("click", () => renderProfile(auth.currentUser));
-}
-
-async function saveProfile() {
-  const updatedUser = {
-    name: document.getElementById("edit-name").value.trim(),
-    phone: document.getElementById("edit-phone").value.trim(),
-    address: document.getElementById("edit-address").value.trim(),
-    occupation: document.getElementById("edit-occupation").value.trim()
-  };
-
-  try {
-    await setDoc(doc(db, "users", currentUserID), updatedUser, { merge: true });
-    currentUserData = { ...currentUserData, ...updatedUser };
-    alert("✅ Profile updated!");
-    renderProfile(auth.currentUser);
-  } catch (err) {
-    alert("❌ Failed to update profile.");
-    console.error(err);
-  }
-}
-
-window.logout = () => {
-  signOut(auth).then(() => {
-    window.location.href = "auth.html";
-  });
-};
-</script>
-
+    window.logout = () => {
+      signOut(auth).then(() => {
+        window.location.href = "auth.html";
+      });
+    };
+  </script>
 </body>
 </html>
-
