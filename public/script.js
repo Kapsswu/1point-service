@@ -1,11 +1,19 @@
+// ✅ Firebase imports
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+const auth = getAuth();
+const db = getFirestore();
+
 const allowedPagesWithoutLogin = ["index.html", "", "/", "auth.html"];
 const currentPage = location.pathname.split("/").pop();
-const userId = localStorage.getItem("loggedInUserId");
 
-if (!userId && !allowedPagesWithoutLogin.includes(currentPage)) {
-  alert("🔒 Please sign in to access this page.");
-  window.location.href = "auth.html";
-}
+onAuthStateChanged(auth, (user) => {
+  if (!user && !allowedPagesWithoutLogin.includes(currentPage)) {
+    alert("\ud83d\udd10 Please sign in to access this page.");
+    window.location.href = "auth.html";
+  }
+});
 
 window.addEventListener("DOMContentLoaded", () => {
   const headerContainer = document.getElementById("header-container");
@@ -13,53 +21,61 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Load header
   if (headerContainer) {
-   fetch("header.html")
-  .then(res => res.text())
-  .then(data => {
-  headerContainer.innerHTML = data;
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        headerContainer.innerHTML = data;
 
-  const userId = localStorage.getItem("loggedInUserId");
-  const signInLink = document.getElementById("signin-link");
-  const profileIcon = document.getElementById("profile-icon");
+        const signInLink = document.getElementById("signin-link");
+        const profileIcon = document.getElementById("profile-icon");
 
-  if (userId) {
-    if (signInLink) signInLink.style.display = "none";
-    if (profileIcon) profileIcon.style.display = "inline-block";
-  } else {
-    if (signInLink) signInLink.style.display = "inline-block";
-    if (profileIcon) profileIcon.style.display = "none";
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            if (signInLink) signInLink.style.display = "none";
+            if (profileIcon) profileIcon.style.display = "inline-block";
+          } else {
+            if (signInLink) signInLink.style.display = "inline-block";
+            if (profileIcon) profileIcon.style.display = "none";
 
-    // 👇 Place this INSIDE this block
-    const allowedWithoutLogin = ["index.html", "", "/"];
-    document.querySelectorAll("a").forEach((link) => {
-      const href = link.getAttribute("href");
-      if (
-        href &&
-        !allowedWithoutLogin.some(page => href.includes(page))
-      ) {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          alert("🔒 Please sign in to access this feature.");
+            const allowedWithoutLogin = ["index.html", "", "/"];
+            document.querySelectorAll("a").forEach((link) => {
+              const href = link.getAttribute("href");
+              if (href && !allowedWithoutLogin.some(page => href.includes(page))) {
+                link.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  alert("\ud83d\udd10 Please sign in to access this feature.");
+                });
+              }
+            });
+          }
         });
-      }
-    });
+      });
   }
-});
-}
+
   // Autofill booking form
   const serviceField = document.getElementById("service");
-  const user = JSON.parse(localStorage.getItem("az_user")) || {};
-  if (serviceField) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get("c") || "";
-    const subcategory = urlParams.get("s") || "";
-    serviceField.value = `${subcategory} (${category.replace(/-/g, ' ')})`;
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get("c") || "";
+  const subcategory = urlParams.get("s") || "";
 
-    ["name", "phone", "location", "address"].forEach(id => {
-      const input = document.getElementById(id);
-      if (input && user[id]) input.value = user[id];
-    });
+  if (serviceField) {
+    serviceField.value = `${subcategory} (${category.replace(/-/g, ' ')})`;
   }
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) return;
+
+    try {
+      const docSnap = await getDoc(doc(db, "users", user.uid));
+      const userData = docSnap.exists() ? docSnap.data() : {};
+      ["name", "phone", "location", "address"].forEach(id => {
+        const input = document.getElementById(id);
+        if (input && userData[id]) input.value = userData[id];
+      });
+    } catch (err) {
+      console.error("Error loading profile:", err);
+    }
+  });
 
   // Handle booking form submission
   const bookingForm = document.getElementById("bookingForm");
@@ -91,8 +107,20 @@ window.addEventListener("DOMContentLoaded", () => {
 *Urgency:* ${urgency}`;
 
       const encodedMessage = encodeURIComponent(message);
-      localStorage.setItem("az_user", JSON.stringify({ name, phone, location, address }));
-      alert("✅ Booking data prepared. Redirecting to WhatsApp...");
+
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            await setDoc(doc(db, "users", user.uid), {
+              name, phone, location, address
+            }, { merge: true });
+          } catch (err) {
+            console.error("Failed to save profile info:", err);
+          }
+        }
+      });
+
+      alert("\u2705 Booking data prepared. Redirecting to WhatsApp...");
       window.open(`https://wa.me/916009982567?text=${encodedMessage}`, "_blank");
     });
   }
@@ -146,15 +174,20 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Logout handler (used on profile or header)
+  // Logout handler
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("loggedInUserId");
-      window.location.href = "auth.html";
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "auth.html";
+      } catch (err) {
+        console.error("Logout failed:", err);
+      }
     });
   }
 });
+
 // Set background images for homepage cards
 document.querySelectorAll(".category-card").forEach(card => {
   const bg = card.getAttribute("data-bg");
@@ -162,4 +195,3 @@ document.querySelectorAll(".category-card").forEach(card => {
     card.style.backgroundImage = `url(${bg})`;
   }
 });
-
