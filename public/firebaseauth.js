@@ -26,15 +26,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// 🔁 Save UID to localStorage when logged in
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    localStorage.setItem("loggedInUserId", user.uid);
-  } else {
-    localStorage.removeItem("loggedInUserId");
-  }
-});
-
 // ✅ SIGN UP
 const signUpBtn = document.getElementById("submitSignUp");
 if (signUpBtn) {
@@ -108,7 +99,6 @@ if (signInBtn) {
         return;
       }
 
-      localStorage.setItem("loggedInUserId", user.uid);
       window.location.href = "index.html";
     } catch (error) {
       if (error.code === "auth/user-not-found") {
@@ -139,3 +129,4 @@ if (forgotLink) {
     }
   });
 }
+
