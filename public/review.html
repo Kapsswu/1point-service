@@ -2,16 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leave a Review | AZ Service</title>
-  <link rel="stylesheet" href="style.css"/>
-  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Embedded Header -->
   <header class="top-nav">
     <a href="index.html" class="logo" style="text-decoration: none;">
       <div style="text-align: center; line-height: 1;">
@@ -19,6 +16,7 @@
         <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
       </div>
     </a>
+
     <div class="nav-links">
       <a href="auth.html" id="signin-link">Sign In</a>
       <a href="profile.html" id="profile-icon" style="display: none;">
@@ -28,7 +26,7 @@
     </div>
   </header>
 
-  <!-- Main -->
+  <!-- Main Content -->
   <main class="container">
     <h2>Leave a Review</h2>
     <form id="review-form" class="form-box" autocomplete="off">
@@ -58,7 +56,7 @@
     </form>
   </main>
 
-  <!-- Footer -->
+  <!-- Embedded Footer -->
   <footer>
     <div class="footer-links">
       <a href="about.html">About Us</a>
@@ -74,76 +72,78 @@
     </div>
   </footer>
 
-  <!-- WhatsApp Floating -->
+  <!-- WhatsApp Floating Button -->
   <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
     <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
 
-  <!-- Main Review Script -->
+  <!-- Firebase Review Script -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+      authDomain: "point-service-c2fcb.firebaseapp.com",
+      projectId: "point-service-c2fcb",
+      storageBucket: "point-service-c2fcb.appspot.com",
+      messagingSenderId: "77473043188",
+      appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
+      measurementId: "G-MTVG8TYHDG"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const form = document.getElementById('review-form');
+    let currentUser = null;
 
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        document.getElementById("signin-link").style.display = "none";
-        document.getElementById("profile-icon").style.display = "inline-block";
-
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-
-          const rating = form.rating.value;
-          const feedback = form.feedback.value;
-          const bookingId = form['booking-id'].value;
-
-          if (!rating) {
-            alert("⭐ Please select a rating.");
-            return;
-          }
-
-          try {
-            await addDoc(collection(db, "reviews"), {
-              uid: user.uid,
-              name: user.displayName || "",
-              email: user.email || "",
-              rating: parseInt(rating),
-              feedback: feedback.trim(),
-              bookingId: bookingId.trim(),
-              timestamp: serverTimestamp()
-            });
-
-            alert("✅ Thank you for your review!");
-            form.reset();
-          } catch (error) {
-            console.error("Review submission failed", error);
-            alert("❌ Failed to submit. Try again.");
-          }
-        });
-
-      } else {
-        alert("⚠️ You must be signed in to leave a review.");
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        alert("\u26a0\ufe0f You must be signed in to leave a review.");
         window.location.href = "auth.html";
+      } else {
+        currentUser = user;
       }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("review-form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        if (!currentUser) return;
+
+        const bookingId = document.getElementById("booking-id").value.trim();
+        const rating = document.getElementById("rating").value;
+        const feedback = document.getElementById("feedback").value.trim();
+
+        if (!rating) {
+          alert("Please select a rating.");
+          return;
+        }
+
+        try {
+          await addDoc(collection(db, "reviews"), {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            bookingId,
+            rating: parseInt(rating),
+            feedback,
+            createdAt: serverTimestamp()
+          });
+
+          alert("✅ Thank you! Your review has been submitted.");
+          form.reset();
+        } catch (err) {
+          console.error("Error submitting review:", err);
+          alert("❌ Failed to submit review. Try again later.");
+        }
+      });
     });
   </script>
 
-  <!-- Shared JS -->
   <script src="script.js"></script>
 </body>
 </html>
