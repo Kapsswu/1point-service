@@ -78,24 +78,24 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle booking form submission
-  const bookingForm = document.getElementById("bookingForm");
-  if (bookingForm) {
-    bookingForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+const bookingForm = document.getElementById("bookingForm");
+if (bookingForm) {
+  bookingForm.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const location = document.getElementById("location").value;
-      const address = document.getElementById("address").value;
-      const description = document.getElementById("description").value;
-      const datetime = document.getElementById("datetime").value;
-      const urgency = document.getElementById("urgency").value;
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const location = document.getElementById("location").value;
+    const address = document.getElementById("address").value;
+    const description = document.getElementById("description").value;
+    const datetime = document.getElementById("datetime").value;
+    const urgency = document.getElementById("urgency").value;
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const category = urlParams.get("c") || "";
-      const subcategory = urlParams.get("s") || "";
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("c") || "";
+    const subcategory = urlParams.get("s") || "";
 
-      const message = `*AZ Service Booking*%0A
+    const message = `*AZ Service Booking*%0A
 *Service:* ${subcategory}%0A
 *Category:* ${category.replace(/-/g, ' ')}%0A
 *Name:* ${name}%0A
@@ -106,24 +106,37 @@ window.addEventListener("DOMContentLoaded", () => {
 *Preferred Time:* ${datetime}%0A
 *Urgency:* ${urgency}`;
 
-      const encodedMessage = encodeURIComponent(message);
+    const encodedMessage = encodeURIComponent(message);
 
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          try {
-            await setDoc(doc(db, "users", user.uid), {
-              name, phone, location, address
-            }, { merge: true });
-          } catch (err) {
-            console.error("Failed to save profile info:", err);
-          }
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          // Save/update profile info
+          await setDoc(doc(db, "users", user.uid), {
+            name, phone, location, address
+          }, { merge: true });
+
+          // ✅ Save booking into history subcollection
+          await addDoc(collection(db, "users", user.uid, "bookings"), {
+            service: subcategory,
+            category: category.replace(/-/g, ' '),
+            description,
+            preferredTime: datetime,
+            urgency,
+            status: "Pending", // default status
+            createdAt: serverTimestamp()
+          });
+
+        } catch (err) {
+          console.error("Failed to save booking:", err);
         }
-      });
-
-      alert("\u2705 Booking data prepared. Redirecting to WhatsApp...");
-      window.open(`https://wa.me/916009982567?text=${encodedMessage}`, "_blank");
+      }
     });
-  }
+
+    alert("✅ Booking data prepared. Redirecting to WhatsApp...");
+    window.open(`https://wa.me/916009982567?text=${encodedMessage}`, "_blank");
+  });
+}
 
   // Terms agreement
   const agreeCheckbox = document.getElementById("agree");
@@ -195,3 +208,4 @@ document.querySelectorAll(".category-card").forEach(card => {
     card.style.backgroundImage = `url(${bg})`;
   }
 });
+
