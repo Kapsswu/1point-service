@@ -223,17 +223,19 @@
       }
     });
   </script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const allowedWithoutLogin = ["index.html", "", "/"];
-    const isLoggedIn = localStorage.getItem("loggedInUserId");
+<script type="module">
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
+  const auth = getAuth();
+  const allowedWithoutLogin = ["index.html", "", "/"];
+
+  onAuthStateChanged(auth, (user) => {
     document.querySelectorAll("a").forEach((link) => {
       const href = link.getAttribute("href");
       if (
         href &&
         !allowedWithoutLogin.some(page => href.includes(page)) &&
-        !isLoggedIn
+        !user // 🚀 block if not logged in
       ) {
         link.addEventListener("click", (e) => {
           e.preventDefault();
@@ -243,5 +245,7 @@
     });
   });
 </script>
+
 </body>
 </html>
+
