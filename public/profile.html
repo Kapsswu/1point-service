@@ -1,198 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>1 Point - Your Profile</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    .profile-container {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      background: #fff;
-    }
-    .profile-info p {
-      margin-bottom: 0.75rem;
-    }
-    .profile-info input {
-      padding: 6px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      width: 100%;
-      margin-top: 4px;
-    }
-    .profile-info button {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      background: #007BFF;
-      color: #fff;
-      cursor: pointer;
-    }
-    .profile-info button:hover {
-      background: #0056b3;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .info {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+        .label {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <h2>User Profile</h2>
+    <div id="userInfo">Loading...</div>
+</div>
 
-  <!-- Header -->
-  <header class="top-nav">
-    <a href="index.html" class="logo" style="text-decoration: none;">
-      <div style="text-align: center; line-height: 1;">
-        <div style="font-size: 2.2rem; font-weight: bold; color: var(--primary);">1</div>
-        <div style="font-size: 0.95rem; color: var(--light);">Point.</div>
-      </div>
-    </a>
-    <div class="nav-links">
-      <a href="auth.html" id="signin-link">Sign In</a>
-      <a href="profile.html" id="profile-icon" style="display: none;">
-        <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
-      </a>
-      <a href="#">Download 1 Point App</a>
-    </div>
-  </header>
+<script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-  <main class="profile-container">
-    <h1>Your Profile</h1>
-
-    <section class="profile-info" id="profile-info">
-      <p>Loading your profile...</p>
-    </section>
-
-    <section class="booking-history">
-      <h2>Booking History</h2>
-      <ul>
-        <li>🛠️ Technician - 12 June 2025 - Completed</li>
-        <li>🚗 Car Repair - 15 June 2025 - Pending</li>
-      </ul>
-    </section>
-
-    <button onclick="logout()">Logout</button>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="about.html">About Us</a>
-      <a href="terms.html">Terms</a>
-      <a href="registration.html">Registration</a>
-      <a href="contact.html">Contact Us</a>
-      <a href="review.html">Reviews</a>
-    </div>
-    <div class="social">
-      <p>Follow us:</p>
-      <a href="https://www.instagram.com/az_service_dimapur" target="_blank">Instagram</a>
-      <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a>
-      <a href="#" id="fb-link">Facebook</a>
-    </div>
-  </footer>
-
-  <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
-    <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
-  </a>
-
-  <!-- Firebase Profile Logic -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
-      authDomain: "point-service-c2fcb.firebaseapp.com",
-      projectId: "point-service-c2fcb",
-      storageBucket: "point-service-c2fcb.appspot.com",
-      messagingSenderId: "77473043188",
-      appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
-      measurementId: "G-MTVG8TYHDG"
+    // ✅ Your Firebase Config from ZIP
+   const firebaseConfig = {
+  apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+  authDomain: "point-service-c2fcb.firebaseapp.com",
+  projectId: "point-service-c2fcb",
+  storageBucket: "point-service-c2fcb.firebasestorage.app",
+  messagingSenderId: "77473043188",
+  appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
+  measurementId: "G-MTVG8TYHDG"
     };
 
+    // Init Firebase
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getFirestore(app);
+    const auth = getAuth(app);
 
-    const profileInfo = document.getElementById("profile-info");
-    let currentUserID = null;
-    let currentUserData = null;
-
+    // Load User Profile
     onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "auth.html";
-        return;
-      }
+        const userInfoDiv = document.getElementById("userInfo");
+        if (user) {
+            try {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
 
-      currentUserID = user.uid;
-
-      try {
-        const docSnap = await getDoc(doc(db, "users", currentUserID));
-        currentUserData = docSnap.exists() ? docSnap.data() : {};
-        renderProfile(user);
-      } catch (err) {
-        profileInfo.innerHTML = `<p style="color:red;">\u26a0\ufe0f Failed to load profile</p>`;
-        console.error(err);
-      }
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    userInfoDiv.innerHTML = `
+                        <div class="info"><span class="label">Name:</span> ${data.name || "N/A"}</div>
+                        <div class="info"><span class="label">Email:</span> ${data.email || "N/A"}</div>
+                        <div class="info"><span class="label">Phone:</span> ${data.phone || "N/A"}</div>
+                    `;
+                } else {
+                    userInfoDiv.innerHTML = "No profile found in database.";
+                }
+            } catch (error) {
+                console.error(error);
+                userInfoDiv.innerHTML = "Error loading profile.";
+            }
+        } else {
+            userInfoDiv.innerHTML = "No user is logged in.";
+        }
     });
-
-    function renderProfile(user) {
-      const data = currentUserData || {};
-      profileInfo.innerHTML = `
-        <p><strong>User ID:</strong> ${currentUserID}</p>
-        <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
-        <p><strong>Email:</strong> ${user.email}</p>
-        <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
-        <p><strong>Address:</strong> ${data.address || 'N/A'}</p>
-        <p><strong>Occupation:</strong> ${data.occupation || 'N/A'}</p>
-        <button id="edit-btn">Edit Profile</button>
-      `;
-
-      document.getElementById("edit-btn").addEventListener("click", showEditForm);
-    }
-
-    function showEditForm() {
-      const data = currentUserData || {};
-      profileInfo.innerHTML = `
-        <p><strong>Name:</strong> <input id="edit-name" value="${data.name || ''}" /></p>
-        <p><strong>Phone:</strong> <input id="edit-phone" value="${data.phone || ''}" /></p>
-        <p><strong>Address:</strong> <input id="edit-address" value="${data.address || ''}" /></p>
-        <p><strong>Occupation:</strong> <input id="edit-occupation" value="${data.occupation || ''}" /></p>
-        <button id="save-btn">Save</button>
-        <button id="cancel-btn">Cancel</button>
-      `;
-
-      document.getElementById("save-btn").addEventListener("click", saveProfile);
-      document.getElementById("cancel-btn").addEventListener("click", () => renderProfile(auth.currentUser));
-    }
-
-    async function saveProfile() {
-      const updatedUser = {
-        name: document.getElementById("edit-name").value.trim(),
-        phone: document.getElementById("edit-phone").value.trim(),
-        address: document.getElementById("edit-address").value.trim(),
-        occupation: document.getElementById("edit-occupation").value.trim()
-      };
-
-      try {
-        await setDoc(doc(db, "users", currentUserID), updatedUser, { merge: true });
-        currentUserData = { ...currentUserData, ...updatedUser };
-        alert("✅ Profile updated!");
-        renderProfile(auth.currentUser);
-      } catch (err) {
-        alert("❌ Failed to update profile.");
-        console.error(err);
-      }
-    }
-
-    window.logout = () => {
-      signOut(auth).then(() => {
-        window.location.href = "auth.html";
-      });
-    };
-  </script>
+</script>
 </body>
 </html>
