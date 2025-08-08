@@ -5,12 +5,13 @@ import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/fireb
 
 // ✅ Your Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+  authDomain: "point-service-c2fcb.firebaseapp.com",
+  projectId: "point-service-c2fcb",
+  storageBucket: "point-service-c2fcb.firebasestorage.app",
+  messagingSenderId: "77473043188",
+  appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
+  measurementId: "G-MTVG8TYHDG"
 };
 
 // ✅ Init Firebase
@@ -76,3 +77,4 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     alert(error.message);
   }
 });
+
