@@ -1,5 +1,5 @@
 // firebaseauth.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -7,14 +7,8 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { saveUserProfile } from "./firebasefirestore.js";
 
-// ✅ Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
   authDomain: "point-service-c2fcb.firebaseapp.com",
@@ -25,18 +19,27 @@ const firebaseConfig = {
   measurementId: "G-MTVG8TYHDG"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
-// ✅ SIGN UP
+// Helper function to show messages
+function showMessage(element, text, isError = true) {
+  element.textContent = text;
+  element.style.color = isError ? "#b00020" : "#007700";
+  element.style.display = "block";
+}
+
+// Helper function to validate email format
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// -- Sign Up Logic --
 const signUpBtn = document.getElementById("submitSignUp");
 if (signUpBtn) {
   signUpBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    const fName = document.getElementById("fName").value.trim();
-    const lName = document.getElementById("lName").value.trim();
     const email = document.getElementById("rEmail").value.trim();
     const password = document.getElementById("rPassword").value.trim();
     const agreeTerms = document.getElementById("agree-terms").checked;
@@ -44,15 +47,23 @@ if (signUpBtn) {
 
     message.style.display = "none";
 
-    if (!agreeTerms) {
-      message.textContent = "⚠️ You must agree to the terms.";
-      message.style.display = "block";
+    if (!email || !password) {
+      showMessage(message, "⚠️ Email and password are required.");
       return;
     }
 
-    if (!fName || !lName || !email || !password) {
-      message.textContent = "⚠️ Please fill in all fields.";
-      message.style.display = "block";
+    if (!isValidEmail(email)) {
+      showMessage(message, "⚠️ Please enter a valid email address.");
+      return;
+    }
+
+    if (password.length < 6) {
+      showMessage(message, "⚠️ Password should be at least 6 characters.");
+      return;
+    }
+
+    if (!agreeTerms) {
+      showMessage(message, "⚠️ You must agree to the terms.");
       return;
     }
 
@@ -60,34 +71,34 @@ if (signUpBtn) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const uid = userCredential.user.uid;
 
-      // 🔄 Save to Firestore
-      await setDoc(doc(db, "users", uid), {
+      // Create user profile data
+      const userData = {
         uid: uid,
-        firstName: fName,
-        lastName: lName,
         email: email,
         createdAt: new Date().toISOString()
-      });
+      };
 
-      // 📧 Send verification email
+      // Save profile to Firestore
+      await saveUserProfile(uid, userData);
+
+      // Send email verification
       await sendEmailVerification(userCredential.user);
 
-      alert("✅ Account created! Please verify your email.");
+      alert("✅ Account created! A verification email has been sent.");
       window.location.href = "auth.html";
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        message.textContent = "⚠️ This email is already registered.";
+        showMessage(message, "⚠️ This email is already registered. Try signing in.");
       } else if (error.code === "auth/weak-password") {
-        message.textContent = "⚠️ Password should be at least 6 characters.";
+        showMessage(message, "⚠️ Password should be at least 6 characters.");
       } else {
-        message.textContent = "❌ " + error.message;
+        showMessage(message, "❌ " + error.message);
       }
-      message.style.display = "block";
     }
   });
 }
 
-// ✅ SIGN IN
+// -- Sign In Logic --
 const signInBtn = document.getElementById("submitSignIn");
 if (signInBtn) {
   signInBtn.addEventListener("click", async (e) => {
@@ -99,54 +110,54 @@ if (signInBtn) {
 
     message.style.display = "none";
 
+    if (!email || !password) {
+      showMessage(message, "⚠️ Email and password are required.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      showMessage(message, "⚠️ Please enter a valid email address.");
+      return;
+    }
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       if (!user.emailVerified) {
-        message.textContent = "⚠️ Please verify your email before signing in.";
-        message.style.display = "block";
+        showMessage(message, "⚠️ Please verify your email before signing in.");
         return;
       }
 
-      // 🔍 Get user profile from Firestore
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        localStorage.setItem("userData", JSON.stringify(docSnap.data()));
-        window.location.href = "index.html";
-      } else {
-        message.textContent = "❌ User profile not found.";
-        message.style.display = "block";
-      }
-
+      // Redirect on successful login
+      window.location.href = "index.html";
     } catch (error) {
       if (error.code === "auth/user-not-found") {
-        message.textContent = "❌ No user found with this email.";
+        showMessage(message, "❌ No user found with this email.");
       } else if (error.code === "auth/wrong-password") {
-        message.textContent = "❌ Incorrect password.";
+        showMessage(message, "❌ Incorrect password.");
       } else {
-        message.textContent = "❌ " + error.message;
+        showMessage(message, "❌ " + error.message);
       }
-      message.style.display = "block";
     }
   });
 }
 
-// 🔁 Forgot Password
+// -- Forgot Password Logic --
 const forgotLink = document.getElementById("forgotPasswordLink");
 if (forgotLink) {
   forgotLink.addEventListener("click", async (e) => {
     e.preventDefault();
     const email = window.prompt("Enter your email to reset password:");
-    if (email) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-        alert("✅ Password reset link sent to your email.");
-      } catch (err) {
-        alert("❌ " + err.message);
-      }
+
+    if (!email) return alert("⚠️ Email is required to reset password.");
+    if (!isValidEmail(email)) return alert("⚠️ Please enter a valid email address.");
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("✅ Password reset link sent to your email.");
+    } catch (err) {
+      alert("❌ " + err.message);
     }
   });
 }
