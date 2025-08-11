@@ -584,7 +584,7 @@ footer {
   left: -200px;
   width: 200px;
   height: 100%;
-  background: #23243a;
+  background: #030406;
   color: #fafaf7;
   box-shadow: 2px 0 16px rgba(0,0,0,0.18);
   z-index: 2000;
@@ -621,7 +621,7 @@ footer {
   transition: background 0.18s;
 }
 .sidebar-menu a:hover {
-  background: #282a3f;
+  background: #030406;
   color: #a78bfa;
 }
 .sidebar-menu strong {
@@ -682,5 +682,6 @@ footer {
     max-width: 320px;
   }
 }
+
 
 
