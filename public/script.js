@@ -1,16 +1,32 @@
 // ✅ Firebase imports
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-const auth = getAuth();
-const db = getFirestore();
+// 🔹 Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
+  authDomain: "point-service-c2fcb.firebaseapp.com",
+  projectId: "point-service-c2fcb",
+  storageBucket: "point-service-c2fcb.appspot.com",
+  messagingSenderId: "77473043188",
+  appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
+  measurementId: "G-MTVG8TYHDG"
+};
 
+// 🔹 Initialize Firebase (only once)
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ✅ Pages that don't require login
 const allowedPagesWithoutLogin = ["index.html", "", "/", "auth.html"];
 const currentPage = location.pathname.split("/").pop();
 
+// Redirect unauthenticated users from protected pages
 onAuthStateChanged(auth, (user) => {
   if (!user && !allowedPagesWithoutLogin.includes(currentPage)) {
-    alert("\ud83d\udd10 Please sign in to access this page.");
+    alert("🔒 Please sign in to access this page.");
     window.location.href = "auth.html";
   }
 });
@@ -19,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const headerContainer = document.getElementById("header-container");
   const footerContainer = document.getElementById("footer-container");
 
-  // Load header
+  // Load header and update nav links based on auth state
   if (headerContainer) {
     fetch("header.html")
       .then(res => res.text())
@@ -37,13 +53,14 @@ window.addEventListener("DOMContentLoaded", () => {
             if (signInLink) signInLink.style.display = "inline-block";
             if (profileIcon) profileIcon.style.display = "none";
 
+            // Disable protected links for unauthenticated users
             const allowedWithoutLogin = ["index.html", "", "/"];
             document.querySelectorAll("a").forEach((link) => {
               const href = link.getAttribute("href");
               if (href && !allowedWithoutLogin.some(page => href.includes(page))) {
                 link.addEventListener("click", (e) => {
                   e.preventDefault();
-                  alert("\ud83d\udd10 Please sign in to access this feature.");
+                  alert("🔒 Please sign in to access this feature.");
                 });
               }
             });
@@ -52,7 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // Autofill booking form
+  // Autofill booking service field from URL params
   const serviceField = document.getElementById("service");
   const urlParams = new URLSearchParams(window.location.search);
   const category = urlParams.get("c") || "";
@@ -62,40 +79,40 @@ window.addEventListener("DOMContentLoaded", () => {
     serviceField.value = `${subcategory} (${category.replace(/-/g, ' ')})`;
   }
 
+  // Autofill user profile data into booking form if logged in
   onAuthStateChanged(auth, async (user) => {
     if (!user) return;
 
     try {
       const docSnap = await getDoc(doc(db, "users", user.uid));
-      const userData = docSnap.exists() ? docSnap.data() : {};
-      ["name", "phone", "location", "address"].forEach(id => {
-        const input = document.getElementById(id);
-        if (input && userData[id]) input.value = userData[id];
-      });
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        ["name", "phone", "location", "address"].forEach(id => {
+          const input = document.getElementById(id);
+          if (input && userData[id]) input.value = userData[id];
+        });
+      }
     } catch (err) {
       console.error("Error loading profile:", err);
     }
   });
 
-  // Handle booking form submission
-const bookingForm = document.getElementById("bookingForm");
-if (bookingForm) {
-  bookingForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+  // Booking form submission handler
+  const bookingForm = document.getElementById("bookingForm");
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const location = document.getElementById("location").value;
-    const address = document.getElementById("address").value;
-    const description = document.getElementById("description").value;
-    const datetime = document.getElementById("datetime").value;
-    const urgency = document.getElementById("urgency").value;
+      // Get input values trimmed and sanitized
+      const name = sanitizeInput(document.getElementById("name").value);
+      const phone = sanitizeInput(document.getElementById("phone").value);
+      const location = sanitizeInput(document.getElementById("location").value);
+      const address = sanitizeInput(document.getElementById("address").value);
+      const description = sanitizeInput(document.getElementById("description").value);
+      const datetime = sanitizeInput(document.getElementById("datetime").value);
+      const urgency = sanitizeInput(document.getElementById("urgency").value);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get("c") || "";
-    const subcategory = urlParams.get("s") || "";
-
-    const message = `*AZ Service Booking*%0A
+      const message = `*AZ Service Booking*%0A
 *Service:* ${subcategory}%0A
 *Category:* ${category.replace(/-/g, ' ')}%0A
 *Name:* ${name}%0A
@@ -106,53 +123,43 @@ if (bookingForm) {
 *Preferred Time:* ${datetime}%0A
 *Urgency:* ${urgency}`;
 
-    const encodedMessage = encodeURIComponent(message);
+      const encodedMessage = encodeURIComponent(message);
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          // Save/update profile info
+      try {
+        // Update user profile info in Firestore
+        const user = auth.currentUser;
+        if (user) {
           await setDoc(doc(db, "users", user.uid), {
             name, phone, location, address
           }, { merge: true });
-
-          // ✅ Save booking into history subcollection
-          await addDoc(collection(db, "users", user.uid, "bookings"), {
-            service: subcategory,
-            category: category.replace(/-/g, ' '),
-            description,
-            preferredTime: datetime,
-            urgency,
-            status: "Pending", // default status
-            createdAt: serverTimestamp()
-          });
-
-        } catch (err) {
-          console.error("Failed to save booking:", err);
         }
+      } catch (err) {
+        console.error("Failed to save profile info:", err);
       }
+
+      alert("✅ Booking data prepared. Redirecting to WhatsApp...");
+      window.open(`https://wa.me/916009982567?text=${encodedMessage}`, "_blank");
     });
+  }
 
-    alert("✅ Booking data prepared. Redirecting to WhatsApp...");
-    window.open(`https://wa.me/916009982567?text=${encodedMessage}`, "_blank");
-  });
-}
-
-  // Terms agreement
+  // Terms agreement logic
   const agreeCheckbox = document.getElementById("agree");
   const acceptBtn = document.getElementById("accept-btn");
   if (agreeCheckbox && acceptBtn) {
-    document.getElementById("agree-section").style.display = "block";
+    const agreeSection = document.getElementById("agree-section");
+    if (agreeSection) agreeSection.style.display = "block";
+
     agreeCheckbox.addEventListener("change", () => {
       acceptBtn.disabled = !agreeCheckbox.checked;
     });
+
     acceptBtn.addEventListener("click", () => {
       localStorage.setItem("agreedToTerms", "true");
       window.location.href = "auth.html";
     });
   }
 
-  // Search suggestions
+  // Search suggestions logic
   const searchInput = document.getElementById("searchInput");
   const suggestions = document.getElementById("suggestions");
 
@@ -199,13 +206,33 @@ if (bookingForm) {
       }
     });
   }
-});
 
-// Set background images for homepage cards
-document.querySelectorAll(".category-card").forEach(card => {
-  const bg = card.getAttribute("data-bg");
-  if (bg) {
-    card.style.backgroundImage = `url(${bg})`;
+  // --- Sidebar Menu Logic ---
+  const openBtn = document.getElementById('open-sidebar');
+  const closeBtn = document.getElementById('close-sidebar');
+  const sidebar = document.getElementById('sidebar-menu');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  if (openBtn && closeBtn && sidebar && overlay) {
+    openBtn.addEventListener('click', () => {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+    });
+    closeBtn.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
   }
+  // --- End Sidebar ---
 });
 
+// Simple input sanitization helper to trim and strip potential harmful characters
+function sanitizeInput(input) {
+  const temp = input.trim();
+  // Replace line breaks and encode HTML special chars if needed, here simple example:
+  return temp.replace(/[<>]/g, '');
+}
