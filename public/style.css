@@ -638,16 +638,33 @@ footer {
   font-size: 2rem;
   cursor: pointer;
 }
+
+/* Adjusted menu button */
 .menu-btn {
   background: none;
   border: none;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-right: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  /* Size and padding */
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
 }
+.menu-btn:hover,
+.menu-btn:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -665,3 +682,5 @@ footer {
     max-width: 320px;
   }
 }
+
+
