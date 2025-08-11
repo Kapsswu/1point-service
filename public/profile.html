@@ -2,11 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>1 Point - Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1 Point - Your Profile</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .profile-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      background: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .profile-info p {
+      margin-bottom: 0.75rem;
+    }
+    .profile-info label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .profile-info input {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    .profile-info button {
+      margin-top: 1rem;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #save-btn {
+      background: #28a745;
+      color: #fff;
+      margin-right: 12px;
+      transition: background-color 0.3s ease;
+    }
+    #save-btn:hover {
+      background: #218838;
+    }
+    #cancel-btn {
+      background: #6c757d;
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+    #cancel-btn:hover {
+      background: #5a6268;
+    }
+    .spinner {
+      margin: 20px auto;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary, #007bff);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    .booking-history ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .booking-history li {
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+    }
+    /* Responsive */
+    @media (max-width: 640px) {
+      .profile-container {
+        margin: 1rem;
+        padding: 1rem;
+      }
+      .profile-info button {
+        width: 100%;
+        margin: 0.5rem 0;
+      }
+      #save-btn {
+        margin-right: 0;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -31,13 +118,16 @@
     <h1>Your Profile</h1>
 
     <section class="profile-info" id="profile-info">
+      <div class="spinner" aria-label="Loading"></div>
       <p>Loading your profile...</p>
     </section>
 
     <section class="booking-history">
       <h2>Booking History</h2>
       <ul id="booking-list">
-        <li>Loading bookings...</li>
+        <!-- Placeholder: dynamic booking history will go here -->
+        <li>🛠️ Technician - 12 June 2025 - Completed</li>
+        <li>🚗 Car Repair - 15 June 2025 - Pending</li>
       </ul>
     </section>
 
@@ -61,16 +151,15 @@
     </div>
   </footer>
 
-  <!-- WhatsApp Button -->
   <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
     <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
 
-  <!-- Firebase Script -->
+  <!-- Firebase Profile Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
@@ -86,108 +175,107 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    let currentUserId = null;
-    let currentUserEmail = null;
+    const profileInfo = document.getElementById("profile-info");
+    let currentUserID = null;
+    let currentUserData = null;
 
-    // Load profile and bookings
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, function(m) {
+        return ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        })[m];
+      });
+    }
+
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = "auth.html";
         return;
       }
-      currentUserId = user.uid;
-      currentUserEmail = user.email;
 
-      // Load profile info
+      currentUserID = user.uid;
+
       try {
-        const userRef = doc(db, "users", currentUserId);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-          const data = userSnap.data();
-          showProfile(data);
-        } else {
-          document.getElementById("profile-info").innerHTML = "<p>No profile found.</p>";
-        }
-      } catch (error) {
-        console.error(error);
-        document.getElementById("profile-info").innerHTML = "<p>Error loading profile.</p>";
+        const docSnap = await getDoc(doc(db, "users", currentUserID));
+        currentUserData = docSnap.exists() ? docSnap.data() : {};
+        renderProfile(user);
+      } catch (err) {
+        profileInfo.innerHTML = `<p style="color:red;">⚠️ Failed to load profile</p>`;
+        console.error(err);
       }
-
-      // Load booking history
-      loadBookingHistory();
     });
 
-    // Show profile details
-    function showProfile(data) {
-      const profileInfo = document.getElementById("profile-info");
+    function renderProfile(user) {
+      const data = currentUserData || {};
       profileInfo.innerHTML = `
-        <p><strong>Name:</strong> ${data.firstName || ''} ${data.lastName || ''}</p>
-        <p><strong>Email:</strong> ${currentUserEmail || ''}</p>
-        <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
-        <p><strong>Address:</strong> ${data.address || 'N/A'}</p>
-        <p><strong>Occupation:</strong> ${data.occupation || 'N/A'}</p>
-        <button onclick="editProfile()">Edit Profile</button>
+        <p><strong>User ID:</strong> ${escapeHtml(currentUserID)}</p>
+        <p><strong>Name:</strong> ${escapeHtml(data.name || 'N/A')}</p>
+        <p><strong>Email:</strong> ${escapeHtml(user.email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(data.phone || 'N/A')}</p>
+        <p><strong>Address:</strong> ${escapeHtml(data.address || 'N/A')}</p>
+        <p><strong>Occupation:</strong> ${escapeHtml(data.occupation || 'N/A')}</p>
+        <button id="edit-btn">Edit Profile</button>
       `;
+
+      document.getElementById("edit-btn").addEventListener("click", showEditForm);
     }
 
-    // Load booking history from Firestore
-    async function loadBookingHistory() {
-      const list = document.getElementById("booking-list");
-      list.innerHTML = "<li>Loading...</li>";
+    function showEditForm() {
+      const data = currentUserData || {};
+      profileInfo.innerHTML = `
+        <form id="edit-profile-form">
+          <p>
+            <label for="edit-name">Name:</label>
+            <input id="edit-name" type="text" value="${escapeHtml(data.name || '')}" />
+          </p>
+          <p>
+            <label for="edit-phone">Phone:</label>
+            <input id="edit-phone" type="tel" value="${escapeHtml(data.phone || '')}" />
+          </p>
+          <p>
+            <label for="edit-address">Address:</label>
+            <input id="edit-address" type="text" value="${escapeHtml(data.address || '')}" />
+          </p>
+          <p>
+            <label for="edit-occupation">Occupation:</label>
+            <input id="edit-occupation" type="text" value="${escapeHtml(data.occupation || '')}" />
+          </p>
+          <button id="save-btn" type="submit">Save</button>
+          <button id="cancel-btn" type="button">Cancel</button>
+        </form>
+      `;
 
-      try {
-        const q = query(collection(db, "users", currentUserId, "bookings"), orderBy("createdAt", "desc"));
-        const snapshot = await getDocs(q);
+      document.getElementById("edit-profile-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        saveProfile();
+      });
 
-        list.innerHTML = "";
-        if (snapshot.empty) {
-          list.innerHTML = "<li>No booking history yet.</li>";
-        } else {
-          snapshot.forEach(docSnap => {
-            const b = docSnap.data();
-            list.innerHTML += `<li>${b.service} - ${b.preferredTime || 'No date'} - ${b.status}</li>`;
-          });
-        }
-      } catch (error) {
-        console.error("Error loading bookings:", error);
-        list.innerHTML = "<li>Error loading bookings.</li>";
-      }
+      document.getElementById("cancel-btn").addEventListener("click", () => renderProfile(auth.currentUser));
     }
 
-    // Edit profile form
-    window.editProfile = () => {
-      const profileInfo = document.getElementById("profile-info");
-      profileInfo.innerHTML = `
-        <p><strong>First Name:</strong> <input id="edit-fname" /></p>
-        <p><strong>Last Name:</strong> <input id="edit-lname" /></p>
-        <p><strong>Phone:</strong> <input id="edit-phone" /></p>
-        <p><strong>Address:</strong> <input id="edit-address" /></p>
-        <p><strong>Occupation:</strong> <input id="edit-occupation" /></p>
-        <button onclick="saveProfile()">Save</button>
-      `;
-    };
+    async function saveProfile() {
+      const updatedUser = {
+        name: document.getElementById("edit-name").value.trim(),
+        phone: document.getElementById("edit-phone").value.trim(),
+        address: document.getElementById("edit-address").value.trim(),
+        occupation: document.getElementById("edit-occupation").value.trim()
+      };
 
-    // Save profile to Firestore
-    window.saveProfile = async () => {
       try {
-        const updates = {
-          firstName: document.getElementById("edit-fname").value.trim(),
-          lastName: document.getElementById("edit-lname").value.trim(),
-          phone: document.getElementById("edit-phone").value.trim(),
-          address: document.getElementById("edit-address").value.trim(),
-          occupation: document.getElementById("edit-occupation").value.trim()
-        };
-        await updateDoc(doc(db, "users", currentUserId), updates);
+        await setDoc(doc(db, "users", currentUserID), updatedUser, { merge: true });
+        currentUserData = { ...currentUserData, ...updatedUser };
         alert("✅ Profile updated!");
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
+        renderProfile(auth.currentUser);
+      } catch (err) {
         alert("❌ Failed to update profile.");
+        console.error(err);
       }
-    };
+    }
 
-    // Logout
     window.logout = () => {
       signOut(auth).then(() => {
         window.location.href = "auth.html";
