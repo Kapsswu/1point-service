@@ -5,12 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>1 Point - Home</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script type="module" src="script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- SIDEBAR MENU -->
+  <nav id="sidebar-menu" class="sidebar-menu">
+    <div class="sidebar-header">
+      <span style="font-size:1.6rem;font-weight:bold;">Menu</span>
+      <button id="close-sidebar" aria-label="Close Menu">&times;</button>
+    </div>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><strong>Categories</strong></li>
+      <li><a href="category.html?cat=Home Services">🏠 Home Services</a></li>
+      <li><a href="category.html?cat=Transportation">🚌 Transportation</a></li>
+      <li><a href="category.html?cat=Rentals">🔑 Rentals</a></li>
+      <li><a href="category.html?cat=Multimedia">🎥 Multimedia</a></li>
+      <li><a href="category.html?cat=Real Estate">🏢 Real Estate</a></li>
+      <li><a href="category.html?cat=Goods Delivery">🚚 Goods Delivery</a></li>
+      <li><a href="category.html?cat=Event Management">🎉 Event Management</a></li>
+      <li><a href="category.html?cat=Construction">🚧 Construction</a></li>
+      <li><a href="category.html?cat=Consultants">🧑‍💼 Consultants</a></li>
+      <li><a href="category.html?cat=Automobile Repairs">🛠️ Automobile Repairs</a></li>
+      <li><a href="category.html?cat=Others">✨ Others</a></li>
+      <li><strong>Pages</strong></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="registration.html">Registration</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="review.html">Reviews</a></li>
+      <li><strong>Most Used</strong></li>
+      <li><a href="booking.html?c=Home Services&s=Electrician">⚡ Electrician</a></li>
+      <li><a href="booking.html?c=Home Services&s=Plumber">🔧 Plumber</a></li>
+      <li><a href="booking.html?c=Home Services&s=Technician (AC, Fridge Repairs)">🛠️ Technician</a></li>
+      <li><a href="booking.html?c=Home Services&s=Carpenter">🪚 Carpenter</a></li>
+      <li><a href="booking.html?c=Transportation&s=Taxi Service">🚕 Taxi Service</a></li>
+      <li><a href="booking.html?c=Multimedia&s=Photography">📷 Photography</a></li>
+      <li><a href="booking.html?c=Construction&s=Labour Service">👷 Labour Service</a></li>
+      <li><a href="booking.html?c=Automobile Repairs&s=Car Repairs">🚗 Car Repairs</a></li>
+      <li><strong>Download</strong></li>
+      <li><a href="https://drive.google.com/file/d/1CGU-jA8Ke8dXMQ5qBIbJo_APF-kjVdCa/view?usp=sharing" download>📲 Download 1 Point Apk</a></li>
+      <li><strong>Social</strong></li>
+      <li><a href="https://www.instagram.com/az_services_dimapur/" target="_blank">Instagram</a></li>
+      <li><a href="https://wa.me/916009982567" target="_blank">WhatsApp</a></li>
+      <li><a href="#" id="fb-link">Facebook</a></li>
+    </ul>
+  </nav>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
   <header class="top-nav">
     <a href="index.html" class="logo" style="text-decoration: none;">
       <div style="text-align: center; line-height: 1;">
@@ -18,23 +62,21 @@
         <div style="font-size: 1.1rem; color: #eee;">Point.</div>
       </div>
     </a>
+    <button id="open-sidebar" class="menu-btn" aria-label="Open Menu">
+      <i class="fas fa-bars"></i>
+    </button>
     <div class="nav-links">
       <a href="auth.html" id="signin-link">Sign In</a>
-      <a href="profile.html" id="profile-icon" style="display: none;">
-        <img src="image/profile-icon.png" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;" />
-      </a>
-     <a href="https://drive.google.com/file/d/1CGU-jA8Ke8dXMQ5qBIbJo_APF-kjVdCa/view?usp=sharing" download>
-      Download 1 Point Apk
-     </a>
+      <a href="profile.html" id="profile-icon" style="display:none;"><i class="fas fa-user-circle"></i></a>
+      <a href="https://drive.google.com/file/d/1CGU-jA8Ke8dXMQ5qBIbJo_APF-kjVdCa/view?usp=sharing" download>Download Apk</a>
+    </div>
   </header>
 
-  <!-- SEARCH BAR -->
   <section class="search-section">
     <input type="text" id="searchInput" placeholder="Type to search for services..." autocomplete="off" />
     <ul id="suggestions"></ul>
   </section>
 
-  <!-- EMERGENCY SERVICES -->
   <section class="most-used">
     <div class="grand-heading">Emergency Services</div>
     <div class="two-column-grid">
@@ -57,7 +99,6 @@
     </div>
   </section>
 
-  <!-- MOST USED SUBCATEGORIES -->
   <section class="most-used">
     <div class="grand-heading">Most Used</div>
     <div class="two-column-grid">
@@ -96,82 +137,79 @@
     </div>
   </section>
 
-  <!-- ALL MAIN CATEGORIES (LIST) -->
   <section class="all-categories">
-  <div class="grand-heading">Categories</div>
-  <ul class="full-width-box-list">
-    <li style="background-image: url('image/home-services.jpg');">
-      <a href="category.html?cat=Home Services">
-        <span class="label-box">🏠 Home Services</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/transportation.jpg');">
-      <a href="category.html?cat=Transportation">
-        <span class="label-box">🚌 Transportation</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/rentals.jpg');">
-      <a href="category.html?cat=Rentals">
-        <span class="label-box">🔑 Rentals</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/multimedia.jpg');">
-      <a href="category.html?cat=Multimedia">
-        <span class="label-box">🎥 Multimedia</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/real-estate.jpg');">
-      <a href="category.html?cat=Real Estate">
-        <span class="label-box">🏢 Real Estate</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/goods-delivery.jpg');">
-      <a href="category.html?cat=Goods Delivery">
-        <span class="label-box">🚚 Goods Delivery</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/event.jpg');">
-      <a href="category.html?cat=Event Management">
-        <span class="label-box">🎉 Event Management</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/construction.jpg');">
-      <a href="category.html?cat=Construction">
-        <span class="label-box">🚧 Construction</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/consultants.jpg');">
-      <a href="category.html?cat=Consultants">
-        <span class="label-box">🧑‍💼 Consultants</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/automobile.jpg');">
-      <a href="category.html?cat=Automobile Repairs">
-        <span class="label-box">🛠️ Automobile Repairs</span>
-      </a>
-    </li>
-    <li style="background-image: url('image/others.jpg');">
-      <a href="category.html?cat=Others">
-        <span class="label-box">✨ Others</span>
-      </a>
-    </li>
-  </ul>
-</section>
+    <div class="grand-heading">Categories</div>
+    <ul class="full-width-box-list">
+      <li style="background-image: url('image/home-services.jpg');">
+        <a href="category.html?cat=Home Services">
+          <span class="label-box">🏠 Home Services</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/transportation.jpg');">
+        <a href="category.html?cat=Transportation">
+          <span class="label-box">🚌 Transportation</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/rentals.jpg');">
+        <a href="category.html?cat=Rentals">
+          <span class="label-box">🔑 Rentals</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/multimedia.jpg');">
+        <a href="category.html?cat=Multimedia">
+          <span class="label-box">🎥 Multimedia</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/real-estate.jpg');">
+        <a href="category.html?cat=Real Estate">
+          <span class="label-box">🏢 Real Estate</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/goods-delivery.jpg');">
+        <a href="category.html?cat=Goods Delivery">
+          <span class="label-box">🚚 Goods Delivery</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/event.jpg');">
+        <a href="category.html?cat=Event Management">
+          <span class="label-box">🎉 Event Management</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/construction.jpg');">
+        <a href="category.html?cat=Construction">
+          <span class="label-box">🚧 Construction</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/consultants.jpg');">
+        <a href="category.html?cat=Consultants">
+          <span class="label-box">🧑‍💼 Consultants</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/automobile.jpg');">
+        <a href="category.html?cat=Automobile Repairs">
+          <span class="label-box">🛠️ Automobile Repairs</span>
+        </a>
+      </li>
+      <li style="background-image: url('image/others.jpg');">
+        <a href="category.html?cat=Others">
+          <span class="label-box">✨ Others</span>
+        </a>
+      </li>
+    </ul>
+  </section>
 
-  <!-- PARTNER WITH US BANNER -->
-<section class="provider-banner">
-  <div class="provider-banner-overlay">
-    <div class="provider-content">
-      <h2>🚀 Turn Your Skills or Business Into Income!</h2>
-      <p>Are you a service provider or run a local business? Join 1 Point and reach customers directly. Whether you’re a plumber, photographer, delivery guy, or entrepreneur — 1 Point connects you to people who need your services.</p>
-      <p>🔧 Individuals | 🏪 Businesses | 🚗 Freelancers — All are welcome!</p>
-      <p>📲 Sign up today. It’s free. Let’s grow together.</p>
-      <a href="registration.html" class="provider-btn">Become a Provider</a>
+  <section class="provider-banner">
+    <div class="provider-banner-overlay">
+      <div class="provider-content">
+        <h2>🚀 Turn Your Skills or Business Into Income!</h2>
+        <p>Are you a service provider or run a local business? Join 1 Point and reach customers directly. Whether you’re a plumber, photographer, delivery guy, or entrepreneur — 1 Point connects you to people who need your services.</p>
+        <p>🔧 Individuals | 🏪 Businesses | 🚗 Freelancers — All are welcome!</p>
+        <p>📲 Sign up today. It’s free. Let’s grow together.</p>
+        <a href="registration.html" class="provider-btn">Become a Provider</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-links">
       <a href="about.html">About Us</a>
@@ -188,64 +226,14 @@
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button -->
   <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
     <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
   </a>
-   <!-- ✅ Firebase Auth Status Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBIjDHdyokcHvzfzsAc5kK0tBaJxpKBwgY",
-      authDomain: "point-service-c2fcb.firebaseapp.com",
-      projectId: "point-service-c2fcb",
-      storageBucket: "point-service-c2fcb.appspot.com",
-      messagingSenderId: "77473043188",
-      appId: "1:77473043188:web:8dc46646d5237291c6c4a1",
-      measurementId: "G-MTVG8TYHDG"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-      const signInLink = document.getElementById("signin-link");
-      const profileIcon = document.getElementById("profile-icon");
-
-      if (user) {
-        signInLink.style.display = "none";
-        profileIcon.style.display = "inline-block";
-      } else {
-        signInLink.style.display = "inline-block";
-        profileIcon.style.display = "none";
-      }
-    });
-  </script>
-<script type="module">
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-
-  const auth = getAuth();
-  const allowedWithoutLogin = ["index.html", "", "/"];
-
-  onAuthStateChanged(auth, (user) => {
-    document.querySelectorAll("a").forEach((link) => {
-      const href = link.getAttribute("href");
-      if (
-        href &&
-        !allowedWithoutLogin.some(page => href.includes(page)) &&
-        !user // 🚀 block if not logged in
-      ) {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          alert("🔒 Please sign in to access this feature.");
-        });
-      }
-    });
-  });
-</script>
+  <!-- Include modular Firebase and custom scripts -->
+  <script type="module" src="firebasefirestore.js"></script>
+  <script type="module" src="firebaseauth.js"></script>
+  <script type="module" src="script.js"></script>
 
 </body>
 </html>
-
