@@ -584,7 +584,7 @@ footer {
   left: -200px;
   width: 200px;
   height: 100%;
-  background: #030406;
+  background: #11121b;
   color: #fafaf7;
   box-shadow: 2px 0 16px rgba(0,0,0,0.18);
   z-index: 2000;
@@ -627,7 +627,7 @@ footer {
 .sidebar-menu strong {
   display: block;
   padding: 10px 24px 4px 24px;
-  color: #a78bfa;
+  color: #473d6e;
   font-size: 1.01rem;
   font-weight: 700;
 }
@@ -682,6 +682,3 @@ footer {
     max-width: 320px;
   }
 }
-
-
-
