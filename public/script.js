@@ -209,24 +209,30 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // --- Sidebar Menu Logic ---
   const openBtn = document.getElementById('open-sidebar');
-  const closeBtn = document.getElementById('close-sidebar');
-  const sidebar = document.getElementById('sidebar-menu');
-  const overlay = document.getElementById('sidebar-overlay');
+const closeBtn = document.getElementById('close-sidebar');
+const sidebar = document.getElementById('sidebar-menu');
+const overlay = document.getElementById('sidebar-overlay');
 
-  if (openBtn && closeBtn && sidebar && overlay) {
-    openBtn.addEventListener('click', () => {
-      sidebar.classList.add('open');
-      overlay.classList.add('active');
-    });
-    closeBtn.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-    });
-    overlay.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-    });
-  }
+if (openBtn && closeBtn && sidebar && overlay) {
+  openBtn.addEventListener('click', () => {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    document.body.classList.add('sidebar-open');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+  });
+}
+
   // --- End Sidebar ---
 });
 
@@ -236,3 +242,4 @@ function sanitizeInput(input) {
   // Replace line breaks and encode HTML special chars if needed, here simple example:
   return temp.replace(/[<>]/g, '');
 }
+
