@@ -207,27 +207,36 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Sidebar Menu Logic ---
-  const openBtn = document.getElementById('open-sidebar');
-  const closeBtn = document.getElementById('close-sidebar');
-  const sidebar = document.getElementById('sidebar-menu');
-  const overlay = document.getElementById('sidebar-overlay');
+ // --- Sidebar Menu Logic ---
+const openBtn = document.getElementById('open-sidebar');
+const closeBtn = document.getElementById('close-sidebar');
+const sidebar = document.getElementById('sidebar-menu');
+const overlay = document.getElementById('sidebar-overlay');
 
-  if (openBtn && closeBtn && sidebar && overlay) {
-    openBtn.addEventListener('click', () => {
-      sidebar.classList.add('open');
-      overlay.classList.add('active');
-    });
-    closeBtn.addEventListener('click', () => {
+if (openBtn && closeBtn && sidebar && overlay) {
+  openBtn.addEventListener('click', () => {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+  });
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+  });
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+  });
+
+  // 🔹 Auto-close on resize above mobile width
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 700) {
       sidebar.classList.remove('open');
       overlay.classList.remove('active');
-    });
-    overlay.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-    });
-  }
-  // --- End Sidebar ---
+    }
+  });
+}
+// --- End Sidebar ---
+
 });
 
 // Simple input sanitization helper to trim and strip potential harmful characters
@@ -236,3 +245,4 @@ function sanitizeInput(input) {
   // Replace line breaks and encode HTML special chars if needed, here simple example:
   return temp.replace(/[<>]/g, '');
 }
+
