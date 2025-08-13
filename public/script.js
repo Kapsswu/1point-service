@@ -165,12 +165,55 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (searchInput && suggestions) {
     const services = [
-      "Electrician", "Plumber", "Technician", "Carpenter",
-      "Taxi Service", "Photography", "Labour Service", "Car Repairs",
-      "Painter", "Mason", "Bike Service", "Courier",
-      "Party Planner", "Video Editor", "Furniture Rental",
-      "Legal Consultant", "Finance Consultant", "Broker",
-      "Property Manager", "Appliances Rental", "DJ", "Mechanic"
+      // Home Services
+    "Electrician", "Plumber", "Technician", "Carpenter", "A.R Refrigerator", 
+    "Battery Invertor", "Bore-well", "Labour", "Machine Repairs", 
+    "Motor Machine Repair", "Painter", "Well Digger",
+
+    // Transportation
+    "Taxi Service", "Bike Rental", "Goods Transport", "Self Drive Car", 
+    "2 Wheeler Delivery", "Auto", "Bus Agency", "Car Rental Agency", 
+    "Sumo Agency", "Tow Truck", "Travel Agency", "Two Wheeler Taxi",
+
+    // Rentals
+    "Projector Rental", "Tent & Table", "Sound System", "Construction Tools", 
+    "Camping Equipments", "Car Rental Agency", "Flowers", "Generator Hire", 
+    "Resort / Park / Expo",
+
+    // Multimedia
+    "Photography", "Videography", "Drone Shot", "Live Broadcast", "Music Studio", 
+    "Music Video", "Newspaper", "Printing Press", "Tony Entertainment",
+
+    // Real Estate
+    "Rent House", "Rent Shop", "Buy Land", "Commercial Space", "Commercial Land",
+
+    // Goods Delivery
+    "Food Delivery", "Courier", "E-commerce", "Furniture Movers",
+
+    // Event Management
+    "Wedding Planner", "Event Host", "Decoration", "Catering", "Event Managers",
+
+    // Construction
+    "Labour Service", "Material Supply", "Site Supervisor", "Blueprint Designer", 
+    "Construction Company", "Fabrication", "Interior and Raw Materials",
+
+    // Consultants
+    "Legal Consultant", "Business Coach", "Marketing Expert", "Tax Advisor", 
+    "Computer Consultant", "Education Consultant", "Internet Work", 
+    "Medical Consultant", "Psychologist",
+
+    // Automobile Repairs
+    "Car Repairs", "Bike Repairs", "Car Wash", "Tire Change", "Automobile Mechanic", 
+    "Bike Mechanic", "Car Mechanic", "JCB Repair", "Vehicle Company Service", 
+    "Vehicle Company Detail",
+
+    // Others
+    "Custom Request", "Miscellaneous", "Disposal", "Gift Shops", "Hotel", 
+    "Market", "Power Tools", "Shirt Printing",
+
+    // Extras from your old array not already included
+    "Party Planner", "Video Editor", "Furniture Rental", "Finance Consultant", 
+    "Broker", "Property Manager", "Appliances Rental", "DJ", "Mechanic"
     ];
 
     searchInput.addEventListener("input", () => {
@@ -242,4 +285,5 @@ function sanitizeInput(input) {
   // Replace line breaks and encode HTML special chars if needed, here simple example:
   return temp.replace(/[<>]/g, '');
 }
+
 
