@@ -588,7 +588,7 @@ footer {
   color: #fafaf7;
   box-shadow: 2px 0 16px rgba(0,0,0,0.18);
   z-index: 2000;
-  transition: left 0.25s ease;
+  transition: left 0.25s;
   overflow-y: auto;
   padding-bottom: 40px;
 }
@@ -618,7 +618,7 @@ footer {
   padding: 10px 24px;
   font-size: 1.08rem;
   border-bottom: 1px solid #23243a;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: background 0.18s;
 }
 .sidebar-menu a:hover {
   background: #030406;
@@ -665,7 +665,6 @@ footer {
   outline: none;
 }
 
-/* Sidebar overlay */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -676,22 +675,10 @@ footer {
 .sidebar-overlay.active {
   display: block;
 }
-
-/* 📱 Mobile view adjustments */
 @media (max-width: 700px) {
   .sidebar-menu {
     width: 85vw;
     min-width: 180px;
     max-width: 320px;
-  }
-}
-
-/* 💻 Force hide sidebar & overlay on desktop */
-@media (min-width: 701px) {
-  .sidebar-menu {
-    left: -200px !important;
-  }
-  .sidebar-overlay {
-    display: none !important;
   }
 }
