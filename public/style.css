@@ -581,20 +581,23 @@ footer {
 .sidebar-menu {
   position: fixed;
   top: 0;
-  left: -200px;
-  width: 200px;
+  left: 0;
+  width: 85vw;
+  max-width: 320px;
   height: 100%;
   background: #11121b;
   color: #fafaf7;
   box-shadow: 2px 0 16px rgba(0,0,0,0.18);
   z-index: 2000;
-  transition: left 0.25s;
+  transition: transform 0.25s ease;
+  transform: translateX(-100%);
   overflow-y: auto;
   padding-bottom: 40px;
 }
 .sidebar-menu.open {
-  left: 0;
+  transform: translateX(0);
 }
+
 .sidebar-header {
   display: flex;
   justify-content: space-between;
@@ -602,6 +605,7 @@ footer {
   padding: 18px 18px 8px 18px;
   border-bottom: 1px solid #333;
 }
+
 .sidebar-menu ul {
   list-style: none;
   padding: 12px 0 0 0;
@@ -650,12 +654,9 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Size and padding */
   width: 40px;
   height: 40px;
   padding: 0;
-
   border-radius: 6px;
   transition: background-color 0.2s ease;
 }
@@ -665,6 +666,7 @@ footer {
   outline: none;
 }
 
+/* Overlay */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -675,6 +677,13 @@ footer {
 .sidebar-overlay.active {
   display: block;
 }
+
+/* Prevent scroll when sidebar is open */
+body.sidebar-open {
+  overflow: hidden;
+}
+
+/* Responsive width */
 @media (max-width: 700px) {
   .sidebar-menu {
     width: 85vw;
