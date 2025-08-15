@@ -190,7 +190,7 @@ body {
   height: auto;
 }
 
-/* ========== SERVICES GRID (Updated Style) ========== */
+/* ========== SERVICES GRID ========== */
 .services {
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
@@ -255,7 +255,7 @@ body {
   margin-right: 5px;
 }
 
-/* ========== CATEGORIES GRID (Updated Style) ========== */
+/* ========== CATEGORIES GRID ========== */
 .categories {
   padding: 20px;
 }
@@ -475,185 +475,42 @@ main.container p {
   line-height: 1.7;
 }
 
-/* Responsive adjustments */
+/* ========== RESPONSIVE — MOBILE WIDTH FIT & 3 CARDS ROW ========== */
 @media (max-width: 768px) {
-  main.container {
-    margin: 90px 15px 30px;
-    padding: 15px;
-  }
-  main.container h1 {
-    font-size: 26px;
-  }
-  main.container p {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  main.container {
-    margin: 80px 10px 20px;
-    padding: 10px;
-  }
-  main.container h1 {
-    font-size: 22px;
-  }
-  main.container p {
-    font-size: 13px;
-  }
-}
-
-/* =========================================================
-   ADJUSTMENTS (8 points): Hero, Services text, Emergency,
-   Skills-to-Income; keep Why-Choose, Reviews hookup,
-   Footer & WhatsApp as-is.
-   These override earlier rules where needed.
-   ========================================================= */
-
-/* 1) HERO — text sizes only */
-.hero-text h2 {
-  font-size: clamp(34px, 4.2vw, 46px);
-  line-height: 1.15;
-  letter-spacing: -0.2px;
-}
-.hero-text p {
-  font-size: clamp(16px, 2.1vw, 20px);
-  color: #4a4f55;
-}
-.hero-buttons .btn {
-  padding: 10px 18px;
-  font-size: 15px;
-  border-radius: 24px;
-}
-
-/* 2) SERVICES — icon + text sizes */
-a.service-card { display: block; } /* ensure anchors behave like cards */
-.service-card i {
-  font-size: 46px;           /* bigger icon */
-  line-height: 1;
-}
-.service-card h3, .service-card h4 {
-  /* Your HTML uses <h3>; some cards might use <h4> in future */
-  font-size: 18px;
-  font-weight: 700;
-  margin: 6px 0 4px;
-}
-.service-card p {
-  font-size: 15px;
-  color: #6c7580;
-}
-
-/* Responsive tightening for services */
-@media (max-width: 520px) {
-  .services {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .service-card i { font-size: 40px; }
-  .service-card h3, .service-card h4 { font-size: 17px; }
-  .service-card p { font-size: 14px; }
-}
-
-/* 3) EMERGENCY — match “template” style: pill cards with icon + number */
-.emergency-banner {
-  background-color: #c62828; /* slightly deeper red for contrast */
-  padding: 22px 16px;
-}
-.emergency-banner h3 {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: .3px;
-}
-.emergency-list {
-  gap: 12px 14px;
-  margin-top: 14px;
-}
-.emergency-list a {
-  text-decoration: none;
-}
-.emergency-list a div {
-  background: #fff;
-  color: #c62828;
-  border: 2px solid rgba(0,0,0,0.06);
-  border-radius: 999px;                /* pill shape */
-  padding: 10px 14px;
-  min-width: 120px;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.emergency-list a div i {
-  font-size: 18px;
-  margin-right: 6px;
-}
-.emergency-list a div:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-}
-
-/* 4) SKILLS TO INCOME — text sizes + background that matches image */
-:root {
-  /* tweak this if you change the hero/photo tone */
-  --cta-bg-1: #eef5ff; /* light bluish */
-  --cta-bg-2: #f8fbff;
-  --cta-accent: #0a74ff;
-}
-.provider-cta {
-  background: linear-gradient(180deg, var(--cta-bg-1) 0%, var(--cta-bg-2) 100%);
-  border-top: 1px solid rgba(0,0,0,0.04);
-  border-bottom: 1px solid rgba(0,0,0,0.04);
-}
-.provider-cta .cta-text h2 {
-  font-size: clamp(26px, 3.6vw, 36px);
-  line-height: 1.2;
-  letter-spacing: -0.2px;
-  color: #1b2a3a;
-  margin-bottom: 10px;
-}
-.provider-cta .cta-text p {
-  font-size: clamp(15px, 2.1vw, 18px);
-  color: #4b5a6a;
-  margin-bottom: 16px;
-}
-.provider-cta .btn-primary {
-  background-color: var(--cta-accent);
-  border: 1px solid rgba(0,0,0,0.05);
-  padding: 10px 18px;
-  font-size: 15px;
-  border-radius: 24px;
-}
-
-/* 6) REVIEWS — ready for Firestore content (grid-friendly) */
-.reviews .reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-  margin-top: 12px;
-}
-.reviews .review-card {
-  text-align: left;
-}
-.reviews .review-card .name {
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 6px;
-}
-.reviews .review-card .text {
-  color: #5a6470;
-  line-height: 1.6;
-}
-.reviews .review-card .date {
-  font-size: 12px;
-  color: #8a94a6;
-  margin-top: 8px;
-}
-
-/* 7) FOOTER + 8) WHATSAPP — kept as-is (no changes) */
-
-/* Extra responsive polish for hero layout */
-@media (max-width: 900px) {
   .hero { padding: 32px 16px; }
+  main.container { margin: 90px 15px 30px; padding: 15px; }
 }
-@media (max-width: 680px) {
+
+@media (max-width: 520px) {
   .hero { flex-direction: column; text-align: center; }
   .hero-image { order: -1; margin-bottom: 16px; }
+
+  /* SERVICES 3-per-row */
+  .services {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .service-card { padding: 15px 10px; }
+  .service-card i { font-size: 36px; }
+  .service-card h3, .service-card h4 { font-size: 15px; }
+  .service-card p { font-size: 13px; }
+
+  /* CATEGORIES 3-per-row */
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .category-card { padding: 15px 8px; }
+  .category-card i { font-size: 32px; }
+  .category-card h4 { font-size: 14px; }
+
+  /* PROVIDER CTA scaling */
+  .provider-cta { padding: 20px 12px; flex-direction: column; text-align: center; }
+  .provider-cta .cta-text h2 { font-size: 26px; }
+  .provider-cta .cta-text p { font-size: 14px; }
+  .provider-cta .btn-primary { padding: 8px 14px; font-size: 14px; }
+
+  /* MAIN CONTAINER TEXT */
+  main.container h1 { font-size: 22px; }
+  main.container p { font-size: 13px; }
 }
