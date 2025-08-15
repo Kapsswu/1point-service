@@ -4,236 +4,154 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>1 Point - Home</title>
+
   <link rel="stylesheet" href="style.css" />
-  <script type="module" src="script.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 
-  <!-- SIDEBAR MENU -->
-  <nav id="sidebar-menu" class="sidebar-menu">
+  <!-- Header placeholder -->
+  <div id="header-placeholder"></div>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar-menu" class="sidebar-menu">
     <div class="sidebar-header">
-      <span style="font-size:1.6rem;font-weight:bold;">Menu</span>
-      <button id="close-sidebar" aria-label="Close Menu">&times;</button>
+      <h2>Menu</h2>
+      <button id="close-sidebar" class="sidebar-close" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
     <ul>
       <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-      <li><strong>Categories</strong></li>
-      <li><a href="category.html?cat=Home Services">🏠 Home Services</a></li>
-      <li><a href="category.html?cat=Transportation">🚌 Transportation</a></li>
-      <li><a href="category.html?cat=Rentals">🔑 Rentals</a></li>
-      <li><a href="category.html?cat=Multimedia">🎥 Multimedia</a></li>
-      <li><a href="category.html?cat=Real Estate">🏢 Real Estate</a></li>
-      <li><a href="category.html?cat=Goods Delivery">🚚 Goods Delivery</a></li>
-      <li><a href="category.html?cat=Event Management">🎉 Event Management</a></li>
-      <li><a href="category.html?cat=Construction">🚧 Construction</a></li>
-      <li><a href="category.html?cat=Consultants">🧑‍💼 Consultants</a></li>
-      <li><a href="category.html?cat=Automobile Repairs">🛠️ Automobile Repairs</a></li>
-      <li><a href="category.html?cat=Others">✨ Others</a></li>
-      <li><strong>Pages</strong></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="terms.html">Terms</a></li>
-      <li><a href="registration.html">Registration</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-      <li><a href="review.html">Reviews</a></li>
-      <li><strong>Most Used</strong></li>
-      <li><a href="booking.html?c=Home Services&s=Electrician">⚡ Electrician</a></li>
-      <li><a href="booking.html?c=Home Services&s=Plumber">🔧 Plumber</a></li>
-      <li><a href="booking.html?c=Home Services&s=Technician (AC, Fridge Repairs)">🛠️ Technician</a></li>
-      <li><a href="booking.html?c=Home Services&s=Carpenter">🪚 Carpenter</a></li>
-      <li><a href="booking.html?c=Transportation&s=Taxi Service">🚕 Taxi Service</a></li>
-      <li><a href="booking.html?c=Multimedia&s=Photography">📷 Photography</a></li>
-      <li><a href="booking.html?c=Construction&s=Labour Service">👷 Labour Service</a></li>
-      <li><a href="booking.html?c=Automobile Repairs&s=Car Repairs">🚗 Car Repairs</a></li>
-      <li><strong>Download</strong></li>
-      <li><a href="https://drive.google.com/file/d/1CGU-jA8Ke8dXMQ5qBIbJo_APF-kjVdCa/view?usp=sharing" download>📲 Download 1 Point Apk</a></li>
-      <li><strong>Social</strong></li>
-      <li><a href="https://www.instagram.com/az_services_dimapur/" target="_blank">Instagram</a></li>
-      <li><a href="https://wa.me/916009982567" target="_blank">WhatsApp</a></li>
-      <li><a href="#" id="fb-link">Facebook</a></li>
+      <li><a href="category.html?cat=Home Services"><i class="fas fa-wrench"></i> Home Services</a></li>
+      <li><a href="category.html?cat=Transportation"><i class="fas fa-car"></i> Transportation</a></li>
+      <li><a href="category.html?cat=Rentals"><i class="fas fa-home"></i> Rentals</a></li>
+      <li><a href="category.html?cat=Multimedia"><i class="fas fa-photo-video"></i> Multimedia</a></li>
+      <li><a href="category.html?cat=Real Estate"><i class="fas fa-building"></i> Real Estate</a></li>
+      <li><a href="category.html?cat=Goods Delivery"><i class="fas fa-box"></i> Goods Delivery</a></li>
+      <li><a href="category.html?cat=Event Management"><i class="fas fa-calendar-alt"></i> Event Management</a></li>
+      <li><a href="category.html?cat=Consultants"><i class="fas fa-user-tie"></i> Consultants</a></li>
+      <li><a href="category.html?cat=Automobile Repairs"><i class="fas fa-car-crash"></i> Automobile Repairs</a></li>
+      <li><a href="category.html?cat=Others"><i class="fas fa-ellipsis-h"></i> Others</a></li>
     </ul>
-  </nav>
-  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  </aside>
 
-  <header class="top-nav">
-    <a href="index.html" class="logo" style="text-decoration: none;">
-      <div style="text-align: center; line-height: 1;">
-        <div style="font-size: 2.8rem; font-weight: bold; color: #fff;">1</div>
-        <div style="font-size: 1.1rem; color: #eee;">Point.</div>
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-text">
+        <h2>All Services. One Point.</h2>
+        <p>Get the best professionals for all your needs.</p>
+        <div class="hero-buttons">
+          <a href="registration.html" class="btn btn-primary">Become a Provider</a>
+          <a href="tel:916009982567" class="btn btn-danger">Call Now</a>
+        </div>
       </div>
-    </a>
-    <button id="open-sidebar" class="menu-btn" aria-label="Open Menu">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="nav-links">
-      <a href="auth.html" id="signin-link">Sign In</a>
-      <a href="profile.html" id="profile-icon" style="display:none;"><i class="fas fa-user-circle"></i></a>
-      <a href="https://drive.google.com/file/d/1CGU-jA8Ke8dXMQ5qBIbJo_APF-kjVdCa/view?usp=sharing" download>Download Apk</a>
-    </div>
-  </header>
-
-  <section class="search-section">
-    <input type="text" id="searchInput" placeholder="Type to search for services..." autocomplete="off" />
-    <ul id="suggestions"></ul>
-  </section>
-
-  <section class="most-used">
-    <div class="grand-heading">Emergency Services</div>
-    <div class="two-column-grid">
-      <a href="tel:102" class="category-card" style="background-image: url('image/ambulance.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-ambulance"></i><span class="label-box">Ambulance</span></div>
-      </a>
-      <a href="tel:03862232201" class="category-card" style="background-image: url('image/fire.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-fire-extinguisher"></i><span class="label-box">Fire Brigade</span></div>
-      </a>
-      <a href="tel:03862228400" class="category-card" style="background-image: url('image/police.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-shield-alt"></i><span class="label-box">Police</span></div>
-      </a>
-      <a href="tel:03862291560" class="category-card" style="background-image: url('image/medical.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-user-nurse"></i><span class="label-box">Medical Help</span></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="most-used">
-    <div class="grand-heading">Most Used</div>
-    <div class="two-column-grid">
-      <a href="booking.html?c=Home Services&s=Electrician" class="category-card" style="background-image: url('image/electrician.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-bolt"></i><span class="label-box">Electrician</span></div>
-      </a>
-      <a href="booking.html?c=Home Services&s=Plumber" class="category-card" style="background-image: url('image/plumber.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-wrench"></i><span class="label-box">Plumber</span></div>
-      </a>
-      <a href="booking.html?c=Home Services&s=Technician (AC, Fridge Repairs)" class="category-card" style="background-image: url('image/technician.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-tools"></i><span class="label-box">Technician</span></div>
-      </a>
-      <a href="booking.html?c=Home Services&s=Carpenter" class="category-card" style="background-image: url('image/carpenter.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-hammer"></i><span class="label-box">Carpenter</span></div>
-      </a>
-      <a href="booking.html?c=Transportation&s=Taxi Service" class="category-card" style="background-image: url('image/taxi.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-taxi"></i><span class="label-box">Taxi Service</span></div>
-      </a>
-      <a href="booking.html?c=Multimedia&s=Photography" class="category-card" style="background-image: url('image/photography.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-camera"></i><span class="label-box">Photography</span></div>
-      </a>
-      <a href="booking.html?c=Construction&s=Labour Service" class="category-card" style="background-image: url('image/labour.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-user-hard-hat"></i><span class="label-box">Labour Service</span></div>
-      </a>
-      <a href="booking.html?c=Automobile Repairs&s=Car Repairs" class="category-card" style="background-image: url('image/car-repairs.jpg');">
-        <div class="card-image"></div>
-        <div class="card-label"><i class="fas fa-car-crash"></i><span class="label-box">Car Repairs</span></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="all-categories">
-    <div class="grand-heading">Categories</div>
-    <ul class="full-width-box-list">
-      <li style="background-image: url('image/home-services.jpg');">
-        <a href="category.html?cat=Home Services">
-          <span class="label-box">🏠 Home Services</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/transportation.jpg');">
-        <a href="category.html?cat=Transportation">
-          <span class="label-box">🚌 Transportation</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/rentals.jpg');">
-        <a href="category.html?cat=Rentals">
-          <span class="label-box">🔑 Rentals</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/multimedia.jpg');">
-        <a href="category.html?cat=Multimedia">
-          <span class="label-box">🎥 Multimedia</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/real-estate.jpg');">
-        <a href="category.html?cat=Real Estate">
-          <span class="label-box">🏢 Real Estate</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/goods-delivery.jpg');">
-        <a href="category.html?cat=Goods Delivery">
-          <span class="label-box">🚚 Goods Delivery</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/event.jpg');">
-        <a href="category.html?cat=Event Management">
-          <span class="label-box">🎉 Event Management</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/construction.jpg');">
-        <a href="category.html?cat=Construction">
-          <span class="label-box">🚧 Construction</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/consultants.jpg');">
-        <a href="category.html?cat=Consultants">
-          <span class="label-box">🧑‍💼 Consultants</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/automobile.jpg');">
-        <a href="category.html?cat=Automobile Repairs">
-          <span class="label-box">🛠️ Automobile Repairs</span>
-        </a>
-      </li>
-      <li style="background-image: url('image/others.jpg');">
-        <a href="category.html?cat=Others">
-          <span class="label-box">✨ Others</span>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="provider-banner">
-    <div class="provider-banner-overlay">
-      <div class="provider-content">
-        <h2>🚀 Turn Your Skills or Business Into Income!</h2>
-        <p>Are you a service provider or run a local business? Join 1 Point and reach customers directly. Whether you’re a plumber, photographer, delivery guy, or entrepreneur — 1 Point connects you to people who need your services.</p>
-        <p>🔧 Individuals | 🏪 Businesses | 🚗 Freelancers — All are welcome!</p>
-        <p>📲 Sign up today. It’s free. Let’s grow together.</p>
-        <a href="registration.html" class="provider-btn">Become a Provider</a>
+      <div class="hero-image">
+        <img src="image/hero-illustration.png" alt="Service Illustration">
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="footer-links">
-      <a href="about.html">About Us</a>
-      <a href="terms.html">Terms</a>
-      <a href="registration.html">Registration</a>
-      <a href="contact.html">Contact Us</a>
-      <a href="review.html">Reviews</a>
-    </div>
-    <div class="social">
-      <p>Follow us:</p>
-      <a href="https://www.instagram.com/az_services_dimapur/" target="_blank">Instagram</a>
-      <a href="https://wa.me/916009982567" target="_blank">WhatsApp</a>
-      <a href="#" id="fb-link">Facebook</a>
-    </div>
-  </footer>
+    <!-- Services -->
+    <section class="services">
+      <a class="service-card" href="booking.html?c=Home Services&s=Plumber">
+        <i class="fas fa-faucet"></i><h3>Plumbing</h3><p>Fast & Reliable</p>
+      </a>
+      <a class="service-card" href="booking.html?c=Home Services&s=Electrician">
+        <i class="fas fa-bolt"></i><h3>Electrician</h3><p>Quick & Verified</p>
+      </a>
+      <a class="service-card" href="booking.html?c=Home Services&s=Technician (AC, Fridge Repairs)">
+        <i class="fas fa-tools"></i><h3>Technical Repairs</h3><p>Certified Experts</p>
+      </a>
+      <a class="service-card" href="booking.html?c=Home Services&s=Carpenter">
+        <i class="fas fa-hammer"></i><h3>Carpentry</h3><p>Trusted Professionals</p>
+      </a>
+      <a class="service-card" href="booking.html?c=Transportation&s=Taxi Service">
+        <i class="fas fa-taxi"></i><h3>Taxi Service</h3><p>Reliable Drivers</p>
+      </a>
+      <a class="service-card" href="booking.html?c=Multimedia&s=Photography">
+        <i class="fas fa-camera"></i><h3>Photography</h3><p>High Quality</p>
+      </a>
+      <a class="service-card" href="booking.html?c=Construction&s=Labour Service">
+        <i class="fas fa-user-cog"></i><h3>Labour Services</h3><p>Skilled Workers</p>
+      </a>
+      <a class="service-card" href="category.html?cat=Others">
+        <i class="fas fa-ellipsis-h"></i><h3>More Services</h3><p>Various Professionals</p>
+      </a>
+    </section>
 
-  <a href="https://wa.me/916009982567" class="floating-whatsapp" target="_blank">
-    <img src="image/whatsapp-icon.png" alt="Chat on WhatsApp" />
+    <!-- Emergency -->
+    <section class="emergency-banner">
+      <h3>Emergency Services</h3>
+      <div class="emergency-list">
+        <a href="tel:102"><div><i class="fas fa-ambulance"></i> 102</div></a>
+        <a href="tel:03862232201"><div><i class="fas fa-fire-extinguisher"></i> Fire</div></a>
+        <a href="tel:03862228400"><div><i class="fas fa-shield-alt"></i> Police</div></a>
+        <a href="tel:108"><div><i class="fas fa-phone-alt"></i> 108</div></a>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+      <h3>Browse Categories</h3>
+      <div class="category-grid">
+        <a class="category-card" href="category.html?cat=Home Services"><i class="fas fa-wrench"></i><h4>Home Services</h4></a>
+        <a class="category-card" href="category.html?cat=Transportation"><i class="fas fa-car"></i><h4>Transportation</h4></a>
+        <a class="category-card" href="category.html?cat=Rentals"><i class="fas fa-home"></i><h4>Rentals</h4></a>
+        <a class="category-card" href="category.html?cat=Multimedia"><i class="fas fa-photo-video"></i><h4>Multimedia</h4></a>
+        <a class="category-card" href="category.html?cat=Real Estate"><i class="fas fa-building"></i><h4>Real Estate</h4></a>
+        <a class="category-card" href="category.html?cat=Goods Delivery"><i class="fas fa-box"></i><h4>Goods Delivery</h4></a>
+        <a class="category-card" href="category.html?cat=Event Management"><i class="fas fa-calendar-alt"></i><h4>Event Management</h4></a>
+        <a class="category-card" href="category.html?cat=Others"><i class="fas fa-ellipsis-h"></i><h4>Others</h4></a>
+      </div>
+    </section>
+
+    <!-- Provider CTA -->
+    <section class="provider-cta">
+      <div class="cta-text">
+        <h2>Turn Your Skills into Income</h2>
+        <p>Are you a service provider or run a local business? Join 1Point and reach customers directly.</p>
+        <a href="registration.html" class="btn btn-primary">Become a Provider</a>
+      </div>
+      <div class="cta-image">
+        <img src="image/provider.jpg" alt="Provider">
+      </div>
+    </section>
+
+    <!-- Why Choose -->
+    <section class="why-choose">
+      <h3>Why Choose Us</h3>
+      <div class="benefits">
+        <div><i class="fas fa-user-check"></i><p>Verified Providers</p></div>
+        <div><i class="fas fa-tags"></i><p>Affordable Prices</p></div>
+        <div><i class="fas fa-headset"></i><p>24/7 Support</p></div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="reviews">
+      <h3>Customer Reviews</h3>
+      <div class="review-card">
+        <img src="image/user.jpg" alt="John Doe">
+        <p><strong>John Doe</strong></p>
+        <p>1Point is a lifesaver. Their professionals worked quickly and efficiently.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- WhatsApp Floating -->
+  <a href="https://wa.me/916009982567" class="whatsapp-float floating-whatsapp" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat with us</span>
   </a>
 
-  <!-- Include modular Firebase and custom scripts -->
+  <!-- Scripts -->
   <script type="module" src="firebasefirestore.js"></script>
   <script type="module" src="firebaseauth.js"></script>
-  <script type="module" src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
