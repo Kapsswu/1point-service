@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>1 Point - Home</title>
 
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 
-  <!-- Header placeholder -->
+  <!-- ========== HEADER PLACEHOLDER ========== -->
   <div id="header-placeholder"></div>
 
-  <!-- SIDEBAR -->
+  <!-- ========== SIDEBAR ========== -->
   <aside id="sidebar-menu" class="sidebar-menu">
     <div class="sidebar-header">
       <h2>Menu</h2>
@@ -36,12 +37,13 @@
     </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- ========== MAIN CONTENT ========== -->
   <main>
-    <!-- Hero -->
+
+    <!-- HERO SECTION -->
     <section class="hero">
       <div class="hero-text">
-        <h2>All Services. One Point.</h2>
+        <h2 class="hero-text">All Services.<span>One Point.</span></h2>
         <p>Get the best professionals for all your needs.</p>
         <div class="hero-buttons">
           <a href="registration.html" class="btn btn-primary">Become a Provider</a>
@@ -53,35 +55,51 @@
       </div>
     </section>
 
-    <!-- Services -->
+    <!-- SERVICES GRID -->
     <section class="services">
       <a class="service-card" href="booking.html?c=Home Services&s=Plumber">
-        <i class="fas fa-faucet"></i><h3>Plumbing</h3><p>Fast & Reliable</p>
+        <i class="fas fa-faucet"></i>
+        <h3>Plumbing</h3>
+        <p>Fast & Reliable</p>
       </a>
       <a class="service-card" href="booking.html?c=Home Services&s=Electrician">
-        <i class="fas fa-bolt"></i><h3>Electrician</h3><p>Quick & Verified</p>
+        <i class="fas fa-bolt"></i>
+        <h3>Electrician</h3>
+        <p>Quick & Verified</p>
       </a>
       <a class="service-card" href="booking.html?c=Home Services&s=Technician (AC, Fridge Repairs)">
-        <i class="fas fa-tools"></i><h3>Technical Repairs</h3><p>Certified Experts</p>
+        <i class="fas fa-tools"></i>
+        <h3>Technical Repairs</h3>
+        <p>Certified Experts</p>
       </a>
       <a class="service-card" href="booking.html?c=Home Services&s=Carpenter">
-        <i class="fas fa-hammer"></i><h3>Carpentry</h3><p>Trusted Professionals</p>
+        <i class="fas fa-hammer"></i>
+        <h3>Carpentry</h3>
+        <p>Trusted Professionals</p>
       </a>
       <a class="service-card" href="booking.html?c=Transportation&s=Taxi Service">
-        <i class="fas fa-taxi"></i><h3>Taxi Service</h3><p>Reliable Drivers</p>
+        <i class="fas fa-taxi"></i>
+        <h3>Taxi Service</h3>
+        <p>Reliable Drivers</p>
       </a>
       <a class="service-card" href="booking.html?c=Multimedia&s=Photography">
-        <i class="fas fa-camera"></i><h3>Photography</h3><p>High Quality</p>
+        <i class="fas fa-camera"></i>
+        <h3>Photography</h3>
+        <p>High Quality</p>
       </a>
       <a class="service-card" href="booking.html?c=Construction&s=Labour Service">
-        <i class="fas fa-user-cog"></i><h3>Labour Services</h3><p>Skilled Workers</p>
+        <i class="fas fa-user-cog"></i>
+        <h3>Labour Services</h3>
+        <p>Skilled Workers</p>
       </a>
       <a class="service-card" href="category.html?cat=Others">
-        <i class="fas fa-ellipsis-h"></i><h3>More Services</h3><p>Various Professionals</p>
+        <i class="fas fa-ellipsis-h"></i>
+        <h3>More Services</h3>
+        <p>Various Professionals</p>
       </a>
     </section>
 
-    <!-- Emergency -->
+    <!-- EMERGENCY BANNER -->
     <section class="emergency-banner">
       <h3>Emergency Services</h3>
       <div class="emergency-list">
@@ -92,7 +110,7 @@
       </div>
     </section>
 
-    <!-- Categories -->
+    <!-- CATEGORIES GRID -->
     <section class="categories">
       <h3>Browse Categories</h3>
       <div class="category-grid">
@@ -107,7 +125,7 @@
       </div>
     </section>
 
-    <!-- Provider CTA -->
+    <!-- PROVIDER CTA -->
     <section class="provider-cta">
       <div class="cta-text">
         <h2>Turn Your Skills into Income</h2>
@@ -119,7 +137,7 @@
       </div>
     </section>
 
-    <!-- Why Choose -->
+    <!-- WHY CHOOSE US -->
     <section class="why-choose">
       <h3>Why Choose Us</h3>
       <div class="benefits">
@@ -129,7 +147,7 @@
       </div>
     </section>
 
-    <!-- Reviews -->
+    <!-- REVIEWS -->
     <section class="reviews">
       <h3>Customer Reviews</h3>
       <div class="review-card">
@@ -138,20 +156,22 @@
         <p>1Point is a lifesaver. Their professionals worked quickly and efficiently.</p>
       </div>
     </section>
+
   </main>
 
-  <!-- Footer placeholder -->
+  <!-- ========== FOOTER PLACEHOLDER ========== -->
   <div id="footer-placeholder"></div>
 
-  <!-- WhatsApp Floating -->
+  <!-- ========== WHATSAPP FLOATING BUTTON ========== -->
   <a href="https://wa.me/916009982567" class="whatsapp-float floating-whatsapp" target="_blank">
     <i class="fab fa-whatsapp"></i>
     <span class="whatsapp-tooltip">Chat with us</span>
   </a>
 
-  <!-- Scripts -->
+  <!-- ========== SCRIPTS ========== -->
   <script type="module" src="firebasefirestore.js"></script>
   <script type="module" src="firebaseauth.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>
